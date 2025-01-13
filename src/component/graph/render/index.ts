@@ -6,7 +6,7 @@ function createElementFor(
     vdom: VSvgNode,
     key: string,
     handler: unknown
-): ReactElement<any>{
+): ReactElement<any> {
     const {
         type,
         attr,
@@ -20,10 +20,11 @@ function createElementFor(
         ...attr,
     }
 
-    const visualElement = createElement(type,reactAttr);
+    const visualElement = createElement(type, reactAttr);
 
     return visualElement
-}
+};
+
 export class Renderer {
     public render(vdom: VSvgNode, handler: unknown): ReactElement<unknown> {
         return createElementFor(vdom, 'root', handler);

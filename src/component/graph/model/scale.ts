@@ -24,4 +24,4 @@ export type ScaleCreationContext = {
     scales: Scales
 };
 
-export type ScaleCreator = (input: ScaleCreationContext) => Scales
+export type ScaleCreator = (input: ScaleCreationContext) => Scales;

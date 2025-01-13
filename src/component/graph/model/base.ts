@@ -1,3 +1,13 @@
+import { Channels, Metadata } from "./scene";
+
+export type Datum = any;
+export type Table = Datum[]
+
+export type ViewSize = {
+    width: number
+    height: number
+}
+
 export type SvgCommonProps = {
     //the color inside the shape
     fill?: string
@@ -26,20 +36,25 @@ export type VDomNode<Attr, Style> = {
     type: string,
     attr?: Attr,
     style?: Style,
-    children?: Array<string | VDomNode<unknown, unknown>>
+    children?: Array<string | VDomNode<unknown, unknown>>,
+    metadata?: Metadata
+
 };
 
 export type VSvgNode = {
     transform?: Array<VSvgTransform<unknown>>,
-    
+
 } & VDomNode<SvgCommonProps, SvgCommonStyle>;
 
+export type VDomRenderer<SourceForm, TargetForm> = {
+    render: (input: SourceForm, handler: Channels) => TargetForm
+}
 
 export type ChartOptions = {
     /**
      * In pixel, the coordinate system will 
      * translated to this point 
-    */ 
+    */
     origin?: [number, number],
 
     width?: number,

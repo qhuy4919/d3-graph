@@ -7,11 +7,9 @@ export type Renderer<SourceForm, TargetForm> = {
     render: (input: SourceForm, handler: unknown) => TargetForm
 }
 
-export {
-    type VSvgNode,
-    type ChartOptions,
-} from './base'
-
-
+export * from './base'
 export * from './scale'
 export * from './axis';
+export * from './scene'
+export * from './mark';
+export * from './common';
