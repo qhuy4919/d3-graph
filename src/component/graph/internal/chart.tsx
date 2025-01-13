@@ -1,5 +1,6 @@
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { ChartOptions } from '../model';
+import { ChartRendererContext } from '../context';
 
 export type D3Chart = {
     width: number,
@@ -41,4 +42,14 @@ function useChartOption({
 
         return opts
     }, [width, height, padding])
+};
+
+
+function useScene(ChartOptions: ChartOptions, data: Record<string, any>): any {
+
+};
+
+function useOrchestrator() {
+    const renderer = useContext(ChartRendererContext);
+    return useMemo(() => renderer && new Ỏ)
 }

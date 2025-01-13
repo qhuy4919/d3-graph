@@ -13,9 +13,10 @@ export class Orchestrator<T> {
         tables: DataFrame,
     ) {
         try {
-
+            const vdom = this.preRenderer.render();
+            return this.renderer.render(vdom, {});
         } catch (error) {
-            console.log('error rendering scene', err);
+            console.log('error rendering scene', error);
             throw error
         }
     }
