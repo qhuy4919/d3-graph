@@ -11,7 +11,14 @@
   },
   "dependencies": {
     "@types/d3": "^7.4.3",
+    "@types/d3-collection": "^1.0.13",
+    "@types/d3-selection": "^3.0.11",
+    "@types/lodash.assign": "^4.2.9",
     "d3": "^7.9.0",
+    "d3-collection": "^1.0.7",
+    "d3-selection": "^3.0.0",
+    "lodash": "^4.17.21",
+    "lodash.assign": "^4.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "rxjs": "^7.8.1"
