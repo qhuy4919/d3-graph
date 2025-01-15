@@ -1,6 +1,12 @@
 import { Channels, Metadata } from "./scene";
 
-export type Datum = any;
+export type Datum = {
+    value: any,
+    stack: any,
+    topicName?: string,
+    name?: string,
+    [key: string]: any
+};
 export type Table = Datum[]
 
 export type ViewSize = {
