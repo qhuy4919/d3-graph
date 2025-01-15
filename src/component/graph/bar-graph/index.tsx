@@ -503,31 +503,40 @@ export function stackedBar() {
                 .style('opacity', 0)
                 .remove();
         }
-    }
+    };
 
+    exports.width = function(_x) {
+        if (!arguments.length) {
+            return width;
+        }
+        if (aspectRatio) {
+            height = Math.ceil(_x * aspectRatio);
+        }
+        width = _x;
+
+        return this;
+    };
 
     return exports;
 }
 
 import data from './data.json';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { stackedBar as temp } from './simple-stack-bar';
 export const BarChart = () => {
     const svgRef = useRef<SVGSVGElement>(null);
-
-    const barChart = stackedBar();
-    const testDataSet = data;
-    const container = select(svgRef.current);
-    const containerWidth = container.node() ? container?.node()?.getBoundingClientRect?.()?.width : false;
+    const container = select('.group-bar-chart');
 
 
-    if (containerWidth) {
-        container.datum(testDataSet).call(barChart);
 
-    };
+    useEffect(() => {
+        const testDataSet = data;
+     
+        container.datum(testDataSet).call(temp);
 
+    })
 
-    return <svg ref={svgRef}
-        width='100%'
-        height='100%'
-    />
+    return <svg className="group-bar-chart"
+    >
+    </svg>
 }
