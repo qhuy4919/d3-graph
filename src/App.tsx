@@ -1,9 +1,12 @@
-import { BarChart } from "./component/graph/bar-graph"
+import { BarChart } from "./component/graph/bar-graph/group-bar"
 
 function App() {
 
+
   return (
-    <BarChart />
+    <>
+      <BarChart chartName='test-bar-chart' />
+    </>
   )
 }
 
