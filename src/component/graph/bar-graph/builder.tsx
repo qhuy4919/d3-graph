@@ -20,6 +20,7 @@ type StackedBarData = {
     stack: string;
     value: number;
     total?: number;
+    date: string;
     [key: string]: any;
 };
 
@@ -404,17 +405,9 @@ export class StackedBarSpec {
 
     public buildLayers() {
         const stackBar = d3Shape.stack().keys(this.stacks);
-        const dataInitial = this.transformedData.map((item) => {
-            const ret: Record<string, number> = {};
 
-            this.stacks.forEach((key) => {
-                ret[key] = item[key] as number;
-            });
 
-            return assign({}, item, ret);
-        });
-
-        this.layers = stackBar(dataInitial);
+        this.layers = stackBar(this.transformedData);
     };
 
 
