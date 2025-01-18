@@ -146,13 +146,13 @@ export class StackedBarSpec {
     }
 
     private getYMax() {
-        const uniqueDataPoints = new Set<number>(this._data.map(d => d.value ?? 0));
+        const uniqueDataPoints = new Set<number>(this.transformedData.map(d => d.total ?? 0));
         const isAllZero = uniqueDataPoints.size === 1 && uniqueDataPoints.has(0);
 
         if (isAllZero) {
             return 1;
         } else {
-            return d3Array.max(this._data.map(d => d.value ?? 0)) ?? 0;
+            return d3Array.max(uniqueDataPoints);
         }
     };
 
@@ -247,9 +247,7 @@ export class StackedBarSpec {
 
         const barJoin = this.layerElements
             .selectAll('.bar')
-            .data((d) => {
-                return this.filterOutUnkownValues(d);
-            });
+            .data((d) =>this.filterOutUnkownValues(d));
 
         // Enter + Update
         const bars = barJoin
@@ -262,9 +260,7 @@ export class StackedBarSpec {
             })
             .attr('width', this.xScale.bandwidth());
 
-        bars.attr('height', (d) => {
-            return this.yScale(d[0]) - this.yScale(d[1])
-        });
+        bars.attr('height', (d) => this.yScale(d[0]) - this.yScale(d[1]));
 
     }
 
@@ -283,7 +279,7 @@ export class StackedBarSpec {
             ?.attr('height', this._height)
     };
 
-    private cleanData(originData: StackedBarData[]) {
+    private normalizedData(originData: StackedBarData[]) {
         return originData.reduce((acc: StackedBarData[], d: StackedBarData) => {
             const valueLabel = this._valueLabel;
             const stackLabel = this._stackLabel;
@@ -314,29 +310,33 @@ export class StackedBarSpec {
             .key(this.getName.bind(this))
             .rollup((values) => {
                 const ret: Record<string, number | StackedBarData[]> = {};
+                let totalAmount = 0;
 
+                //append stack field with value to main entry
                 values.forEach((entry) => {
+                    if(entry && entry[this._valueLabel]) {
+                        totalAmount += entry[this._valueLabel]
+                    }
                     if (entry && entry[this._stackLabel]) {
                         ret[entry[this._stackLabel]] = this.getValue(entry);
                     }
                 });
 
+
+
                 // Include the original values for tooltip usage
-                ret.values = values;
+                ret.valueList = values;
+                ret.total = totalAmount;
 
                 return ret;
             })
             .entries(data)
             .map(({ key, value }) => {
-                const normalizedStack = this.stacks.map(x => x)
                 return {
-                    total: d3Array.sum(normalizedStack),
                     key,
                     ...value,
                 }
             });
-
-
     };
 
     public buildScales() {
@@ -404,9 +404,8 @@ export class StackedBarSpec {
     };
 
     public buildLayers() {
-        const stackBar = d3Shape.stack().keys(this.stacks);
-
-
+        const stackBar = d3Shape.stack().keys(this.stacks)
+        .value((d, k) => d[k]);
         this.layers = stackBar(this.transformedData);
     };
 
@@ -535,7 +534,7 @@ export class StackedBarSpec {
         const _buildSvg = this.buildSvg.bind(this);
         const _buildScales = this.buildScales.bind(this);
         const _buildLayers = this.buildLayers.bind(this);
-        const _cleanData = this.cleanData.bind(this);
+        const _normalizedData = this.normalizedData.bind(this);
         const _prepareData = this.prepareData.bind(this);
         const _drawGridLines = this.drawGridLines.bind(this);
         const _buildAxis = this.buildAxis.bind(this);
@@ -543,7 +542,7 @@ export class StackedBarSpec {
         const _drawStackedBar = this.drawStackedBar.bind(this);
 
         _selection.each(function (_data: StackedBarData[]) {
-            _prepareData(_cleanData(_data));
+            _prepareData(_normalizedData(_data));
             _buildScales();
             _buildLayers();
             _buildSvg(this);
