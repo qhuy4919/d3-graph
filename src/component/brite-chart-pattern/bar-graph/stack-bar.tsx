@@ -2,6 +2,7 @@ import data from './data.json';
 import { useEffect, useRef } from 'react';
 import { stackBarBuilder } from './builder';
 import { Datum } from '../model';
+import { D3Legend } from '../legend';
 
 export type D3GraphProps = {
     data?: Datum[],
@@ -75,18 +76,18 @@ export const BarChart = ({
     }, []);
 
 
-    useEffect(() => {
-        if (!chartInstance.current) {
-            createChart();
-        }
-        else {
-            updateChart();
-        }
+    // useEffect(() => {
+    //     if (!chartInstance.current) {
+    //         createChart();
+    //     }
+    //     else {
+    //         updateChart();
+    //     }
 
-        return () => {
-            stackBar.destroy();
-        }
-    }, [data])
+    //     return () => {
+    //         stackBar.destroy();
+    //     }
+    // }, [data])
 
 
     useEffect(() => {
@@ -105,6 +106,15 @@ export const BarChart = ({
         <div ref={rootNode}
             className={`group-bar-chart ${chartName}`}
         >
+            <D3Legend
+            data={data}
+            dataSchema={{
+                nameLabel: 'name',
+                stackLabel: 'stack',
+                valueLabel: 'value',
+            }}
+        />
         </div>
+       
     </>
 }

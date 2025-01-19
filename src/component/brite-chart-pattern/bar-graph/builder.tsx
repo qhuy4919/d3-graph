@@ -8,10 +8,10 @@ import * as d3Shape from 'd3-shape';
 import {
     Selection,
     BaseType,
-    select
+    select,
 } from 'd3-selection';
-import assign from 'lodash.assign';
-import colorHelper from './color';
+import * as d3Selection from 'd3-selection'
+import colorHelper from '../color';
 import { validateContainer } from '../util';
 
 // Type definitions
@@ -247,7 +247,7 @@ export class StackedBarSpec {
 
         const barJoin = this.layerElements
             .selectAll('.bar')
-            .data((d) =>this.filterOutUnkownValues(d));
+            .data((d) => this.filterOutUnkownValues(d));
 
         // Enter + Update
         const bars = barJoin
@@ -314,7 +314,7 @@ export class StackedBarSpec {
 
                 //append stack field with value to main entry
                 values.forEach((entry) => {
-                    if(entry && entry[this._valueLabel]) {
+                    if (entry && entry[this._valueLabel]) {
                         totalAmount += entry[this._valueLabel]
                     }
                     if (entry && entry[this._stackLabel]) {
@@ -405,7 +405,7 @@ export class StackedBarSpec {
 
     public buildLayers() {
         const stackBar = d3Shape.stack().keys(this.stacks)
-        .value((d, k) => d[k]);
+            .value((d, k) => d[k]);
         this.layers = stackBar(this.transformedData);
     };
 
@@ -529,6 +529,29 @@ export class StackedBarSpec {
         }
     };
 
+    private handleMouseOver(e, d) {
+        console.log('e', e, 'd', d);
+        this.dispatcher.call('customMouseOver', e, d, d3Selection.pointer(e));
+    }
+
+    public addMouseEvents() {
+        const handleEventfunction = {
+            mouseover: this.handleMouseOver.bind(this),
+        }
+        if (this.svg) {
+            this.svg.selectAll('.bar')
+                .on('mouseover', function (d) {
+                    select(this)
+                        .attr('opacity', '0.75')
+                })
+            this.svg.selectAll('.bar')
+            .on('mouseout', function (d) {
+                    select(this)
+                        .attr('opacity', '1')
+                })
+        }
+    }
+
 
     public build(_selection: Selection<BaseType, StackedBarData[], BaseType, unknown>) {
         const _buildSvg = this.buildSvg.bind(this);
@@ -540,6 +563,7 @@ export class StackedBarSpec {
         const _buildAxis = this.buildAxis.bind(this);
         const _drawAxis = this.drawAxis.bind(this);
         const _drawStackedBar = this.drawStackedBar.bind(this);
+        const _addMouseEnvent = this.addMouseEvents.bind(this);
 
         _selection.each(function (_data: StackedBarData[]) {
             _prepareData(_normalizedData(_data));
@@ -550,6 +574,7 @@ export class StackedBarSpec {
             _buildAxis();
             _drawAxis();
             _drawStackedBar();
+            _addMouseEnvent()
         });
     }
 }

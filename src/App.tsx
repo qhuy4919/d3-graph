@@ -1,4 +1,4 @@
-import { BarChart } from "./component/graph/bar-graph/group-bar"
+import { BarChart } from "./component/brite-chart-pattern"
 
 function App() {
 
