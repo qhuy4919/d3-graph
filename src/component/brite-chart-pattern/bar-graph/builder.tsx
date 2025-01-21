@@ -37,6 +37,10 @@ type Margin = {
     left: number;
 };
 
+type D3GraphEvent = 'customMouseOver' |
+    'customMouseOut' |
+    'customMouseMove' |
+    'customClick'
 type D3Selection = Selection<BaseType | SVGSVGElement | SVGTextElement, unknown, null, undefined>;
 
 export class StackedBarSpec {
@@ -71,13 +75,11 @@ export class StackedBarSpec {
     private xAxis: d3Axis.Axis<string | number>;
     private yAxis: d3Axis.Axis<string | number>;
 
-    private aspectRatio: number | null = null;
     private yTickTextYOffset = -8;
     private yTickTextXOffset = -20;
     private locale: string | undefined;
     private yTicks = 5;
     private xTicks = 5;
-    private percentageAxisToMaxRatio = 1;
     private colorScale: d3Scale.ScaleOrdinal<string, unknown, never> | undefined = undefined;
     private categoryColorMap: Record<string, string> = {};
     private ease = d3Ease.easeQuadInOut;
@@ -95,7 +97,6 @@ export class StackedBarSpec {
 
     private baseLine: Selection<SVGLineElement, number, BaseType, unknown>;
     private xAxisPadding = { top: 0, left: 0, bottom: 0, right: 0 };
-    private barOpacity = 0.24;
 
     private chartWidth = this._width - this.margin.left - this.margin.right;
     private chartHeight = this._height - this.margin.top - this.margin.bottom;
@@ -126,6 +127,17 @@ export class StackedBarSpec {
     public getValue(data: StackedBarData) {
         return data[this._valueLabel];
     }
+
+    public getColorScale() {
+        return this.colorScale;
+    }
+
+    public setDispacher(event: D3GraphEvent, callback: () => void) {
+        console.log('this.dispatcher', this.dispatcher);
+        this.dispatcher.on.apply(this.dispatcher, [event, callback]);
+        return this.build;
+    }
+
 
     private getValOrDefaultToZero(value: number) {
         return (isNaN(value) || value < 0) ? 0 : value
@@ -530,22 +542,33 @@ export class StackedBarSpec {
     };
 
     private handleMouseOver(e, d) {
-        console.log('e', e, 'd', d);
         this.dispatcher.call('customMouseOver', e, d, d3Selection.pointer(e));
+    }
+
+    private handelMouseOut(e, d) {
+        this.dispatcher.call('customMouseOut', e, d, d3Selection.pointer(e));
     }
 
     public addMouseEvents() {
         const handleEventfunction = {
             mouseover: this.handleMouseOver.bind(this),
+            mouseout: this.handelMouseOut.bind(this),
         }
+
+        // this.svg
+        //     .on('mouseover', handleEventfunction.mouseover)
+        //     .on('mouseout', handleEventfunction.mouseout)
+
         if (this.svg) {
             this.svg.selectAll('.bar')
                 .on('mouseover', function (d) {
+                    handleEventfunction.mouseover(this, d)
                     select(this)
                         .attr('opacity', '0.75')
                 })
             this.svg.selectAll('.bar')
-            .on('mouseout', function (d) {
+                .on('mouseout', function (d) {
+                    handleEventfunction.mouseout(this, d)
                     select(this)
                         .attr('opacity', '1')
                 })
@@ -582,7 +605,8 @@ export class StackedBarSpec {
 
 export const stackBarBuilder = () => {
     const bar = {};
-    const barChart = new StackedBarSpec(1000);
+    const barChart = new StackedBarSpec(1000)
+
 
     const create = function (element: BaseType,
         data: StackedBarData[],
@@ -592,6 +616,12 @@ export const stackBarBuilder = () => {
         barChart.data = data;
         const chart = barChart.build;
         validateContainer(container);
+        barChart.setDispacher('customMouseOver', (e, d) => {
+            console.log('mouse over', e, d)
+        });
+        barChart.setDispacher('customMouseOut', () => {
+            console.log('mouse out')
+        });
         container.datum(data).call(chart.bind(barChart))
     };
 

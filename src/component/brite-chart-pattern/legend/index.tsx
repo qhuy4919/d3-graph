@@ -1,14 +1,11 @@
-import { ScaleBand, ScaleOrdinal, scaleOrdinal } from 'd3-scale';
+import { ScaleOrdinal, scaleOrdinal } from 'd3-scale';
 import { Selection, BaseType, select } from 'd3-selection';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { DataPrimaryField, Datum } from '../model';
+import { useEffect, useRef } from 'react';
+import { D3GraphContainer, DataPrimaryField, Datum } from '../model';
 import colorHelper from '../color';
-import { svg } from 'd3';
+import { getLineElementMargin, getTextWidth } from '../util';
 export type D3Legend = {
     data: Datum[],
-
-    width?: number
-    height?: number,
     textSize?: number,
     textLetterSpacing?: number,
     markerSize?: number,
@@ -19,12 +16,13 @@ export type D3Legend = {
     isHorizontal?: boolean
 
     //color
-    colorSchema?: string[]
+    colorScale?: ScaleOrdinal<string, unknown, never>
+    colorSchema?: string[],
 
     //data format
     dataSchema: DataPrimaryField
 
-};
+} & Partial<D3GraphContainer>;
 
 
 export const D3Legend = ({
@@ -56,7 +54,6 @@ export const D3Legend = ({
 
     const legendRef = useRef<HTMLDivElement>(null);
 
-    const getStack = (data: Datum) => data[dataSchema.stackLabel];
 
     function reduceData(data: Datum[]) {
         const validateStackField = Object.keys(data[0]).includes(dataSchema.stackLabel);
@@ -87,7 +84,7 @@ export const D3Legend = ({
         const colorScale = scaleOrdinal()
             .range(colorSchema)
             .domain(data.map(x => x[dataSchema.stackLabel]));
-            console.log('colorScale', colorScale.domain());
+
         return colorScale
             .domain()
             .reduce((memo: Record<string, string>, item: string) => {
@@ -96,7 +93,6 @@ export const D3Legend = ({
                 }
                 return memo;
             }, {});
-
     }
 
     function buildLegendGroup(svg?: Selection<SVGSVGElement, unknown, null, undefined>) {
@@ -109,7 +105,6 @@ export const D3Legend = ({
             container
                 .append('g')
                 .classed('legend-group', true);
-            console.log('svg-2', container);
 
             return container;
         };
@@ -125,7 +120,6 @@ export const D3Legend = ({
         svg
             ?.attr('width', width)
             ?.attr('height', height)
-        console.log('svg-1', svg);
 
         return buildLegendGroup(svg);
 
@@ -161,17 +155,15 @@ export const D3Legend = ({
                 .append('g')
                 .classed('legend-entry', true)
                 .attr('data-item', d => d)
-                .attr('transform', function (d) {
+                .attr('transform', function (name) {
                     let horizontalOffset = xOffset,
                         lineHeight = chartHeight / 2,
-                        verticalOffset = lineHeight;
-                    // labelWidth = textHelper.getTextWidth(name, textSize);
+                        verticalOffset = lineHeight,
+                        labelWidth = getTextWidth(name, textSize);
 
-                    xOffset += markerSize + 2 * 1.5 * markerSize + 200;
-                    xOffset += markerSize + 2
+                    xOffset += markerSize + 2 * getLineElementMargin(marginRaito, markerSize) + labelWidth;
                     return `translate(${horizontalOffset},${verticalOffset})`;
                 })
-                .merge(entries)
                 .append('circle')
                 .classed('legend-circle', true)
                 .attr('cx', markerSize / 2)
@@ -190,12 +182,12 @@ export const D3Legend = ({
                 .style('letter-spacing', `${textLetterSpacing}px`);
 
             //     // Exit
-                // svg.select('.legend-group')
-                //     .selectAll('g.legend-entry')
-                //     // .exit()
-                //     // .transition()
-                //     .style('opacity', 0)
-                //     .remove();
+            // svg.select('.legend-group')
+            //     .selectAll('g.legend-entry')
+            //     // .exit()
+            //     // .transition()
+            //     .style('opacity', 0)
+            //     .remove();
         }
 
     }
@@ -207,8 +199,6 @@ export const D3Legend = ({
             createLegend(legendRef.current, data);
         };
     }, [])
-
-
 
 
     return <div ref={legendRef} className='legend-container'></div>
