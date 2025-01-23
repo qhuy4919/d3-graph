@@ -130,6 +130,7 @@ export const BarChart = ({
                 stackLabel: 'stack',
                 valueLabel: 'value',
             }}
+
         />
     </>
 }

@@ -3,7 +3,7 @@ import { D3GraphContainer, DataPrimaryField, Datum } from "../model"
 import { BaseType, select, Selection } from 'd3-selection';
 
 export type D3Tooltip = {
-    data: Datum[],
+    data: Record<string, unknown>,
     dataSchema: DataPrimaryField
 
 

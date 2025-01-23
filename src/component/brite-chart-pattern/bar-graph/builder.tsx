@@ -133,7 +133,6 @@ export class StackedBarSpec {
     }
 
     public setDispacher(event: D3GraphEvent, callback: () => void) {
-        console.log('this.dispatcher', this.dispatcher);
         this.dispatcher.on.apply(this.dispatcher, [event, callback]);
         return this.build;
     }
@@ -542,11 +541,12 @@ export class StackedBarSpec {
     };
 
     private handleMouseOver(e, d) {
-        this.dispatcher.call('customMouseOver', e, d, d3Selection.pointer(e));
+        console.log('e, d', e, d)
+        this.dispatcher.call('customMouseOver', e, d);
     }
 
     private handelMouseOut(e, d) {
-        this.dispatcher.call('customMouseOut', e, d, d3Selection.pointer(e));
+        this.dispatcher.call('customMouseOut', e, d);
     }
 
     public addMouseEvents() {
@@ -561,14 +561,14 @@ export class StackedBarSpec {
 
         if (this.svg) {
             this.svg.selectAll('.bar')
-                .on('mouseover', function (d) {
-                    handleEventfunction.mouseover(this, d)
+                .on('mouseover', function (e, d) {
+                    handleEventfunction.mouseover(e, d)
                     select(this)
                         .attr('opacity', '0.75')
                 })
             this.svg.selectAll('.bar')
-                .on('mouseout', function (d) {
-                    handleEventfunction.mouseout(this, d)
+                .on('mouseout', function (e, d) {
+                    handleEventfunction.mouseout(e, d)
                     select(this)
                         .attr('opacity', '1')
                 })
@@ -617,10 +617,9 @@ export const stackBarBuilder = () => {
         const chart = barChart.build;
         validateContainer(container);
         barChart.setDispacher('customMouseOver', (e, d) => {
-            console.log('mouse over', e, d)
+            console.log('mouse over', e, e[1] - e[0])
         });
         barChart.setDispacher('customMouseOut', () => {
-            console.log('mouse out')
         });
         container.datum(data).call(chart.bind(barChart))
     };
