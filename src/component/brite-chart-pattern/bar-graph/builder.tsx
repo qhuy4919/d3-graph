@@ -348,6 +348,7 @@ export class StackedBarSpec {
                     ...value,
                 }
             });
+        console.log(this.transformedData)
     };
 
     public buildScales() {
