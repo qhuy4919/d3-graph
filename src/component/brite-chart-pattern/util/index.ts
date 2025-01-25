@@ -1,5 +1,5 @@
 import { Selection } from "d3-selection";
-
+import { max } from 'd3-array';
 export const validateContainer = (container: Selection<any, any, null, undefined>) => {
     if (container?.empty()) {
         throw Error('A root container is required');
@@ -28,3 +28,18 @@ export const getTextWidth = (text: string, fontSize = DEFAULT_TEXT_SIZE, fontsty
 export const getLineElementMargin = (marginRatio = DEFAULT_MARGIN_RATIO, markerSize = DEFAULT_MARKER_SIZE) => {
     return marginRatio * markerSize;
 }
+
+export const getMax = (totalList: Set<number>) => {
+    const isAllZero = totalList.size === 1 && totalList.has(0);
+
+    if (isAllZero) {
+        return 1;
+    } else {
+        return max(totalList) ?? 0;
+    }
+}
+
+export function getValOrDefaultToZero(value: number) {
+    return (isNaN(value) || value < 0) ? 0 : value
+}
+

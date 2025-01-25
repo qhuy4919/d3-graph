@@ -1,21 +1,28 @@
 import { useEffect, useRef } from "react";
-import { BaseType, select } from "d3-selection";
-import * as d3Array from 'd3-array';
+import { select } from "d3-selection";
+import * as d3Dispatcher from 'd3-dispatch';
 import { validateContainer } from "../util";
 import { D3BaseGraph, D3Selection } from "../model";
+import { colorSchema } from "../color";
+import { buildScale } from "./scale";
+import { drawAxis, drawGridLine } from "./axis";
+import { drawStackBar } from "./graph/bar-graph";
+import { buildGraphStructure, buildLegendStructure, buildSvg } from "./svg";
+import { buildMouseEvent } from "./event";
+import { buildDataShape, reduceData, transformData } from "./data-transformation";
+import { buildLegend } from "./legend";
+import styled from "styled-components";
+
+const StyledGraphContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+`;
 
 const PERIOD_FIELD = 'date'
 const AMOUNT_FIELD = 'value';
 const TYPE_FIELD = 'stack';
-
-type BaseGraphData = {
-    value: number,
-    type: string,
-    name: string,
-    total?: number,
-    dataKey: string,
-    dataList: BaseGraphData[],
-}
 
 export const GraphBuilder = <
     ChartData extends Record<string, any>
@@ -23,61 +30,116 @@ export const GraphBuilder = <
     containerSize,
     data
 }: D3BaseGraph<ChartData>) => {
-    const { height = 500, width = 1000 } = containerSize;
+    const { height = 500, width = 1000, margin: customMargin } = containerSize;
+    const margin = {
+        top: customMargin?.top ?? 40,
+        right: customMargin?.right ?? 30,
+        bottom: customMargin?.bottom ?? 60,
+        left: customMargin?.left ?? 70
+    };
+
+    const chartWidth = width - margin.left - margin.right;
+    const chartHeight = height - margin.top - margin.bottom;
+
     const graphRef = useRef<HTMLDivElement>(null);
+    const legendRef = useRef<HTMLDivElement>(null);
+    const stackList: string[] = [...new Set(data.map(d => d[TYPE_FIELD]))];
 
-    function reduceData(data: ChartData[]) {
-        return data.reduce((acc: BaseGraphData[], d: ChartData) => {
-            return [
-                ...acc,
-                {
-                    value: parseInt(d[AMOUNT_FIELD]),
-                    type: d[TYPE_FIELD],
-                    name: d[PERIOD_FIELD],
-                }
-            ]
-        }, []);
-    };
+    const dispatcher = d3Dispatcher.dispatch(
+        'customMouseOver',
+        'customMouseOut',
+        'customMouseMove',
+        'customClick'
+    );
 
-    function transformedData(data: BaseGraphData[]) {
-        return d3Array.groups(data, d => d.name).reduce(
-            (acc: BaseGraphData[], d: [string, BaseGraphData[]]) => {
-                const newEntry: BaseGraphData = {
-                    dataKey: d[0],
-                    dataList: d3Array.map(d[1], (v: BaseGraphData) => v.value)
-                };
-
-                (d?.[1] ?? []).forEach((entry) => {
-                    newEntry[entry.type] = entry.value
-
-                });
-
-                return [
-                    ...acc,
-                    newEntry
-                ]
-            }, []);
+    const dataSchema = {
+        nameLabel: PERIOD_FIELD,
+        stackLabel: TYPE_FIELD,
+        valueLabel: AMOUNT_FIELD
     }
 
-    function buildDataShape() {
 
-    }
-
-    function buildSvg(container: BaseType) {
-        const svg = select(container)
-            .append('svg')
-            .classed('d3-graph', true)
-
-
-        svg.attr('width', width)
-        svg.attr('height', height)
-
-    };
 
     function buildGraph(selection: D3Selection<HTMLDivElement, ChartData>) {
         selection.each((data) => {
-            const _data = transformedData(reduceData(data));
-            console.log('_data', _data)
+            const graphSvg = buildSvg({
+                container: graphRef.current,
+                containerProps: {
+                    width: width,
+                    height: height,
+                    margin: margin,
+                    key: 'stack-chart'
+                },
+                childElement: buildGraphStructure
+            });
+
+            const legendSvg = buildSvg({
+                container: legendRef.current,
+                containerProps: {
+                    width: width,
+                    height: 100,
+                    margin: margin,
+                    key: 'graph-legend'
+                },
+                childElement: buildLegendStructure
+            })
+
+            const normalizeData = reduceData(data, dataSchema)
+            const transformedData = transformData(normalizeData);
+            const layers = buildDataShape(transformedData, stackList);
+            const {
+                colorScale,
+                xScale,
+                yScale
+            } = buildScale({
+                chartHeight,
+                chartWidth,
+                betweenBarsPadding: 0.1,
+                colorSchema: colorSchema,
+                transformedData: transformedData,
+                originalData: normalizeData,
+            });
+            drawGridLine({
+                chartSize: {
+                    chartHeight: chartHeight,
+                    chartWidth: chartWidth,
+                },
+                scale: yScale,
+                selection: graphSvg,
+                isHorizontal: true,
+                yTicks: 5,
+                xTicks: 5,
+            });
+            drawAxis({
+                chartSize: {
+                    chartHeight: chartHeight,
+                    chartWidth: chartWidth,
+                },
+                selection: graphSvg,
+                xScale,
+                yScale
+            })
+            drawStackBar({
+                layers,
+                selection: graphSvg,
+                colorScale,
+                xScale,
+                yScale,
+            });
+
+            buildLegend({
+                selection: legendSvg,
+                legendList: stackList,
+                colorScale,
+            })
+
+            buildMouseEvent({
+                selection: graphSvg,
+                selectionElement: 'bar',
+                onMouseOver: (e, d) => {
+                    dispatcher.call('customMouseOver', e, d);
+                }
+            })
         })
     }
 
@@ -89,5 +151,7 @@ export const GraphBuilder = <
     }, []);
 
 
-    return <div ref={graphRef} className='graph-container'></div>;
+    return <StyledGraphContainer ref={graphRef} className='graph-container'>
+        <div ref={legendRef} className='legend-container'></div>
+    </StyledGraphContainer>
 }

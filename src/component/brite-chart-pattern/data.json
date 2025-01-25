@@ -24,6 +24,18 @@
         "date": "2011-01-08"
     },
     {
+        "stack": "vivid",
+        "name": "Direct5",
+        "value": 30,
+        "date": "2011-01-09"
+    },
+    {
+        "stack": "vivid",
+        "name": "Direct6",
+        "value": 35,
+        "date": "2011-01-10"
+    },
+    {
         "stack": "sparkling",
         "name": "Eventbrite1",
         "value": 18,
@@ -48,6 +60,18 @@
         "date": "2011-01-08"
     },
     {
+        "stack": "sparkling",
+        "name": "Eventbrite5",
+        "value": 5,
+        "date": "2011-01-09"
+    },
+    {
+        "stack": "sparkling",
+        "name": "Eventbrite6",
+        "value": 8,
+        "date": "2011-01-10"
+    },
+    {
         "stack": "sunny",
         "name": "Email1",
         "value": 10,
@@ -70,5 +94,53 @@
         "name": "Email4",
         "value": 25,
         "date": "2011-01-08"
+    },
+    {
+        "stack": "sunny",
+        "name": "Email5",
+        "value": 30,
+        "date": "2011-01-09"
+    },
+    {
+        "stack": "sunny",
+        "name": "Email6",
+        "value": 40,
+        "date": "2011-01-10"
+    },
+    {
+        "stack": "radiant",
+        "name": "Webinar1",
+        "value": 22,
+        "date": "2011-01-05"
+    },
+    {
+        "stack": "radiant",
+        "name": "Webinar2",
+        "value": 25,
+        "date": "2011-01-06"
+    },
+    {
+        "stack": "radiant",
+        "name": "Webinar3",
+        "value": 30,
+        "date": "2011-01-07"
+    },
+    {
+        "stack": "radiant",
+        "name": "Webinar4",
+        "value": 35,
+        "date": "2011-01-08"
+    },
+    {
+        "stack": "radiant",
+        "name": "Webinar5",
+        "value": 40,
+        "date": "2011-01-09"
+    },
+    {
+        "stack": "radiant",
+        "name": "Webinar6",
+        "value": 45,
+        "date": "2011-01-10"
     }
 ]

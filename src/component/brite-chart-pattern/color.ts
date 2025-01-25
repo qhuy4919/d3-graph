@@ -1,3 +1,12 @@
+export const colorSchema = [
+    '#6aedc7', //green
+    '#39c2c9', //blue
+    '#ffce00', //yellow
+    '#ffa71a', //orange
+    '#f866b9', //pink
+    '#998ce3' //purple
+]
+
 export default function colorHelper() {
     const colorGradients = {
         greenBlue: ['#39C7EA', '#4CDCBA'],

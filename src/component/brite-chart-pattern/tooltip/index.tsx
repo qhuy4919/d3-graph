@@ -33,9 +33,7 @@ export const D3Tooltip = ({
     };
 
     function updateTooltip(data: Datum, xPosition: number, yPosition: number) {
-        console.log('data: Datum, xPosition: number, yPosition: number',
-            data, xPosition, yPosition
-        )
+
     }
 
     // function getTooltipPosition([mouseX, mouseY]: [number, number]) {
@@ -44,7 +42,6 @@ export const D3Tooltip = ({
 
     function build(_selection: Selection<HTMLDivElement | null, Datum[], null, undefined>) {
         _selection.each(function (data) {
-            console.log(data);
             buildSvg(this)
         })
     }

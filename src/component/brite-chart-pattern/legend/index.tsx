@@ -16,7 +16,7 @@ export type D3Legend = {
     isHorizontal?: boolean
 
     //color
-    colorScale?: ScaleOrdinal<string, unknown, never>
+    colorScale: ScaleOrdinal<string, unknown, never>
     colorSchema?: string[],
 
     //data format
@@ -34,11 +34,12 @@ export const D3Legend = ({
     markerSize = 16,
     marginRaito = 1.5,
     numberLetterSpacing = 0.8,
-    numberFormat = 's',
 
-    colorSchema = colorHelper().colorSchemas.britecharts,
 
     dataSchema,
+    //
+    colorScale
+
 }: D3Legend) => {
     const margin = {
         top: 5,
@@ -48,7 +49,6 @@ export const D3Legend = ({
     };
     const markerYOffset = - (textSize - 2) / 2;
 
-    const dataKeyList = Object.values(dataSchema);
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
 
@@ -78,21 +78,6 @@ export const D3Legend = ({
     function createLegend(element: HTMLDivElement | null, data: Datum[]) {
         const legendContainer = select(element);
         legendContainer.datum(data).call(build)
-    }
-
-    function buildColorScheme() {
-        const colorScale = scaleOrdinal()
-            .range(colorSchema)
-            .domain(data.map(x => x[dataSchema.stackLabel]));
-
-        return colorScale
-            .domain()
-            .reduce((memo: Record<string, string>, item: string) => {
-                if (memo && colorScale) {
-                    memo[item] = colorScale(item) as string
-                }
-                return memo;
-            }, {});
     }
 
     function buildLegendGroup(svg?: Selection<SVGSVGElement, unknown, null, undefined>) {
@@ -156,7 +141,7 @@ export const D3Legend = ({
                 .classed('legend-entry', true)
                 .attr('data-item', d => d)
                 .attr('transform', function (name) {
-                    let horizontalOffset = xOffset,
+                    const horizontalOffset = xOffset,
                         lineHeight = chartHeight / 2,
                         verticalOffset = lineHeight,
                         labelWidth = getTextWidth(name, textSize);
@@ -169,7 +154,7 @@ export const D3Legend = ({
                 .attr('cx', markerSize / 2)
                 .attr('cy', markerYOffset)
                 .attr('r', markerSize / 2)
-                .style('fill', (d) => legendColorMap[d])
+                .style('fill', (d) => colorScale(d))
                 .style('stroke-width', 1);
 
             svg.select('.legend-group')
@@ -181,13 +166,6 @@ export const D3Legend = ({
                 .style('font-size', `${textSize}px`)
                 .style('letter-spacing', `${textLetterSpacing}px`);
 
-            //     // Exit
-            // svg.select('.legend-group')
-            //     .selectAll('g.legend-entry')
-            //     // .exit()
-            //     // .transition()
-            //     .style('opacity', 0)
-            //     .remove();
         }
 
     }

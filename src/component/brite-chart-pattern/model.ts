@@ -1,7 +1,20 @@
 import { BaseType, Selection } from 'd3-selection';
+
 export type Datum = {
     [key: string]: unknown;
 }
+export type BaseGraphData = {
+    value: number,
+    type: string,
+    name: string,
+
+}
+export type TransformedGraphData = {
+    total?: number,
+    dataKey?: string,
+    dataList?: BaseGraphData[],
+    [key: string]: any
+};
 
 export const DataPrimaryField = {
     nameLabel: 'date',
@@ -23,6 +36,11 @@ export type D3BaseGraph<T = Record<string, unknown>> = {
 }
 
 export type D3Selection<
-    T extends BaseType,
-    D extends Datum
-> = Selection<T | null, D[], null, undefined>
+    T extends BaseType = BaseType,
+    D extends TransformedGraphData = TransformedGraphData
+> = Selection<T | null, D[], null, undefined>;
+
+export type ChartSize = {
+    chartWidth: number,
+    chartHeight: number,
+}
