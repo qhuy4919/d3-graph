@@ -13,8 +13,8 @@ const DEFAULT_MARGIN_RATIO = 0.15;
 const DEFAULT_MARKER_SIZE = 16;
 
 export const getTextWidth = (text: string, fontSize = DEFAULT_TEXT_SIZE, fontstyle = DEFAULT_FONT_STYLE) => {
-    let a = document.createElement('canvas');
-    let b = a.getContext('2d');
+    const a = document.createElement('canvas');
+    const b = a.getContext('2d');
 
     if (b) {
         b.font = fontSize + 'px ' + fontstyle;
@@ -41,5 +41,6 @@ export const getMax = (totalList: Set<number>) => {
 
 export function getValOrDefaultToZero(value: number) {
     return (isNaN(value) || value < 0) ? 0 : value
-}
+};
+
 

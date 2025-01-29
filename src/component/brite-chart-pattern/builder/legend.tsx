@@ -16,7 +16,7 @@ type DynamicLegendProps = {
     numberLetterSpacing?: number,
     numberFormat?: string,
 }
-export function buildLegend({
+export function drawLegend({
     selection,
     legendList,
     textSize = 12,
@@ -29,6 +29,16 @@ export function buildLegend({
     let xOffset = markerSize;
     const markerYOffset = - (textSize - 2) / 2;
 
+    function transformLabel(name: string) {
+        const horizontalOffset = xOffset,
+            lineHeight = 100 / 2,
+            verticalOffset = lineHeight,
+            labelWidth = getTextWidth(name, textSize);
+
+        xOffset += markerSize + 2 * getLineElementMargin(marginRatio, markerSize) + labelWidth;
+        return `translate(${horizontalOffset},${verticalOffset})`;
+    }
+
     function drawHorizontalLegend(svg: D3Selection<SVGGElement>) {
         svg.select('.legend-group')
             .selectAll('g')
@@ -37,22 +47,30 @@ export function buildLegend({
             .append('g')
             .classed('legend-line', true);
 
+        svg.select('.legend-group')
+            .append('g')
+            .classed('legend-label', true)
+
         const entries = svg.select('.legend-line')
             .selectAll('g.legend-entry')
             .data(legendList ?? []);
+
+        svg.select('.legend-label')
+            .append('text')
+            .text('Legend:')
+            .attr('transform', function () {
+                return transformLabel('Legend');
+            })
+            .style('font-size', `${textSize}px`)
+            .style('color', 'white')
+            .style('font-weight', 'bold')
 
         entries.enter()
             .append('g')
             .classed('legend-entry', true)
             .attr('data-item', d => d)
             .attr('transform', function (name) {
-                const horizontalOffset = xOffset,
-                    lineHeight = 100 / 2,
-                    verticalOffset = lineHeight,
-                    labelWidth = getTextWidth(name, textSize);
-
-                xOffset += markerSize + 2 * getLineElementMargin(marginRatio, markerSize) + labelWidth;
-                return `translate(${horizontalOffset},${verticalOffset})`;
+                return transformLabel(name);
             })
             .append('circle')
             .classed('legend-circle', true)
@@ -70,6 +88,7 @@ export function buildLegend({
             .attr('x', 1.5 * markerSize)
             .style('font-size', `${textSize}px`)
             .style('letter-spacing', `${textLetterSpacing}px`);
+
     }
 
 

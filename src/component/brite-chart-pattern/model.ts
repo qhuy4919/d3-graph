@@ -1,28 +1,23 @@
+import { ScaleBand, ScaleLinear, ScaleOrdinal } from 'd3-scale';
 import { BaseType, Selection } from 'd3-selection';
+import { Stack } from 'd3-shape';
 
-export type Datum = {
-    [key: string]: unknown;
-}
-export type BaseGraphData = {
-    value: number,
+export type PrimitiveField = {
+    value: number | string,
     type: string,
     name: string,
-
 }
+export type BaseGraphData = {
+    [key: string]: any,
+} & PrimitiveField;
+
 export type TransformedGraphData = {
-    total?: number,
+    _total?: number,
     dataKey?: string,
-    dataList?: BaseGraphData[],
-    [key: string]: any
-};
+} & Partial<Record<string, BaseGraphData>>;
 
-export const DataPrimaryField = {
-    nameLabel: 'date',
-    valueLabel: 'value',
-    stackLabel: 'stack',
-};
-
-export type DataPrimaryField = typeof DataPrimaryField;
+export type StackData<D, K> = Stack<any, D, K>
+export type ChartShape = 'stack' | 'pie'
 
 export type D3GraphContainer = {
     width: number,
@@ -31,8 +26,16 @@ export type D3GraphContainer = {
 }
 
 export type D3BaseGraph<T = Record<string, unknown>> = {
+    chartKey: string,
     containerSize: D3GraphContainer,
-    data: T[]
+    data: T[],
+    shape: ChartShape,
+    spec?: D3GraphSpec
+}
+
+export type D3GraphSpec = {
+    buildScale: (props: DynamicGraphProps) => DynamicGraphScale,
+
 }
 
 export type D3Selection<
@@ -43,4 +46,20 @@ export type D3Selection<
 export type ChartSize = {
     chartWidth: number,
     chartHeight: number,
+} & Pick<D3GraphContainer, 'margin'>;
+
+export type ChartSchema = {
+    dataSchema: PrimitiveField,
+    colorSchema: string[],
+}
+
+export type DynamicGraphProps = {
+    data: BaseGraphData[],
+    graphSvg: D3Selection<SVGGElement>
+}
+
+export type DynamicGraphScale = {
+    xScale: ScaleBand<string>,
+    yScale: ScaleLinear<number, number, never>,
+    colorScale: ScaleOrdinal<string, string, never>
 }

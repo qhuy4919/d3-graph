@@ -1,10 +1,12 @@
-import { Series } from 'd3-shape';
-import { D3Selection, TransformedGraphData } from '../../model'
+import { BaseGraphData, ChartSize, D3Selection, TransformedGraphData } from '../../model'
 import { ScaleBand, ScaleLinear, ScaleOrdinal } from 'd3-scale';
+import { Series } from 'd3-shape'
+import { buildDataShape, transformData } from '../data';
 
 type DrawStackBar = {
     selection: D3Selection<SVGGElement>;
-    layers: Series<TransformedGraphData, string>[],
+    originalData: BaseGraphData[]
+
     colorScale: ScaleOrdinal<string, string>,
     xScale: ScaleBand<string>,
     yScale: ScaleLinear<number, number>,
@@ -12,14 +14,16 @@ type DrawStackBar = {
 
 export const drawStackBar = ({
     selection,
-    layers,
-
+    originalData,
     colorScale,
     xScale,
     yScale,
 
 }: DrawStackBar) => {
-    const series = selection.select('.chart-group').selectAll('.layer')
+    const series = selection.select('.chart-group').selectAll('.layer');
+    const transformedData = transformData(originalData, 'name');
+    const layers = buildDataShape('stack', originalData, transformedData) as Series<TransformedGraphData, string>[];
+    if (!layers) throw new Error('Build layers failed');
 
     const layerElements = series
         .data(layers)
@@ -43,6 +47,17 @@ export const drawStackBar = ({
         .attr('y', (d) => yScale(d[1]))
         .attr('width', xScale.bandwidth())
         .attr('height', (d) => yScale(d[0]) - yScale(d[1]))
+};
 
+type DrawGroupBar = {
+
+} & DrawStackBar
+export const drawGroupBar = ({
+    selection,
+    originalData,
+    colorScale,
+    xScale,
+    yScale,
+}: DrawGroupBar) => {
 
 }

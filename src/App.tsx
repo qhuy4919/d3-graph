@@ -5,10 +5,24 @@ function App() {
 
   return (
     <>
-      <GraphBuilder data={data} containerSize={{
-        width: 1000,
-        height: 600,
-      }} />
+      <GraphBuilder
+        chartKey='experience-stacked-chart'
+        data={data}
+        containerSize={{
+          width: 1000,
+          height: 600,
+        }}
+        shape='stack'
+      />
+      <GraphBuilder
+        chartKey='experience-pie-chart'
+        data={data}
+        containerSize={{
+          width: 1000,
+          height: 600,
+        }}
+        shape='pie'
+      />
     </>
   )
 }

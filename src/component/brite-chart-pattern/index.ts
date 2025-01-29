@@ -1,1 +1,1 @@
-export * from './bar-graph';
+export * from './builder';

@@ -68,9 +68,23 @@ export function buildLegendStructure(
     const { margin } = containerSize
     const container = selection.append('g')
         .classed('legend-container-group', true)
-        .attr('transform', `translate(${margin?.left}, 0)`);
+        .attr('transform', `translate(${margin?.left}, -${margin?.top})`);
     container
         .append('g')
         .classed('legend-group', true);
+
+}
+
+export function buildTooltipStructure(
+    selection: D3Selection<SVGSVGElement>,
+    containerSize: D3GraphContainer,
+) {
+    const { margin } = containerSize;
+
+    selection.append('g')
+        .classed('tooltip-container-group select-disable', true)
+        .attr('transform', `translate( ${margin?.left}, ${margin?.top})`);
+
+    selection.append('g').classed('tooltip-group', true);
 
 }
