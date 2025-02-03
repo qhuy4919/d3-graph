@@ -1,27 +1,59 @@
-import { GraphBuilder } from "./component/brite-chart-pattern/builder"
+import { D3GraphBuilder } from "./component/brite-chart-pattern/builder"
 import data from './component/brite-chart-pattern/data.json'
-function App() {
+import { D3DataSchema } from "./component/brite-chart-pattern/model"
 
+type ChartData = {
+  amount: number,
+  period: string,
+  type: string,
+  bgcolor: string,
+  min_range: string,
+  max_range: string,
+  insurer_id: string,
+  identifier: string
+}
+function App() {
+  const dataSchema: D3DataSchema = {
+    amount: 'amount',
+    color: 'color',
+    period: 'period',
+    type: 'type',
+    subColor: 'subColor',
+  }
 
   return (
     <>
-      <GraphBuilder
+      <D3GraphBuilder<ChartData>
         chartKey='experience-stacked-chart'
         data={data}
         containerSize={{
           width: 1000,
           height: 600,
         }}
-        shape='stack'
+        spec={{
+          shape: 'stack',
+        }}
       />
-      <GraphBuilder
+      <D3GraphBuilder
+        chartKey='experience-group-chart'
+        data={data}
+        containerSize={{
+          width: 1000,
+          height: 600,
+        }}
+        spec={{
+          shape: 'group',
+        }} />
+      <D3GraphBuilder
         chartKey='experience-pie-chart'
         data={data}
         containerSize={{
           width: 1000,
           height: 600,
         }}
-        shape='pie'
+        spec={{
+          shape: 'pie',
+        }}
       />
     </>
   )

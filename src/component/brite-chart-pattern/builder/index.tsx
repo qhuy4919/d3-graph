@@ -1,11 +1,8 @@
 import { useEffect, useRef } from "react";
 import { pointer, select } from "d3-selection";
-import * as d3Dispatcher from 'd3-dispatch';
+import { dispatch } from 'd3-dispatch';
 import { validateContainer } from "../util";
-import { D3BaseGraph } from "../model";
-import { colorSchema } from "../color";
-import { drawAxis, drawGridLine } from "./axis";
-import { drawStackBar } from "./graph/bar-graph";
+import { ChartShape, D3BaseGraph } from "../model";
 import {
     buildGraphStructure,
     buildLegendStructure,
@@ -37,20 +34,27 @@ const StyledTooltipContainer = styled.div`
     font-size: 14px;
 `;
 
+const interactiveElement = (shape: ChartShape) => {
+    switch (shape) {
+        case 'stack': return 'bar'
+        case 'group': return 'bar'
+        case 'pie': return 'arc'
+        default: return 'bar'
+    }
+}
 
-const PERIOD_FIELD = 'date'
-const AMOUNT_FIELD = 'value';
-const TYPE_FIELD = 'stack';
-
-export const GraphBuilder = <
+export const D3GraphBuilder = <
     ChartData extends Record<string, any>
 >({
     chartKey,
     containerSize,
     data,
-    shape,
+    spec
 }: D3BaseGraph<ChartData>) => {
     const { height = 500, width = 1000, margin: customMargin } = containerSize;
+    const {
+        shape
+    } = spec
     const margin = {
         top: customMargin?.top ?? 10,
         right: customMargin?.right ?? 30,
@@ -58,38 +62,34 @@ export const GraphBuilder = <
         left: customMargin?.left ?? 30
     };
 
+
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
 
     const graphRef = useRef<HTMLDivElement>(null);
     const legendRef = useRef<HTMLDivElement>(null);
     const tooltipRef = useRef<HTMLDivElement>(null);
-    const stackList: string[] = [...new Set(data.map(d => d[TYPE_FIELD]))];
 
-    const dispatcher = d3Dispatcher.dispatch(
-        'customMouseOver',
-        'customMouseOut',
+    const dispatcher = dispatch(
+        'chartMouseOver',
+        'chartMouseOut',
         'customMouseMove',
-        'customClick'
+        'customDataEntryClick',
+        'customTouchMove'
     );
-
-    const dataSchema = {
-        name: PERIOD_FIELD,
-        type: TYPE_FIELD,
-        value: AMOUNT_FIELD
-    };
 
     const {
         colorScale,
         normalizeData,
+        legendList,
         xScale,
+        x2Scale,
         yScale
     } = useD3Dashboard<ChartData>({
         data,
-        dataSchema,
-        colorSchema,
         chartHeight,
-        chartWidth
+        chartWidth,
+        ...spec,
     });
 
     function buildGraph() {
@@ -123,7 +123,9 @@ export const GraphBuilder = <
             shape,
             graphSvg,
             data: normalizeData,
+            dispatcher,
             xScale,
+            x2Scale,
             yScale,
             colorScale,
             chartHeight,
@@ -133,25 +135,24 @@ export const GraphBuilder = <
 
         drawLegend({
             selection: legendSvg,
-            legendList: stackList,
+            legendList,
             colorScale,
         });
 
         buildMouseEvent({
             selection: graphSvg,
-            selectionElement: 'bar',
+            selectionElement: interactiveElement(shape),
             onMouseOver: (e, d, key) => {
                 tooltipElement.mouseEvent.mouseover(key, d)
-                dispatcher.call('customMouseOver', e, d);
+                dispatcher.call('chartMouseOver', e, d, pointer(e));
             },
-            onMouseOut: (e, d) => {
+            onMouseOut: () => {
                 tooltipElement.mouseEvent.mouseout();
-                dispatcher.call('customMouseOut', e, d);
+                dispatcher.call('chartMouseOut');
             },
-            onMouseMove: (e, d) => {
+            onMouseMove: (e) => {
                 const position = pointer(e);
                 tooltipElement.mouseEvent.mousemove(position);
-                dispatcher.call('customMouseMove', e, d);
             }
         })
     }

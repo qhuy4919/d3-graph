@@ -1,8 +1,7 @@
 import * as d3Scale from 'd3-scale';
-import { BaseGraphData, TransformedGraphData } from "../model";
+import { BaseGraphData, ChartShape } from "../model";
 import { getMax } from "../util";
 import { transformData } from './data';
-import { range } from 'lodash';
 
 // type ScaleType = 'band' | 'ordinal' | 'utc' | 'linear';
 // type Scale<In, Out> = {
@@ -16,7 +15,7 @@ type DynamicScaleProps = {
     betweenGroupsPadding?: number
 }
 type BuildScale = {
-
+    shape: ChartShape
 
     //
     colorSchema: string[],
@@ -27,6 +26,7 @@ type BuildScale = {
 } & DynamicScaleProps
 
 export const buildScale = ({
+    shape,
     originalData,
 
     colorSchema,
@@ -36,11 +36,15 @@ export const buildScale = ({
 
     betweenBarsPadding = 0.1,
 }: BuildScale) => {
-    const transformedData = transformData(originalData, 'name');
-    const maxTick = getMax(new Set<number>(transformedData.map(x => x._total ?? 0)));
+    const transformedData = transformData(originalData, 'period');
+    const maxTick = getMax(new Set<number>(
+        shape === 'stack'
+            ? transformedData.map(x => x._total ?? 0)
+            : originalData.map(x => x.amount ?? 0)
+    ));
 
     const xScale = d3Scale.scaleBand()
-        .domain(originalData.map(d => d.name))
+        .domain(originalData.map(d => d.period))
         .rangeRound([0, chartWidth])
         .padding(betweenBarsPadding);
 

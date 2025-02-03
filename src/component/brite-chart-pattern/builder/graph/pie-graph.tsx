@@ -17,7 +17,6 @@ export function drawPie({
     chartHeight,
     chartWidth,
 }: DrawPie) {
-    console.log("🚀 ~ originalData:", originalData)
     const transformedData = transformData(originalData, 'type');
     const radius = Math.min(chartWidth, chartHeight) / 2;
     const PieContainer = selection.select('.chart-group')
@@ -31,7 +30,7 @@ export function drawPie({
         .classed('label-container', true)
         .attr('transform', `translate(${chartWidth / 2},${chartHeight / 2})`);
 
-    const total = sum(originalData.map(x => parseInt(x.value.toString())));
+    const total = sum(originalData.map(x => x.amount));
     const arcs = buildDataShape('pie', originalData, transformedData) as PieArcDatum<TransformedGraphData>[];
     const arcGenerator = arc<PieArcDatum<TransformedGraphData>>()
         .innerRadius(0)
@@ -63,7 +62,8 @@ export function drawPie({
                         .attr("font-weight", "bold")
                         .text(d => {
                             const amount = d.data._total ?? 0;
-                            return `${Math.round(amount / total * 100)}%`
+                            const percentage = Math.round(amount / total * 100);
+                            return percentage > 5 ? `${percentage}%` : ''
                         }))
             }
         )

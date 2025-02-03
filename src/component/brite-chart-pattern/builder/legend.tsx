@@ -1,5 +1,5 @@
 import { ScaleOrdinal } from "d3-scale"
-import { D3Selection } from "../model"
+import { D3Dispatcher, D3Selection } from "../model"
 import { getLineElementMargin, getTextWidth } from "../util"
 
 type DynamicLegendProps = {
@@ -25,6 +25,7 @@ export function drawLegend({
     marginRatio = 1.5,
 
     colorScale,
+
 }: DynamicLegendProps) {
     let xOffset = markerSize;
     const markerYOffset = - (textSize - 2) / 2;
