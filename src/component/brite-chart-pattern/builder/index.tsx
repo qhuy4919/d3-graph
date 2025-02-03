@@ -53,7 +53,8 @@ export const D3GraphBuilder = <
 }: D3BaseGraph<ChartData>) => {
     const { height = 500, width = 1000, margin: customMargin } = containerSize;
     const {
-        shape
+        shape,
+        axis: axisProps
     } = spec
     const margin = {
         top: customMargin?.top ?? 10,
@@ -127,9 +128,10 @@ export const D3GraphBuilder = <
             x2Scale,
             yScale,
             colorScale,
+            margin,
             chartHeight,
             chartWidth,
-            margin
+            axisProps
         });
 
         drawLegend({

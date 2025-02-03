@@ -24,6 +24,11 @@ function App() {
         }}
         spec={{
           shape: 'stack',
+          axis: {
+            x: {
+              axisLabel: 'Members'
+            }
+          }
         }}
       />
       <D3GraphBuilder

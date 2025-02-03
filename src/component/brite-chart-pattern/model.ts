@@ -30,14 +30,12 @@ export type D3GraphContainer = {
 
 export type DynamicAxisProps = {
     scale?: ScaleBand<string> | ScaleLinear<number, number>
-    AxisLabel: string,
-    AxisLabelOffset?: number,
+    axisLabel: string,
+    axisLabelOffset?: number,
     ticks?: number,
     tickTextOffset?: number,
 }
-export type AxisProps = {
-    chartSize: ChartSize
-    // 
+export type D3AxisProps = {
     x: DynamicAxisProps,
     y: DynamicAxisProps,
     //
@@ -61,7 +59,7 @@ export type D3DataSchema = {
 export type D3GraphSpec<Data> = {
     shape: ChartShape,
     reduceData?: (data: Data[]) => BaseGraphData[],
-    axis: {
+    axis?: {
         x?: DynamicAxisProps
         y?: DynamicAxisProps
     }

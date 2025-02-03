@@ -1,12 +1,12 @@
 import { ScaleLinear } from 'd3-scale';
 import { axisBottom, axisLeft } from 'd3-axis'
-import { AxisProps, D3Selection } from '../model';
+import { ChartSize, D3AxisProps, D3Selection } from '../model';
 
 const getDefaultXAxisPadding = () => ({ top: 0, left: 0, bottom: 0, right: 0 })
 export const buildAxis = ({
     x, y
 
-}: AxisProps) => {
+}: D3AxisProps) => {
     const { ticks: xTicks, scale: xScale } = x;
     const { ticks: yTicks, scale: yScale } = y;
 
@@ -22,7 +22,7 @@ type DynamicGridLineProps = {
     //
     isHorizontal?: boolean
     //
-} & Pick<AxisProps, 'chartSize' | 'x' | 'y'>
+} & Pick<D3AxisProps, 'x' | 'y'> & ChartSize
 export const drawGridLine = ({
 
     scale,
@@ -32,12 +32,12 @@ export const drawGridLine = ({
     x,
     y,
     //
-    chartSize
+    chartHeight,
+    chartWidth
 }: DynamicGridLineProps) => {
     const xAxisPadding = getDefaultXAxisPadding();
     const { ticks: xTicks } = x;
     const { ticks: yTicks } = y;
-    const { chartHeight, chartWidth } = chartSize
 
     if (isHorizontal) {
         selection.select('.grid-lines-group')
@@ -73,14 +73,14 @@ export const drawGridLine = ({
 
 type DrawAxis = {
     selection: D3Selection<SVGGElement>,
-} & AxisProps
+} & D3AxisProps & ChartSize
 export const drawAxis = ({
     selection,
+    chartHeight,
     ...rest
 }: DrawAxis) => {
-    const { chartSize, y } = rest;
+    const { y } = rest;
     const xAxisPadding = getDefaultXAxisPadding();
-    const { chartHeight } = chartSize;
     const { xAxis, yAxis } = buildAxis(rest)
 
     selection.select<SVGGElement>('.x-axis-group .axis.x')

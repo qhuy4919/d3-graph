@@ -1,11 +1,12 @@
-import { ChartShape, ChartSize, D3Dispatcher, DynamicGraphProps, DynamicGraphScale } from '../../model'
-import { drawAxis, drawGridLine } from '../axis';
+import { D3AxisProps, ChartShape, ChartSize, D3Dispatcher, DynamicGraphProps, DynamicGraphScale } from '../../model'
+import { drawAxis } from '../axis';
 import { drawGroupBar, drawStackBar } from './bar-graph';
 import { drawMarker, highlightMarker } from './marker';
 import { drawPie } from './pie-graph';
 export type DrawGraph = {
     shape: ChartShape,
-    dispatcher: D3Dispatcher
+    dispatcher: D3Dispatcher,
+    axisProps?: Partial<D3AxisProps>
 } & ChartSize & DynamicGraphProps & DynamicGraphScale
 export const drawGraph = ({
     shape,
@@ -20,29 +21,32 @@ export const drawGraph = ({
     xScale,
     x2Scale,
     colorScale,
+    //
+    axisProps
 }: DrawGraph) => {
 
     switch (shape) {
         case 'stack': {
             drawAxis({
-                chartSize: {
-                    chartHeight: chartHeight,
-                    chartWidth: chartWidth,
-                },
+                chartHeight,
+                chartWidth,
                 selection: graphSvg,
                 x: {
                     scale: xScale,
-                    AxisLabel: 'x-axis',
-                    AxisLabelOffset: -10,
+                    axisLabel: 'x-axis',
+                    axisLabelOffset: -10,
                     ticks: 5,
                     tickTextOffset: 10,
+                    ...axisProps?.x
                 },
                 y: {
                     scale: yScale,
-                    AxisLabel: 'y-axis',
-                    AxisLabelOffset: 10,
+                    axisLabel: 'y-axis',
+                    axisLabelOffset: 10,
                     ticks: 5,
                     tickTextOffset: 10,
+                    ...axisProps?.y
+
                 }
             })
             drawStackBar({
@@ -86,24 +90,24 @@ export const drawGraph = ({
         }
         case 'group': {
             drawAxis({
-                chartSize: {
-                    chartHeight: chartHeight,
-                    chartWidth: chartWidth,
-                },
+                chartHeight,
+                chartWidth,
                 selection: graphSvg,
                 x: {
                     scale: xScale,
-                    AxisLabel: 'x-axis',
-                    AxisLabelOffset: -10,
+                    axisLabel: 'x-axis',
+                    axisLabelOffset: -10,
                     ticks: 5,
                     tickTextOffset: 10,
+                    ...axisProps?.x
                 },
                 y: {
                     scale: yScale,
-                    AxisLabel: 'y-axis',
-                    AxisLabelOffset: 10,
+                    axisLabel: 'y-axis',
+                    axisLabelOffset: 10,
                     ticks: 5,
                     tickTextOffset: 10,
+                    ...axisProps?.y
                 }
             })
             drawGroupBar({

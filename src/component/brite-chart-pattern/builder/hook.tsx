@@ -9,10 +9,8 @@ export type useD3Dashboard<ChartData> = {
 } & D3GraphSpec<ChartData> & ChartSize;
 export const useD3Dashboard = <Data extends Record<string, unknown>>({
     data,
-    shape,
-    chartHeight,
-    chartWidth,
     reduceData,
+    ...rest
 }: useD3Dashboard<Data>) => {
     const normalizeData = reduceData?.(data) ?? defaultReduceData(data, {
         amount: 'amount',
@@ -22,7 +20,7 @@ export const useD3Dashboard = <Data extends Record<string, unknown>>({
         subColor: 'subColor',
     });
 
-    const colorSchema = [... new Set(normalizeData.map(x => x.color))]
+    const colorSchema = [... new Set(normalizeData.map(x => x.color))];
     const legendList = [... new Set(normalizeData.map(x => x.type))];
 
     const {
@@ -31,12 +29,10 @@ export const useD3Dashboard = <Data extends Record<string, unknown>>({
         x2Scale,
         yScale
     } = buildScale({
-        shape,
-        chartHeight,
-        chartWidth,
         betweenBarsPadding: 0.1,
         colorSchema: colorSchema,
         originalData: normalizeData,
+        ...rest
     });
 
 

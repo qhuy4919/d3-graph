@@ -35,6 +35,8 @@ export const buildScale = ({
     chartHeight,
 
     betweenBarsPadding = 0.1,
+
+
 }: BuildScale) => {
     const transformedData = transformData(originalData, 'period');
     const maxTick = getMax(new Set<number>(
