@@ -1,31 +1,15 @@
-import { ScaleBand, ScaleLinear } from 'd3-scale';
+import { ScaleLinear } from 'd3-scale';
 import { axisBottom, axisLeft } from 'd3-axis'
-import { ChartSize, D3Selection } from '../model';
-
-export type DynamicAxisProps = {
-    xScale: ScaleBand<string>,
-    yScale: ScaleLinear<number, number>,
-    xAxisLabel?: string,
-    yAxisLabel?: string,
-    xAxisLabelOffset?: number,
-    yAxisLabelOffset?: number,
-    yTicks?: number,
-    xTicks?: number,
-    yTickTextYOffset?: number,
-    yTickTextXOffset?: number,
-
-
-    //
-    chartSize: ChartSize
-};
+import { AxisProps, D3Selection } from '../model';
 
 const getDefaultXAxisPadding = () => ({ top: 0, left: 0, bottom: 0, right: 0 })
 export const buildAxis = ({
-    xScale,
-    yScale,
-    yTicks = 5,
-    xTicks = 5,
-}: DynamicAxisProps) => {
+    x, y
+
+}: AxisProps) => {
+    const { ticks: xTicks, scale: xScale } = x;
+    const { ticks: yTicks, scale: yScale } = y;
+
     return {
         xAxis: axisBottom(xScale).ticks(xTicks),
         yAxis: axisLeft(yScale).ticks(yTicks),
@@ -38,19 +22,21 @@ type DynamicGridLineProps = {
     //
     isHorizontal?: boolean
     //
-} & Pick<DynamicAxisProps, 'yTicks' | 'xTicks' | 'chartSize'>
+} & Pick<AxisProps, 'chartSize' | 'x' | 'y'>
 export const drawGridLine = ({
 
     scale,
     selection,
     isHorizontal = true,
     //
-    yTicks,
-    xTicks,
+    x,
+    y,
     //
     chartSize
 }: DynamicGridLineProps) => {
     const xAxisPadding = getDefaultXAxisPadding();
+    const { ticks: xTicks } = x;
+    const { ticks: yTicks } = y;
     const { chartHeight, chartWidth } = chartSize
 
     if (isHorizontal) {
@@ -87,16 +73,15 @@ export const drawGridLine = ({
 
 type DrawAxis = {
     selection: D3Selection<SVGGElement>,
-} & DynamicAxisProps
+} & AxisProps
 export const drawAxis = ({
     selection,
-    xScale,
-    yScale,
-    chartSize,
+    ...rest
 }: DrawAxis) => {
+    const { chartSize, y } = rest;
     const xAxisPadding = getDefaultXAxisPadding();
     const { chartHeight } = chartSize;
-    const { xAxis, yAxis } = buildAxis({ xScale, yScale, chartSize })
+    const { xAxis, yAxis } = buildAxis(rest)
 
     selection.select<SVGGElement>('.x-axis-group .axis.x')
         .attr('transform', `translate(0, ${chartHeight})`)
@@ -104,5 +89,12 @@ export const drawAxis = ({
 
     selection.select<SVGGElement>('.y-axis-group.axis')
         .attr('transform', `translate(${-xAxisPadding.left}, 0)`)
-        .call((d) => yAxis(d))
+        .call((d) => yAxis(d));
+
+    drawGridLine({
+        scale: y.scale,
+        selection,
+        isHorizontal: true,
+        ...rest
+    });
 }

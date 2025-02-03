@@ -1,5 +1,6 @@
 import { Selection } from "d3-selection";
 import { max } from 'd3-array';
+import { BaseGraphData } from "../model";
 export const validateContainer = (container: Selection<any, any, null, undefined>) => {
     if (container?.empty()) {
         throw Error('A root container is required');
@@ -42,5 +43,3 @@ export const getMax = (totalList: Set<number>) => {
 export function getValOrDefaultToZero(value: number) {
     return (isNaN(value) || value < 0) ? 0 : value
 };
-
-

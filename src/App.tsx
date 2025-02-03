@@ -13,14 +13,6 @@ type ChartData = {
   identifier: string
 }
 function App() {
-  const dataSchema: D3DataSchema = {
-    amount: 'amount',
-    color: 'color',
-    period: 'period',
-    type: 'type',
-    subColor: 'subColor',
-  }
-
   return (
     <>
       <D3GraphBuilder<ChartData>

@@ -28,12 +28,28 @@ export type D3GraphContainer = {
     margin?: { top: number, right: number, bottom: number, left: number },
 }
 
+export type DynamicAxisProps = {
+    scale?: ScaleBand<string> | ScaleLinear<number, number>
+    AxisLabel: string,
+    AxisLabelOffset?: number,
+    ticks?: number,
+    tickTextOffset?: number,
+}
+export type AxisProps = {
+    chartSize: ChartSize
+    // 
+    x: DynamicAxisProps,
+    y: DynamicAxisProps,
+    //
+};
+
 export type D3BaseGraph<T = Record<string, unknown>> = {
     chartKey: string,
     containerSize: D3GraphContainer,
     data: T[],
     spec: D3GraphSpec<T>
 }
+
 
 export type D3DataSchema = {
     amount: string,
@@ -44,8 +60,11 @@ export type D3DataSchema = {
 }
 export type D3GraphSpec<Data> = {
     shape: ChartShape,
-    reduceData?: (data: Data[]) => BaseGraphData[]
-    buildScale?: (props: DynamicGraphProps) => DynamicGraphScale,
+    reduceData?: (data: Data[]) => BaseGraphData[],
+    axis: {
+        x?: DynamicAxisProps
+        y?: DynamicAxisProps
+    }
 }
 
 export type D3Selection<

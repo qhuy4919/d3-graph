@@ -24,25 +24,26 @@ export const drawGraph = ({
 
     switch (shape) {
         case 'stack': {
-            drawGridLine({
-                chartSize: {
-                    chartHeight: chartHeight,
-                    chartWidth: chartWidth,
-                },
-                scale: yScale,
-                selection: graphSvg,
-                isHorizontal: true,
-                yTicks: 5,
-                xTicks: 5,
-            });
             drawAxis({
                 chartSize: {
                     chartHeight: chartHeight,
                     chartWidth: chartWidth,
                 },
                 selection: graphSvg,
-                xScale,
-                yScale
+                x: {
+                    scale: xScale,
+                    AxisLabel: 'x-axis',
+                    AxisLabelOffset: -10,
+                    ticks: 5,
+                    tickTextOffset: 10,
+                },
+                y: {
+                    scale: yScale,
+                    AxisLabel: 'y-axis',
+                    AxisLabelOffset: 10,
+                    ticks: 5,
+                    tickTextOffset: 10,
+                }
             })
             drawStackBar({
                 selection: graphSvg,
@@ -58,13 +59,18 @@ export const drawGraph = ({
                 chartWidth,
             })
 
-            dispatcher.on('chartMouseOver', (d) => {
+            dispatcher.on('chartMouseOver', (d, type) => {
                 const normalizeY = yScale(d[1])
                 const normalizeX = (xScale(d.data.dataKey) ?? 0) + xScale.bandwidth() / 2;
-                highlightMarker(markerSelection, [normalizeX, normalizeY]);
+                const color = colorScale(type)
+                highlightMarker(markerSelection, [0, normalizeY], color);
             })
             dispatcher.on('chartMouseOut', () => {
                 highlightMarker(markerSelection, [99999, 99999]);
+            })
+            dispatcher.on('chartClick', () => {
+                console.log("🚀 ~ dispatcher.on ~ chartClick:");
+
             })
             return;
         }
@@ -79,25 +85,26 @@ export const drawGraph = ({
             return;
         }
         case 'group': {
-            drawGridLine({
-                chartSize: {
-                    chartHeight: chartHeight,
-                    chartWidth: chartWidth,
-                },
-                scale: yScale,
-                selection: graphSvg,
-                isHorizontal: true,
-                yTicks: 5,
-                xTicks: 5,
-            });
             drawAxis({
                 chartSize: {
                     chartHeight: chartHeight,
                     chartWidth: chartWidth,
                 },
                 selection: graphSvg,
-                xScale,
-                yScale
+                x: {
+                    scale: xScale,
+                    AxisLabel: 'x-axis',
+                    AxisLabelOffset: -10,
+                    ticks: 5,
+                    tickTextOffset: 10,
+                },
+                y: {
+                    scale: yScale,
+                    AxisLabel: 'y-axis',
+                    AxisLabelOffset: 10,
+                    ticks: 5,
+                    tickTextOffset: 10,
+                }
             })
             drawGroupBar({
                 selection: graphSvg,

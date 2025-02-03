@@ -1,9 +1,19 @@
 import { select } from "d3-selection";
 import { ChartSize, D3Selection, DynamicGraphProps } from "../../model";
 
-export function highlightMarker(selection: D3Selection<SVGGElement>, [x, y]: [number, number]) {
+export function highlightMarker(
+    selection: D3Selection<SVGGElement>,
+    [x, y]: [number, number],
+    color?: string
+) {
     selection
         .attr('transform', `translate(${x},${y})`);
+    selection
+        .selectAll('.horizontal-graph-marker')
+        .attr('stroke', color ?? 'transparent')
+
+
+
 
 }
 
@@ -37,7 +47,6 @@ export function drawMarker({
         .attr('y1', chartHeight)
         .attr('x2', 0)
         .attr('y2', 0)
-        .attr('stroke', 'red')
         .style('stroke-dasharray', ('3, 3'))
         .attr('stroke-width', '1px');
 

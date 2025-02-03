@@ -7,7 +7,8 @@ export function buildMouseEvent({
     selectionElement,
     onMouseOver,
     onMouseOut,
-    onMouseMove
+    onMouseMove,
+    onClick,
 }: D3MouseEvent) {
 
     selection.selectAll<HTMLElement, TransformedGraphData>(`.${selectionElement}`)
@@ -27,6 +28,9 @@ export function buildMouseEvent({
         })
         .on('mousemove', function (e, d) {
             onMouseMove?.(e, d)
+        })
+        .on('click', function (e, d) {
+            onClick?.(e, d);
         })
 };
 

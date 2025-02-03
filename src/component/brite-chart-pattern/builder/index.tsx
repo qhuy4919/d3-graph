@@ -73,9 +73,8 @@ export const D3GraphBuilder = <
     const dispatcher = dispatch(
         'chartMouseOver',
         'chartMouseOut',
-        'customMouseMove',
-        'customDataEntryClick',
-        'customTouchMove'
+        'chartMouseMove',
+        'chartClick'
     );
 
     const {
@@ -142,9 +141,9 @@ export const D3GraphBuilder = <
         buildMouseEvent({
             selection: graphSvg,
             selectionElement: interactiveElement(shape),
-            onMouseOver: (e, d, key) => {
-                tooltipElement.mouseEvent.mouseover(key, d)
-                dispatcher.call('chartMouseOver', e, d, pointer(e));
+            onMouseOver: (e, d, type) => {
+                tooltipElement.mouseEvent.mouseover(type, d)
+                dispatcher.call('chartMouseOver', e, d, type);
             },
             onMouseOut: () => {
                 tooltipElement.mouseEvent.mouseout();
@@ -153,6 +152,10 @@ export const D3GraphBuilder = <
             onMouseMove: (e) => {
                 const position = pointer(e);
                 tooltipElement.mouseEvent.mousemove(position);
+            },
+            onClick: (e, d) => {
+                dispatcher.call('chartClick', e, d);
+
             }
         })
     }
