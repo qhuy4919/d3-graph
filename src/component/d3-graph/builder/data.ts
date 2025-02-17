@@ -1,4 +1,4 @@
-import { DefaultGraphColorSchema } from "@gotecq/theme";
+// import { DefaultGraphColorSchema } from "@gotecq/theme";
 import { D3BaseGraphData, ChartShape, D3DataSchema, TransformedGraphData } from "../model";
 import * as d3Array from 'd3-array';
 import * as d3Shape from 'd3-shape';
@@ -18,7 +18,7 @@ export function reduceData<ChartData extends Record<string, any>>(data: ChartDat
                 amount: parseInt(d[amount]),
                 type: d[type],
                 period: d[period],
-                color: d[color] ?? DefaultGraphColorSchema.default.scheme[i],
+                color: d[color],
                 subColor: subColor ? d[subColor] : undefined,
                 ...d,
             }

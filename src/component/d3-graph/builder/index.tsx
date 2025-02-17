@@ -1,8 +1,8 @@
 import { useEffect, useRef, useCallback } from "react";
 import { select } from "d3-selection";
 import { dispatch } from 'd3-dispatch';
-import { getLegendHeight, validateContainer } from "../util";
-import { D3BaseGraph, D3BaseGraphData, DEFAULT_LEGEND_FONT_SIZE, DEFAULT_LEGEND_MARKER_SIZE, DEFAULT_MARKER_SIZE } from "../model";
+import { getLegendHeight, validateContainer, withD3CustomizableTooltip } from "../util";
+import { D3BaseGraph, D3BaseGraphData, DEFAULT_LEGEND_FONT_SIZE, DEFAULT_LEGEND_MARKER_SIZE } from "../model";
 import {
     buildGraphStructure,
     buildLegendStructure,
@@ -11,17 +11,6 @@ import {
 import { drawLegend } from "./legend";
 import styled from "styled-components";
 import { drawTooltip } from "./tooltip";
-import { withD3CustomizableTooltip } from "../../util";
-
-const StyledGraphContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-`;
 
 const StyledTooltipContainer = styled.div`
     position: absolute;
@@ -45,7 +34,6 @@ export const D3GraphBuilder = <
     spec
 }: D3BaseGraph<ChartData>) => {
     const { width, height, margin } = containerSize;
-    console.log("🚀 ~ height:", height)
     const {
         builder,
         className,
@@ -133,7 +121,6 @@ export const D3GraphBuilder = <
                         },
                     },
                     {
-
                     }
                 )(Object.keys(d))
             }

@@ -1,7 +1,7 @@
-import { D3EventListeners, D3Selection } from "../model";
+import { D3BaseGraphData, D3EventListeners, D3Selection } from "../model";
 
 type DynamicTooltip<T> = {
-    selection: D3Selection<HTMLDivElement>,
+    selection: D3Selection<HTMLDivElement, D3BaseGraphData>,
     defaultTooltip: (d?: T) => string
 }
 
@@ -45,6 +45,7 @@ export function drawTooltip<T extends Record<string, unknown>>({
 
         },
         onMouseOut: () => {
+            console.log('12313');
             defaultOnMouseOut()
         },
         onMouseMove: (e) => {

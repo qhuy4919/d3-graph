@@ -48,12 +48,10 @@ export function buildGraphStructure(
         .append('g').classed('x axis', true);
 
     groupListElement.selectAll('.x-axis-group')
-        .append('g').classed('month-axis', true);
 
     groupListElement.append('g').classed('y-axis-group axis', true);
     groupListElement.append('g').classed('grid-lines-group', true);
     groupListElement.append('g').classed('chart-group', true);
-    groupListElement.append('g').classed('y-axis-label', true);
     groupListElement.append('g').classed('metadata-group', true);
 };
 

@@ -1,6 +1,7 @@
-import { D3GraphBuilder } from "./component/brite-chart-pattern/builder"
-import data from './component/brite-chart-pattern/data.json'
-import { D3DataSchema } from "./component/brite-chart-pattern/model"
+import { D3GraphBuilder } from "./component"
+import { verticalStackedGraphBuilder } from "./component/d3-graph/stacked-graph";
+import data from './component/data.json';
+import styled from 'styled-components';
 
 type ChartData = {
   amount: number,
@@ -12,47 +13,48 @@ type ChartData = {
   insurer_id: string,
   identifier: string
 }
+
+const StyleGraphContainer = styled.div`
+  min-width: 800px;
+  min-height: 300px;
+  max-height: 400px;
+  overflow: auto;
+`;
 function App() {
   return (
-    <>
-      <D3GraphBuilder<ChartData>
-        chartKey='experience-stacked-chart'
-        data={data}
-        containerSize={{
-          width: 1000,
-          height: 600,
-        }}
-        spec={{
-          shape: 'stack',
-          axis: {
-            x: {
-              axisLabel: 'Members'
+    <div style={{
+      width: '100vw',
+      display: 'flex',
+      justifyContent: 'center'
+    }}>
+      <StyleGraphContainer className='d3-graph-container'>
+        <D3GraphBuilder<ChartData>
+          data={data}
+          containerSize={{
+            width: 800,
+            height: 600,
+            margin: {
+              top: 50,
+              right: 60,
+              bottom: 50,
+              left: 60
             }
-          }
-        }}
-      />
-      <D3GraphBuilder
-        chartKey='experience-group-chart'
-        data={data}
-        containerSize={{
-          width: 1000,
-          height: 600,
-        }}
-        spec={{
-          shape: 'group',
-        }} />
-      <D3GraphBuilder
-        chartKey='experience-pie-chart'
-        data={data}
-        containerSize={{
-          width: 1000,
-          height: 600,
-        }}
-        spec={{
-          shape: 'pie',
-        }}
-      />
-    </>
+          }}
+          spec={{
+            builder: verticalStackedGraphBuilder,
+            axis: {
+              y: {
+                axisLabel: 'Members'
+              },
+              x: {
+                axisLabel: 'Number of Members'
+              }
+            }
+          }}
+        />
+
+      </StyleGraphContainer>
+    </div>
   )
 }
 

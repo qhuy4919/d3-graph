@@ -1,8 +1,7 @@
 import { BaseType, Selection } from "d3-selection";
-import { TransformedGraphData } from "./base";
+import { D3BaseGraphData } from "./base";
 
 export type D3Selection<
     T extends BaseType = BaseType,
-    D = TransformedGraphData,
-    X = TransformedGraphData
-> = Selection<T | null, D, T | null, X>;
+    D extends Record<string, unknown> | unknown = D3BaseGraphData,
+> = Selection<T | null, D, T | null, undefined>;

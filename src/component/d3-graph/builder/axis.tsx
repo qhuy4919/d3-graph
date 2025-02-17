@@ -1,8 +1,13 @@
 import { axisBottom, axisLeft, axisRight, axisTop } from 'd3-axis'
-import { ChartSize, D3AxisProps, D3BaseGraphData, D3Selection, DynamicAxisProps } from '../model';
-import { getTextWidth } from '../util';
-import { CSSVariableValue } from '@/lib-root/theme'
-import { withDynamicSize } from '../../util';
+import { ChartSize, D3AxisProps, D3BaseGraphData, D3Selection, DEFAULT_LEGEND_FONT_SIZE, DynamicAxisProps } from '../model';
+import { getTextWidth, withDynamicSize } from '../util';
+import { select } from 'd3-selection';
+
+const CSSVariableValue = {
+    fontFamily: {
+        base: 'var(--font-family-base)'
+    }
+}
 
 const getDefaultXAxisPadding = () => ({ top: 50, left: 0, bottom: 50, right: 0 })
 export const buildAxis = <Domain extends string | number>({
@@ -35,6 +40,7 @@ export const buildAxis = <Domain extends string | number>({
         .tickArguments([ticks])
         .tickFormat(normalizedFormat)
         .tickPadding(tickPadding)
+
 }
 
 type DynamicGridLineProps<ScaleX extends string | number, ScaleY extends string | number> = {
@@ -92,6 +98,7 @@ export const drawGridLine = <DomainX extends string | number, DomainY extends st
     return selection;
 };
 
+
 type DrawAxis<DomainX extends string | number, DomainY extends string | number> = {
     selection: D3Selection<SVGGElement>,
     isHorizontal?: boolean,
@@ -145,25 +152,46 @@ export const drawAxis = <DomainX extends string | number, DomainY extends string
         .style('font-weight', xRest?.tickLabelFontWeight ?? 'normal')
         .style('font-size', xRest?.tickLabelFontSize ?? fontSize)
 
-    selection.select('.x-axis-group')
-        .append('g')
-        .classed('x-axis-label-wrapper', true)
-        .attr('transform', `translate(${-margin?.left - fontSize}, ${chartHeight / 2 + yLabelWidth / 2})`)
-
-        .append('text')
-        .text(yLabel)
-        .classed('y-axis-label', true)
-        .attr('transform', "rotate(-90)")
-
-
     selection.select<SVGGElement>('.y-axis-group.axis')
         .attr('transform', `translate(${xAxisPadding.left}, 0)`)
         .call((d) => yAxis(d))
         .style('font-family', CSSVariableValue.fontFamily.base)
         .style('font-weight', yRest?.tickLabelFontWeight ?? 'normal')
         .style('font-size', yRest?.tickLabelFontSize ?? fontSize)
+        .selectAll('.tick text')
+        .call((d) => {
+            truncateLabel(d, margin.left + margin.right)
+        });
+
+    selection.select('.y-axis-group')
+        .append('g')
+        .classed('y-axis-label-wrapper', true)
+        .attr('transform', `translate(${-margin.left - margin.right + 16}, ${chartHeight / 2 + yLabelWidth / 2})`)
+        .append('text')
+        .text(yLabel)
+        .classed('y-axis-label', true)
+        .attr('transform', "rotate(-90)")
+        .style('fill', 'black')
+        .style('font-size', 16)
+
+
+
 
     drawGridLine({
         ...props
     });
+};
+
+function truncateLabel(
+    text: D3Selection<SVGGElement, D3BaseGraphData>,
+    width?: number
+) {
+    const normalizeWidth = (width ?? DEFAULT_LEGEND_FONT_SIZE) / DEFAULT_LEGEND_FONT_SIZE;
+    text.each(function () {
+        let gameName = select(this).text();
+        if (gameName.length > normalizeWidth) {
+            gameName = gameName.slice(0, normalizeWidth) + '...'
+        }
+        select(this).text(gameName)
+    })
 }

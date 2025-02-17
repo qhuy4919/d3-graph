@@ -269,7 +269,7 @@ export function verticalStackedGraphBuilder(props: D3GraphBuilder<T>): D3Builder
         tooltipEvent?.onMouseMove?.(this);
     })
     dispatcher.on('chartMouseOut', () => {
-        highlightMarker(markerSelection, [99999, 99999]);
+        // highlightMarker(markerSelection, [99999, 99999]);
         tooltipEvent?.onMouseOut?.(this);
     })
     dispatcher.on('chartClick', function (d) {

@@ -179,9 +179,6 @@ export const drawGroupBar = ({
     const data = transformData(originalData, 'period');
     if (!data) throw new Error('Build data failed');
 
-
-
-
     const layerElements = series
         .data(data)
         .join(
