@@ -13,3 +13,7 @@ export * from './axis';
 export * from './scene'
 export * from './mark';
 export * from './common';
+export * from './graph';
+
+export const DEFAULT_WIDTH = 250
+export const DEFAULT_HEIGHT = 250

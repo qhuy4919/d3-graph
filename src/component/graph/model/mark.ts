@@ -1,4 +1,3 @@
-import { SceneNodeSpec } from "../internal/scene-node";
 import { Datum, ViewSize } from "./base";
 import { Interpolation, MarkType, Orientation, StrokeCap } from "./common";
 import { Facet, Metadata, SceneNode } from "./scene";

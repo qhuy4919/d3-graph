@@ -1,4 +1,4 @@
-import { ChartOptions, DataFrame, SceneNode } from "../../model";
+import { ChartOptions, DataFrame, SceneNode } from "../model";
 
 export function createSceneGraph(
     root: SceneNode,

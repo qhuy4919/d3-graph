@@ -1,7 +1,6 @@
 import { Subject, Subscription } from 'rxjs';
-import { SceneNodeSpec } from '../scene-node';
 import { AxisBuilder } from './axis';
-import { ScaleCreator, SceneNode } from '../../model';
+import { SceneNode } from '../model';
 
 type SubscriableHandle<T> = {
     item: T,
@@ -10,11 +9,8 @@ type SubscriableHandle<T> = {
 
 export class SceneNodeBuilder {
     public readonly onChange = new Subject<unknown>();
-    public readonly spec = new SceneNodeSpec();
 
-    private markBuilders: Array<SubscriableHandle<any>> = [];
     private axisBuilders: Array<SubscriableHandle<AxisBuilder>> = []
-
     private scales: ScaleCreator[] = [];
 
     /**
@@ -22,7 +18,6 @@ export class SceneNodeBuilder {
      * @param table the name of the bound datatable to use
      * @param creator the scale-creator
      */
-
 
     public scale(
         ...creators: Array<ScaleCreator>
@@ -50,6 +45,7 @@ export class SceneNodeBuilder {
         });
         return this;
     }
+
 
 
     public build(): SceneNode {
