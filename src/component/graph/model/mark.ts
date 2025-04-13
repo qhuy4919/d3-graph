@@ -131,9 +131,6 @@ export type MarkEncodings = {
 
 
     [MarkEncodingKey.metadata]?: MarkEncoding<Metadata>
-
-    // catch all, and to allow indexing
-    [key: string]: MarkEncoding<any> | undefined
 };
 
 

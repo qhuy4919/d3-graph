@@ -3,7 +3,7 @@
 * @category Builder 
 */
 
-import { ChartOptions, DEFAULT_HEIGHT, DEFAULT_WIDTH, ItemSpace } from "../model";
+import { ChartOptions, DEFAULT_HEIGHT, DEFAULT_WIDTH, GraphPadding, ItemSpace } from "../model";
 
 export class GraphOptionsManager {
     readonly options: ChartOptions;
@@ -41,5 +41,32 @@ export class GraphOptionsManager {
             shape: { width, height },
         }
     }
+
+    private getPadding(name: keyof GraphPadding): number {
+        const padding = this.options.padding;
+        if (typeof padding === 'number') {
+            return padding as number
+        } else if (typeof padding === 'object') {
+            return padding[name] || 0
+        }
+        return 0
+    }
+
+    public get paddingTop(): number {
+        return this.getPadding('top')
+    }
+
+    public get paddingBottom(): number {
+        return this.getPadding('bottom')
+    }
+
+    public get paddingLeft(): number {
+        return this.getPadding('left')
+    }
+
+    public get paddingRight(): number {
+        return this.getPadding('right')
+    }
+
 
 }

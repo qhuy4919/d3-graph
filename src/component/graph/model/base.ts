@@ -5,10 +5,16 @@ export type Datum = {
     amount: number,
     type: string,
     period: string,
-    _total?: number,
-    _dataKey: string,
+    color: string,
     [key: string]: unknown
 };
+
+export type D3DataSchema = {
+    amount: string,
+    type: string,
+    period: string,
+    color: string,
+}
 
 export type ViewSize = {
     width: number

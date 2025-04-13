@@ -1,3 +1,6 @@
+import { D3GraphSceneBuilder } from "../builder";
+import { ChartOptions } from "./base";
+
 /* Specification for padding to apply to the graph */
 export type GraphPadding = {
     top?: number;
@@ -6,12 +9,9 @@ export type GraphPadding = {
     left?: number;
 }
 export type D3GraphProps<Data extends Record<string, unknown>> = {
-    width: number;
-    height: number;
     data: Data[];
-    padding?: GraphPadding;
-
-}
+    builder?: D3GraphSceneBuilder
+} & ChartOptions
 
 export type ItemSpace = {
     origin: {

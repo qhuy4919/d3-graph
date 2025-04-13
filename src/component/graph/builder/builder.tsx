@@ -1,54 +1,30 @@
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { AxisBuilder } from './axis';
-import { SceneNode } from '../model';
+import { GraphScene } from '../model';
+import { D3GraphScene } from '../spec';
+import { ScaleBuilder } from './scale';
 
-type SubscriableHandle<T> = {
-    item: T,
-    subscription: Subscription
-}
-
-export class SceneNodeBuilder {
+export class D3GraphSceneBuilder {
     public readonly onChange = new Subject<unknown>();
+    public readonly spec = new D3GraphScene();
 
-    private axisBuilders: Array<SubscriableHandle<AxisBuilder>> = []
-    private scales: ScaleCreator[] = [];
-
-    /**
-     * @param name the name of the scale-crator to add
-     * @param table the name of the bound datatable to use
-     * @param creator the scale-creator
-     */
-
-    public scale(
-        ...creators: Array<ScaleCreator>
-
-    ): SceneNodeBuilder {
-        creators.forEach(c => {
-            this.spec.addScale(c);
-            this.scales.push(c)
+    public scale(...builder: ScaleBuilder[]): D3GraphSceneBuilder {
+        builder.forEach(b => {
+            this.spec.addScale(b.spec);
         });
-
-        this.onChange.next('node add scales');
         return this;
-    };
+    }
 
-    public axes(...builder: AxisBuilder[]): SceneNodeBuilder {
+    public axes(...builder: AxisBuilder[]): D3GraphSceneBuilder {
         builder.forEach(b => {
             this.spec.addAxis(b.spec);
-            this.axisBuilders.push({
-                item: b,
-                subscription: b.onChange.subscribe(
-                    c => this.onChange.next(c),
-                )
-            })
 
         });
         return this;
     }
 
 
-
-    public build(): SceneNode {
+    public build(): GraphScene {
         return this.spec
     }
 
