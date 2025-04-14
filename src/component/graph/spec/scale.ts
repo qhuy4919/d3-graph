@@ -12,7 +12,7 @@ export class D3ScaleSpec implements D3Scale {
     private _range: D3ScaleRange;
     private _rangeRound: D3ScaleRangeRound;
     private _padding: number = 0;
-    private _nice: boolean = false;
+    private _nice: number = 0;
 
 
     public constructor(
@@ -59,10 +59,10 @@ export class D3ScaleSpec implements D3Scale {
     set padding(value: number) {
         this._padding = value;
     }
-    get nice(): boolean {
+    get nice(): number {
         return this._nice;
     }
-    set nice(value: boolean) {
+    set nice(value: number) {
         this._nice = value;
     }
 }

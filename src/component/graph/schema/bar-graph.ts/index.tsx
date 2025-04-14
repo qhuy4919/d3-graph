@@ -4,7 +4,7 @@ import { ScaleBuilder } from "../../builder/scale"
 import { D3Graph } from '../../graph';
 
 export const BarChartBuilder = () => {
-    const chart = new D3GraphSceneBuilder()
+    const chart = new D3GraphSceneBuilder();
     chart.axes(
         new AxisBuilder('amountScale', 'bottom'),
         new AxisBuilder('periodScale', 'left')
@@ -12,10 +12,10 @@ export const BarChartBuilder = () => {
         .scale(
             new ScaleBuilder('amountScale', 'linear')
                 .domain([0, 100])
-                .range([0, 100]),
+                .rangeRound([0, 100]),
             new ScaleBuilder('periodScale', 'band')
                 .domain(['Jan', 'Feb', 'Mar', 'Apr'])
-                .range([0, 100])
+                .rangeRound([0, 100])
         ).build();
 
     return chart;

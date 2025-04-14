@@ -10,9 +10,14 @@ export class D3GraphScene implements GraphScene {
         return this._scales
     }
 
+    public getScale(name: string) {
+        return this._scales.find(scale => scale.name === name);
+    }
+
     public get axes() {
         return this._axes
     }
+
 
     public addAxis(value: D3AxisSpec) {
         this._axes.push(value)

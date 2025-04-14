@@ -21,13 +21,6 @@ export class AxisBuilder {
 
     public build() {
         return this.spec;
-        // const axis = this.axisByOrientation()(this._scale)
-        //     .tickArguments([this._ticks])
-        //     .tickPadding(this._tickPadding);
-
-        // //draw all spec into screen
-        // this._selection.select<SVGGElement>(`.${name}-axis-group .axis.${name}`)
-        //     .call((d) => axis(d))
     }
 
 
