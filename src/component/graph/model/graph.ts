@@ -8,10 +8,11 @@ export type GraphPadding = {
     bottom?: number;
     left?: number;
 }
-export type D3GraphProps<Data extends Record<string, unknown>> = {
+export type D3BaseGraph<Data extends Record<string, unknown>> = {
     data: Data[];
-    builder?: D3GraphSceneBuilder
-} & ChartOptions
+    builder?: D3GraphSceneBuilder,
+    options: ChartOptions
+}
 
 export type ItemSpace = {
     origin: {
@@ -19,7 +20,7 @@ export type ItemSpace = {
         y: number
     }
     shape: {
-        width: number | undefined
-        height: number | undefined
+        width: number
+        height: number
     }
 }

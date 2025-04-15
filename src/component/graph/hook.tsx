@@ -16,7 +16,7 @@ export function useD3GraphData<Data extends Record<string, unknown>>(input: Data
             setData(normalizedData);
         }
 
-    }, [data, input])
+    }, [input])
 
-    return [data];
+    return [data, setData];
 }

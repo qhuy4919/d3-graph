@@ -21,14 +21,19 @@ export type ViewSize = {
     height: number
 }
 
+export const getDefaultChartOptions = (): ChartOptions => ({
+    width: 0,
+    height: 0,
+    padding: 10,
+})
 export type ChartOptions = {
     /**
      * In pixel, the coordinate system will 
      * translated to this point 
     */
     origin?: [number, number],
-    width?: number,
-    height?: number,
+    width: number,
+    height: number,
     padding?: number | GraphPadding
 }
 

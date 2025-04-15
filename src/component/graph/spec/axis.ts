@@ -19,6 +19,7 @@ export class D3AxisSpec implements AxisSpec {
     private _tickOffset = DEFAULT_AXIS_TICK_OFFSET_VALUE
     private _tickWidth: number = DEFAULT_AXIS_STROKE
     private _tickPadding: number = DEFAULT_AXIS_TICK_PADDING
+    private _transform: string = ''
 
     public constructor(
         scale: string,
@@ -100,5 +101,13 @@ export class D3AxisSpec implements AxisSpec {
 
     set ticks(value: number) {
         this._ticks = value;
+    }
+
+    get transform(): string {
+        return this._transform;
+    }
+
+    set transform(value: string) {
+        this._transform = value;
     }
 }

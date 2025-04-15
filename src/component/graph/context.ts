@@ -1,11 +1,14 @@
 import { createContext, useContext } from "react";
 import { D3GraphSceneBuilder } from "./builder";
+import { ChartOptions, getDefaultChartOptions } from "./model";
 
 export const D3GraphSceneContext = createContext<{
-    builder: D3GraphSceneBuilder | undefined,
+    schema?: D3GraphSceneBuilder,
+    options: ChartOptions
 
 }>({
-    builder: undefined
+    schema: undefined,
+    options: getDefaultChartOptions(),
 });
 
 export const useD3GraphSceneContext = () => useContext(D3GraphSceneContext);

@@ -1,53 +1,56 @@
-import { ChartOptions, D3GraphProps } from "./model";
-import { D3GraphSceneContext, useD3GraphSceneContext } from "./context";
-import { useD3GraphData } from "./hook";
-import { AxisRenderer } from "./renderer";
+import { D3BaseGraph, Datum } from "./model";
+import { D3GraphSceneContext } from "./context";
 import styled from 'styled-components'
+import { GraphOptionsManager } from "./builder";
+import { D3Group } from "./renderer/group";
 
-export const StyledD3Graph = styled.svg`
+export const StyledD3GraphContainer = styled.div`
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    
     .d3-graph-content {
         padding-bottom: var(--spacing);
     }
 `;
+export const StyledD3Graph = styled.svg``;
 
-export const D3Graph = <Data extends Record<string, unknown>>(props: D3GraphProps<Data>) => {
+export type D3Graph<Data extends Datum> = {
+    children?: React.ReactNode
+} & D3BaseGraph<Data>;
+
+export const D3Graph = <Data extends Datum>(props: D3Graph<Data>) => {
     const {
-        data,
+        options,
+        children,
         builder,
-        height,
-        width,
-        padding,
     } = props;
-    const [normalizeData] = useD3GraphData(data);
-
-
+    const { graphSpace, paddingLeft, paddingTop } = new GraphOptionsManager(options);
+    const { shape } = graphSpace
 
     return <D3GraphSceneContext.Provider
         value={{
-            builder
+            schema: builder,
+            options,
         }}
     >
-        <StyledD3Graph>
-            <D3Axis {...props} />
-        </StyledD3Graph>
+        <StyledD3GraphContainer className={'d3-graph-container'}>
+            <StyledD3Graph
+                width={options.width}
+                height={options.height}
+            >
+                <D3Group
+                    className="d3-group-container"
+                    height={shape.height}
+                    width={shape.width}
+                    transform={`translate(${paddingLeft},${paddingTop})`}
+                >
+                    {children}
+                </D3Group>
+            </StyledD3Graph>
+        </StyledD3GraphContainer>
     </D3GraphSceneContext.Provider>
 };
 
-export type D3Axis = ChartOptions
-const D3Axis = (props: D3Axis) => {
-    const { builder } = useD3GraphSceneContext();
-    if (!builder) return <>Non Graph Available</>
-    const axisSpecList = builder.spec.axes;
-    return axisSpecList.map((spec, i) => {
-        return <AxisRenderer
-            key={`d3-axis-${i}`}
-            spec={spec}
-            graphOptions={props}
-        />
-    })
-}

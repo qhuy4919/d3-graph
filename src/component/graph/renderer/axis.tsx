@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react"
-import { GraphOptionsManager } from "../builder"
 import { AxisScale, ChartOptions } from "../model"
 import { D3AxisSpec } from "../spec"
 import { mergeClass } from "../util"
@@ -17,7 +16,7 @@ export const AxisRenderer = ({
     graphOptions,
     spec,
 }: AxisRenderer) => {
-    const { builder } = useD3GraphSceneContext();
+    const { schema } = useD3GraphSceneContext();
 
     const {
         width = 0,
@@ -25,6 +24,7 @@ export const AxisRenderer = ({
     } = graphOptions;
     const {
         className,
+        transform
     } = spec;
 
     const axisRef = useRef<SVGGElement>(null);
@@ -53,7 +53,7 @@ export const AxisRenderer = ({
                 throw new Error('Invalid axis orientation')
         }
         const scaleName = scale;
-        const axisScale = ScaleRenderer(builder?.spec.getScale(scaleName)) as AxisScale;
+        const axisScale = ScaleRenderer(schema?.spec.getScale(scaleName)) as AxisScale;
         if (!axisScale) throw new Error('axis scale error!');
 
         return axis(axisScale)
@@ -66,17 +66,30 @@ export const AxisRenderer = ({
         if (axisRef) {
             select(axisRef.current)
                 .call(d => axisBackbone(spec)(d))
+                .attr('transform', transform)
+
 
         }
     }, [axisRef])
 
-    const { paddingTop, paddingLeft } = new GraphOptionsManager(graphOptions);
     return <D3Group
         innerRef={axisRef}
         className={mergeClass('d3-axis', className)}
-        transform={`translate(${paddingLeft}, ${paddingTop})`}
         height={height}
         width={width}
     >
     </D3Group>
+}
+
+export const D3Axis = () => {
+    const { schema, options } = useD3GraphSceneContext();
+    if (!schema) return <>Non Graph Available</>
+    const axisSpecList = schema.spec.axes;
+    return axisSpecList.map((spec, i) => {
+        return <AxisRenderer
+            key={`d3-axis-${i}`}
+            spec={spec}
+            graphOptions={options}
+        />
+    })
 }

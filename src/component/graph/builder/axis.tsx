@@ -18,6 +18,16 @@ export class AxisBuilder {
         this.spec = new D3AxisSpec(scale, orient);
     }
 
+    public transform(value: string) {
+        this.spec.transform = value;
+        return this;
+    }
+
+    public className(value: string) {
+        this.spec.className = value;
+        return this;
+    }
+
 
     public build() {
         return this.spec;

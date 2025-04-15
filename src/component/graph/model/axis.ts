@@ -14,14 +14,18 @@ export interface AxisSpec {
     orient: AxisOrientation,
     scale: string,
     domain?: boolean
+    //tick
     tickColor?: string
     tickCount?: number
     tickOffset?: number
     tickWidth?: number,
+    //label
     label?: string,
     labelFontSize?: number,
     labelFontWeight?: number,
     labelFont?: string,
+    //tweak
+    transform?: string
 }
 // axis scale
 export type AxisScaleOutput = number | string | undefined;

@@ -1,1 +1,1 @@
-export { AxisRenderer } from './axis';
+export { AxisRenderer, D3Axis } from './axis';

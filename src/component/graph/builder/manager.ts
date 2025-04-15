@@ -8,7 +8,7 @@ import { ChartOptions, DEFAULT_HEIGHT, DEFAULT_WIDTH, GraphPadding, ItemSpace } 
 export class GraphOptionsManager {
     readonly options: ChartOptions;
 
-    public constructor(options: ChartOptions = {}) {
+    public constructor(options: ChartOptions = { width: 0, height: 0 }) {
         this.options = options;
     }
 
