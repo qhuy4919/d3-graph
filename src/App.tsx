@@ -4,7 +4,7 @@ import { D3reduceData } from './component/graph/util';
 
 function App() {
   const normalizeData = D3reduceData(data, {
-    period: "period",
+    period: "type",
     type: "type",
     amount: "amount",
     color: "color",
@@ -14,8 +14,8 @@ function App() {
     <D3BarChart
       data={normalizeData}
       options={{
-        height: 400,
-        width: 800,
+        height: 500,
+        width: 1200,
         padding: { top: 40, right: 40, bottom: 40, left: 40 }
       }
       }
