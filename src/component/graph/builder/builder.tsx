@@ -3,6 +3,7 @@ import { AxisBuilder } from './axis';
 import { GraphScene } from '../model';
 import { D3GraphScene } from '../spec';
 import { ScaleBuilder } from './scale';
+import { GridBuilder } from './grid';
 
 export class D3GraphSceneBuilder {
     public readonly onChange = new Subject<unknown>();
@@ -19,6 +20,13 @@ export class D3GraphSceneBuilder {
         builder.forEach(b => {
             this.spec.addAxis(b.spec);
 
+        });
+        return this;
+    }
+
+    public grid(...builder: GridBuilder[]): D3GraphSceneBuilder {
+        builder.forEach(b => {
+            this.spec.addGrid(b.spec)
         });
         return this;
     }

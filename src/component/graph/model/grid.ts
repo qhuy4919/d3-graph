@@ -2,16 +2,18 @@ import { D3Scale } from './scale';
 // grid scale
 export type GridScaleOutput = number | string | undefined;
 export type GridScale = D3Scale<string>;
-// common
-export type CommonGridProps = {
+
+export type GridSpec = {
     scale: string,
+    orient: D3GridOrientation
     className?: string,
-    stroke?: string
-    strokeWidth?: string | number,
-    strokeDasharray?: string,
+    stroke: string
+    strokeWidth: string | number,
+    strokeDasharray: string,
     offset?: number,
-    opacity?: number,
+    opacity: number,
 }
+export type D3GridOrientation = 'row' | 'col';
 //const
 export const DEFAULT_GRID_STROKE_WIDTH = '1px';
 export const DEFAULT_GRID_STROKE = '#f8f8f8';

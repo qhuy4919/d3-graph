@@ -1,11 +1,10 @@
-import { D3GraphSceneBuilder, GraphOptionsManager } from "../../builder"
+import { D3GraphSceneBuilder, GraphOptionsManager, GridBuilder } from "../../builder"
 import { AxisBuilder } from "../../builder/axis"
 import { ScaleBuilder } from "../../builder/scale"
 import { D3Graph } from '../../graph';
 import { D3BaseGraph, Datum } from "../../model";
-import { D3Axis } from "../../renderer";
+import { D3Axis, D3Grid } from "../../renderer";
 import { max as d3Max } from 'd3-array'
-import { D3GridRow } from "../../renderer/grid";
 
 export const BarChartBuilder = <Data extends Datum>({
     data,
@@ -17,14 +16,14 @@ export const BarChartBuilder = <Data extends Datum>({
         shape: { width: graphWidth = 0, height: graphHeight = 0 }
     } = graphSpace;
 
-    chart.axes(
-        new AxisBuilder('amountScale', 'bottom')
-            .transform(`translate(0, ${graphHeight})`)
-            .className('axis-x')
-            .ticks(5),
-        new AxisBuilder('periodScale', 'left')
-            .className('axis-y')
-    )
+    chart
+        .axes(
+            new AxisBuilder('amountScale', 'bottom')
+                .transform(`translate(0, ${graphHeight})`)
+                .className('axis-x'),
+            new AxisBuilder('periodScale', 'left')
+                .className('axis-y')
+        )
         .scale(
             new ScaleBuilder('amountScale', 'linear')
                 .domain([0, d3Max(data, d => d.amount) ?? 0])
@@ -33,7 +32,14 @@ export const BarChartBuilder = <Data extends Datum>({
             new ScaleBuilder('periodScale', 'band')
                 .domain(data.map(d => d?.period))
                 .rangeRound([0, graphHeight])
-        ).build();
+                .ticks(data.length)
+
+        )
+        .grid(
+            new GridBuilder('amountScale', 'col'),
+            new GridBuilder('periodScale', 'row')
+        )
+        .build();
 
     return chart;
 }
@@ -45,6 +51,6 @@ export const D3BarChart = <Data extends Datum>(props: D3BaseGraph<Data>) => {
         builder={chart}
     >
         <D3Axis />
-        <D3GridRow scale='amountScale' />
+        <D3Grid />
     </D3Graph>
 }

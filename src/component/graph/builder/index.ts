@@ -4,3 +4,6 @@ export {
 export {
     GraphOptionsManager
 } from './manager';
+export {
+    GridBuilder
+} from './grid';

@@ -1,26 +1,35 @@
 import { useEffect, useRef } from "react"
 import { GraphOptionsManager } from "../builder"
 import { useD3GraphSceneContext } from "../context"
-import { AnyD3Scale, CommonGridProps, DEFAULT_GRID_STROKE, DEFAULT_GRID_STROKE_WIDTH } from "../model"
+import { AnyD3Scale } from "../model"
 import { getScaleTicks, mergeClass } from "../util"
 import { D3Group } from "./group"
 import { select } from "d3-selection"
 import { ScaleRenderer } from "./scale"
+import { D3GridSpec } from "../spec"
 
-export type D3GridRow = CommonGridProps
-export const D3GridRow = ({
-    scale,
-    className,
-    stroke = DEFAULT_GRID_STROKE,
-    strokeWidth = DEFAULT_GRID_STROKE_WIDTH,
-    opacity = 0.3,
-}: D3GridRow) => {
+export type GridRenderer = {
+    spec: D3GridSpec
+};
+export const GridRenderer = ({
+    spec
+}: GridRenderer) => {
     const { options, schema } = useD3GraphSceneContext();
     const gridRef = useRef<SVGGElement>(null);
     const { graphSpace } = new GraphOptionsManager(options);
     const {
         shape
     } = graphSpace
+
+    const {
+        className,
+        opacity,
+        orient,
+        scale,
+        stroke,
+        strokeDasharray,
+        strokeWidth,
+    } = spec
 
     const scaleSpec = schema?.spec.getScale(scale);
     const ticks = scaleSpec?.ticks
@@ -29,36 +38,53 @@ export const D3GridRow = ({
 
     useEffect(() => {
         if (gridRef) {
-            // select(gridRef.current)
-            //     .selectAll('line.grid-row-line')
-            //     .data(tickData)
-            //     .enter()
-            //     .append('line')
-            //     .attr('class', 'grid-row-line')
-            //     .attr('x1', 0)
-            //     .attr('x2', shape?.width ?? 0)
-            //     .attr('y1', (d) => gridScale(d))
-            //     .attr('y2', (d) => gridScale(d))
-            //     .attr('stroke', stroke)
-            //     .style('opacity', opacity)
-            //     .attr('stroke-width', strokeWidth);
+            if (orient === 'row') {
+                select(gridRef.current)
+                    .selectAll('line.grid-row-line')
+                    .data(tickData)
+                    .enter()
+                    .append('line')
+                    .attr('class', 'grid-row-line')
+                    .attr('x1', 0)
+                    .attr('x2', shape?.width ?? 0)
+                    .attr('y1', (d) => gridScale(d))
+                    .attr('y2', (d) => gridScale(d))
+                    .attr('stroke', stroke)
+                    .attr('stroke-width', strokeWidth)
+                    .style('opacity', opacity)
+                    .style('stroke-dasharray', strokeDasharray);
+            }
 
-            select(gridRef.current)
-                .selectAll('line.grid-col-line')
-                .data(tickData)
-                .enter()
-                .append('line')
-                .attr('class', 'grid-col-line')
-                .attr('y1', 0)
-                .attr('y2', shape?.height ?? 0)
-                .attr('x1', (d) => gridScale(d))
-                .attr('x2', (d) => gridScale(d))
-                .attr('stroke', stroke)
-                .style('opacity', opacity)
-                .attr('stroke-width', strokeWidth);
+            else if (orient === 'col') {
+                select(gridRef.current)
+                    .selectAll('line.grid-col-line')
+                    .data(tickData)
+                    .enter()
+                    .append('line')
+                    .attr('class', 'grid-col-line')
+                    .attr('y1', 0)
+                    .attr('y2', shape?.height ?? 0)
+                    .attr('x1', (d) => gridScale(d))
+                    .attr('x2', (d) => gridScale(d))
+                    .attr('stroke', stroke)
+                    .attr('stroke-width', strokeWidth)
+                    .style('opacity', opacity)
+                    .style('stroke-dasharray', strokeDasharray);
+            }
 
         }
-    }, [gridRef]);
+    }, [
+        gridRef,
+        gridScale,
+        opacity,
+        orient,
+        shape?.height,
+        shape?.width,
+        stroke,
+        strokeDasharray,
+        strokeWidth,
+        tickData
+    ]);
 
     return <D3Group
         innerRef={gridRef}
@@ -67,4 +93,16 @@ export const D3GridRow = ({
     >
 
     </D3Group>
+}
+
+export const D3Grid = () => {
+    const { schema } = useD3GraphSceneContext();
+    if (!schema) return <>Non Graph Available</>
+    const gridSpecList = schema.spec.grid;
+    return gridSpecList.map((spec, i) => {
+        return <GridRenderer
+            key={`d3-axis-${i}`}
+            spec={spec}
+        />
+    })
 }

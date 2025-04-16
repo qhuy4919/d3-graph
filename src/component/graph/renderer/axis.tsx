@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { AxisScale, ChartOptions } from "../model"
+import { AxisScale } from "../model"
 import { D3AxisSpec } from "../spec"
 import { mergeClass } from "../util"
 import { D3Group } from "./group"
@@ -9,23 +9,22 @@ import { useD3GraphSceneContext } from "../context"
 import { ScaleRenderer } from "./scale"
 
 export type AxisRenderer = {
-    graphOptions: ChartOptions
     spec: D3AxisSpec
 }
 export const AxisRenderer = ({
-    graphOptions,
-    spec,
+    spec
 }: AxisRenderer) => {
-    const { schema } = useD3GraphSceneContext();
+    const { schema, options } = useD3GraphSceneContext();
 
     const {
         width = 0,
         height = 0
-    } = graphOptions;
+    } = options;
+
     const {
         className,
-        transform
-    } = spec;
+        transform,
+    } = spec
 
     const axisRef = useRef<SVGGElement>(null);
 
@@ -67,8 +66,6 @@ export const AxisRenderer = ({
             select(axisRef.current)
                 .call(d => axisBackbone(spec)(d))
                 .attr('transform', transform)
-
-
         }
     }, [axisRef])
 
@@ -82,14 +79,15 @@ export const AxisRenderer = ({
 }
 
 export const D3Axis = () => {
-    const { schema, options } = useD3GraphSceneContext();
+    const { schema } = useD3GraphSceneContext();
     if (!schema) return <>Non Graph Available</>
     const axisSpecList = schema.spec.axes;
     return axisSpecList.map((spec, i) => {
+        //Cannot spread instance of class
+        //  therfore have to pass it into props
         return <AxisRenderer
             key={`d3-axis-${i}`}
             spec={spec}
-            graphOptions={options}
         />
     })
 }

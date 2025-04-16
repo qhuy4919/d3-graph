@@ -13,7 +13,8 @@ export type AxisOrientation = 'right' | 'left' | 'bottom' | 'top';
 export interface AxisSpec {
     orient: AxisOrientation,
     scale: string,
-    domain?: boolean
+    domain?: boolean,
+    className?: string
     //tick
     tickColor?: string
     tickCount?: number
