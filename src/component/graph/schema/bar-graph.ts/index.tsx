@@ -5,6 +5,7 @@ import { D3Graph } from '../../graph';
 import { D3BaseGraph, Datum } from "../../model";
 import { D3Axis } from "../../renderer";
 import { max as d3Max } from 'd3-array'
+import { D3GridRow } from "../../renderer/grid";
 
 export const BarChartBuilder = <Data extends Datum>({
     data,
@@ -19,14 +20,16 @@ export const BarChartBuilder = <Data extends Datum>({
     chart.axes(
         new AxisBuilder('amountScale', 'bottom')
             .transform(`translate(0, ${graphHeight})`)
-            .className('axis-x'),
+            .className('axis-x')
+            .ticks(5),
         new AxisBuilder('periodScale', 'left')
             .className('axis-y')
     )
         .scale(
             new ScaleBuilder('amountScale', 'linear')
                 .domain([0, d3Max(data, d => d.amount) ?? 0])
-                .rangeRound([0, graphWidth]),
+                .rangeRound([0, graphWidth])
+                .ticks(5),
             new ScaleBuilder('periodScale', 'band')
                 .domain(data.map(d => d?.period))
                 .rangeRound([0, graphHeight])
@@ -42,5 +45,6 @@ export const D3BarChart = <Data extends Datum>(props: D3BaseGraph<Data>) => {
         builder={chart}
     >
         <D3Axis />
+        <D3GridRow scale='amountScale' />
     </D3Graph>
 }

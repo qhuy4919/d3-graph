@@ -28,5 +28,5 @@ export interface AxisSpec {
     transform?: string
 }
 // axis scale
-export type AxisScaleOutput = number | string | undefined;
+export type AxisScaleOutput = number | string;
 export type AxisScale = D3AxisScale<AxisScaleOutput>;

@@ -1,11 +1,17 @@
-import { D3Scale, D3ScaleDomain, D3ScaleRange, D3ScaleRangeRound, D3ScaleType } from "../model";
+import {
+    D3BaseScale,
+    D3ScaleDomain,
+    D3ScaleRange,
+    D3ScaleRangeRound,
+    D3ScaleType
+} from "../model";
 /** 
  * @Category Scale Specification
  * */
 
 
 
-export class D3ScaleSpec implements D3Scale {
+export class D3ScaleSpec implements D3BaseScale {
     private _name: string = '';
     private _type: D3ScaleType;
     private _domain: D3ScaleDomain;
@@ -13,6 +19,7 @@ export class D3ScaleSpec implements D3Scale {
     private _rangeRound: D3ScaleRangeRound;
     private _padding: number = 0;
     private _nice: number = 0;
+    private _ticks: number = 0;
 
 
     public constructor(
@@ -64,5 +71,13 @@ export class D3ScaleSpec implements D3Scale {
     }
     set nice(value: number) {
         this._nice = value;
+    }
+
+    get ticks() {
+        return this._ticks;
+    }
+
+    set ticks(value: number) {
+        this._ticks = value;
     }
 }

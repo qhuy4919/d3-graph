@@ -11,9 +11,9 @@ export * from './base'
 export * from './scale'
 export * from './axis';
 export * from './scene'
-export * from './mark';
 export * from './common';
 export * from './graph';
+export * from './grid';
 
 export const DEFAULT_WIDTH = 250
 export const DEFAULT_HEIGHT = 250

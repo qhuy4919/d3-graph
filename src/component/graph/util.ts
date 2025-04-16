@@ -1,7 +1,10 @@
 import { DefaultGraphColorSchema } from "../theme";
-import { D3DataSchema, Datum } from "./model";
+import { AnyD3Scale, D3DataSchema, Datum, ScaleInput } from "./model";
 
-export function D3reduceData<ChartData extends Record<string, unknown>>(data: ChartData[], dataSchema: D3DataSchema) {
+export function D3reduceData<ChartData extends Record<string, unknown>>(
+    data: ChartData[],
+    dataSchema: D3DataSchema
+) {
     const {
         period,
         type,
@@ -24,4 +27,30 @@ export function D3reduceData<ChartData extends Record<string, unknown>>(data: Ch
 
 export function mergeClass(...args: (boolean | string | undefined | null)[]) {
     return args.filter(Boolean).join(' ');
+}
+
+
+//util for scale
+export function getScaleTicks<Scale extends AnyD3Scale>(
+    scale: Scale,
+    numTicks?: number,
+): ScaleInput<Scale>[] {
+    // Because `Scale` is generic type which maybe a subset of AnyD3Scale
+    // that may not have `ticks` field,
+    // TypeScript will not let us do the `'ticks' in scale` check directly.
+    // Have to manually cast and expand type first.
+    const s = scale as AnyD3Scale;
+
+    if ('ticks' in s) {
+        return s.ticks(numTicks);
+    }
+
+    return s
+        .domain()
+        .filter(
+            (_, index, arr) =>
+                numTicks == null ||
+                arr.length <= numTicks ||
+                index % Math.round((arr.length - 1) / numTicks) === 0,
+        );
 }

@@ -18,7 +18,6 @@ export class D3GraphScene implements GraphScene {
         return this._axes
     }
 
-
     public addAxis(value: D3AxisSpec) {
         this._axes.push(value)
     }

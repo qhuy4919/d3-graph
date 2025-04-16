@@ -29,13 +29,18 @@ export class ScaleBuilder {
         return this;
     }
 
-    public nice(value: boolean) {
+    public nice(value: number) {
         this.spec.nice = value;
         return this;
     }
 
     public padding(padding: number) {
         this.spec.padding = padding;
+        return this;
+    }
+
+    public ticks(value: number) {
+        this.spec.ticks = value;
         return this;
     }
 

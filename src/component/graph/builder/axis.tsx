@@ -28,6 +28,15 @@ export class AxisBuilder {
         return this;
     }
 
+    public ticks(value: number) {
+        this.spec.ticks = value;
+        return this;
+    }
+
+    public tickPadding(value: number) {
+        this.spec.tickPadding = value;
+        return this;
+    }
 
     public build() {
         return this.spec;
