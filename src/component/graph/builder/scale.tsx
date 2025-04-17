@@ -1,4 +1,5 @@
 import { D3ScaleDomain, D3ScaleRange, D3ScaleRangeRound, D3ScaleType } from "../model";
+import { ScaleRenderer } from "../renderer/scale";
 import { D3ScaleSpec } from "../spec";
 
 /** 

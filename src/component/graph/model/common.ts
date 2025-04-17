@@ -1,3 +1,5 @@
+import { SVGProps } from "react";
+
 export enum StrokeCap {
     Butt = 'butt',
     Round = 'round',
@@ -33,3 +35,7 @@ export enum MarkType {
     Trail = 'trail',
     Shape = 'shape',
 };
+
+//Omit some custom props that might be duplicate in original SVG props
+export type AddSVGProps<Props, Element extends SVGElement> = Props &
+    Omit<SVGProps<Element>, keyof Props>;

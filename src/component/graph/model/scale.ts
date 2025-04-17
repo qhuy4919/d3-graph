@@ -60,6 +60,13 @@ export interface ScaleTypeToD3Scale<
 }
 export type D3ScaleType = keyof ScaleTypeToD3Scale;
 
+export type PickD3Scale<
+    T extends keyof ScaleTypeToD3Scale<Output, DiscreteInput, D3DefaultThresholdInput>,
+    Output = D3ScaleOutput,
+    DiscreteInput extends string = string,
+    ThresholdInput extends D3DefaultThresholdInput = D3DefaultThresholdInput,
+> = ValueOf<Pick<ScaleTypeToD3Scale<Output, DiscreteInput, ThresholdInput>, T>>;
+
 export type D3Scale<
     Output = D3ScaleOutput,
     DiscreteInput extends string = string,
@@ -69,3 +76,7 @@ export type D3Scale<
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyD3Scale = D3Scale<any, any, any>;
 export type ScaleInput<Scale extends AnyD3Scale> = Parameters<Scale>[0];
+
+//any scale casting type
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AnyBandScale = PickD3Scale<'band', any, any>;

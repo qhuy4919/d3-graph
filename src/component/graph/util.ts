@@ -53,4 +53,16 @@ export function getScaleTicks<Scale extends AnyD3Scale>(
                 arr.length <= numTicks ||
                 index % Math.round((arr.length - 1) / numTicks) === 0,
         );
+
+
+}
+export function getScaleBandwidth(scale: AnyD3Scale) {
+    if (!scale) return 0;
+    if ('bandwidth' in scale) {
+        return scale.bandwidth();
+    }
+
+    const range = scale.range();
+    const domain = scale.domain();
+    return Math.abs(range[range.length - 1] - range[0]) / domain.length;
 }

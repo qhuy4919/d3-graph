@@ -1,11 +1,5 @@
-/**  
-* This type descripe a rendering phase
-* @param SourceForm the type of incoming data
-* @param TargetForm the type of output
- */
-export type Renderer<SourceForm, TargetForm> = {
-    render: (input: SourceForm, handler: unknown) => TargetForm
-}
+export const DEFAULT_WIDTH = 250
+export const DEFAULT_HEIGHT = 250
 
 export * from './base'
 export * from './scale'
@@ -14,6 +8,7 @@ export * from './scene'
 export * from './common';
 export * from './graph';
 export * from './grid';
+export * from './mark';
+export * from './data';
+export * from './shape';
 
-export const DEFAULT_WIDTH = 250
-export const DEFAULT_HEIGHT = 250

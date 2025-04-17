@@ -6,8 +6,10 @@ export type Datum = {
     type: string,
     period: string,
     color: string,
-    [key: string]: unknown
+    [key: string]: any
 };
+
+export type D3Table = Datum[]
 
 export type D3DataSchema = {
     amount: string,

@@ -7,3 +7,7 @@ export {
 export {
     GridBuilder
 } from './grid';
+
+export {
+    markGroup
+} from './factory'
