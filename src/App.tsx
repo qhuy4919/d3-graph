@@ -8,15 +8,15 @@ function App() {
     period: "period",
     type: "type",
     amount: "amount",
-    color: "insurer_bgcolor",
+    color: "network_bgcolor",
   });
 
   return (
     <D3BarChart
       data={normalizeData}
       options={{
-        height: 500,
-        width: 1200,
+        height: 800,
+        width: 1500,
         padding: defaultChartOptionPadding
       }
       }

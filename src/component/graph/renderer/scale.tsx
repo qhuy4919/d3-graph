@@ -1,35 +1,47 @@
 import { scaleBand, scaleLinear, scaleOrdinal } from "d3-scale";
 import { D3ScaleSpec } from "../spec";
-import { PickD3Scale } from "../model";
+import { D3ScaleOutput, PickD3Scale } from "../model";
 
-export const ScaleRenderer = <T extends D3ScaleSpec['type']>(spec?: D3ScaleSpec) => {
-    function getScaleBackbone<T extends D3ScaleSpec['type']>(spec: D3ScaleSpec) {
-        const { type,
-            domain,
-            range,
-            rangeRound,
-            nice,
-            padding
-        } = spec;
-        switch (type) {
-            case 'linear':
-                return scaleLinear()
-                    .domain(domain as number[])
-                    .rangeRound(rangeRound as number[])
-                    .nice(nice) as PickD3Scale<T>
+export const ScaleRenderer = <
+    T extends D3ScaleSpec['type'],
+    Output extends D3ScaleOutput
+>(spec?: D3ScaleSpec) => {
+    if (
+        !spec ||
+        typeof spec !== 'object' ||
+        !('type' in spec)
+    ) {
+        throw new Error('Scale render failed!');
+    }
+    const {
+        type,
+        name,
+        domain = [],
+        range = [],
+        rangeRound = [],
+        nice,
+        padding = 1,
+    } = spec;
 
-            case 'band':
-                return scaleBand()
-                    .domain(domain as string[])
-                    .rangeRound(rangeRound as number[])
-                    .padding(padding) as PickD3Scale<T>
+    switch (type) {
+        case 'linear':
+            return scaleLinear()
+                .domain(domain as number[])
+                .rangeRound(rangeRound as number[])
+                .nice(nice) as PickD3Scale<T, Output>
 
-            case "ordinal":
-                return scaleOrdinal<string, string>()
-                    .domain(domain as string[])
-                    .range(range as string[]) as PickD3Scale<T>
-        }
+        case 'band':
+            return scaleBand()
+                .domain(domain as string[])
+                .rangeRound(rangeRound as number[])
+                .padding(padding) as PickD3Scale<T, Output>
+
+        case "ordinal":
+            return scaleOrdinal<string, string>()
+                .domain(domain as string[])
+                .range(range as string[]) as PickD3Scale<T, Output>
+        default:
+            throw new Error(`Something wrong with ${name}`)
     }
 
-    return spec ? getScaleBackbone<T>(spec) : undefined
 };

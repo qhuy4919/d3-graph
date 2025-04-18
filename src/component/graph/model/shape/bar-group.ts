@@ -1,11 +1,11 @@
 import { Datum as D3Datum } from "../base";
 
 /** Unique key for item in a group. */
-export type GroupKey = string | number;
+export type D3GroupKey = string;
 
-export interface BarGroupBar<Key> {
+export interface BarGroupBar {
     /** group key */
-    key: Key;
+    key: string;
     /** index of BarGroup (matches input Datum index). */
     index: number;
     /** group value (Datum[key]) */
@@ -22,32 +22,28 @@ export interface BarGroupBar<Key> {
     color: string;
 }
 
-interface BaseBarGroup<Key> {
+interface BaseBarGroup {
     /** index of BarGroup (matches input Datum index). */
     index: number;
     /** bars within group, one for each key. */
-    bars: BarGroupBar<Key>[];
+    bars: BarGroupBar[];
 }
 
 /** One BarGroup is returned for each datum, which has multiple sub-bars (based on keys). */
-export interface BarGroup<Key> extends BaseBarGroup<Key> {
+export interface BarGroup extends BaseBarGroup {
     /** x0 position of bar group */
     x0: number;
 }
 
 /** One BarGroup is returned for each datum, which has multiple sub-bars (based on keys). */
-export interface BarGroupHorizontal<Key> extends BaseBarGroup<Key> {
+export interface BarGroupHorizontal extends BaseBarGroup {
     /** y0 position of bar group */
     y0: number;
 }
 
-export interface BaseBarGroupProps<Datum extends D3Datum, Key extends GroupKey = GroupKey> {
+export interface BaseBarGroupProps<Datum extends D3Datum> {
     /** Array of data for which to generate grouped bars. */
     data: Datum[];
-    /** Returns the desired color for a bar with a given key and index. */
-    color: (key: Key, index: number) => string;
-    /** Array of keys corresponding to stack layers. */
-    keys: Key[];
     /** className applied to Bars. */
     className?: string;
     /** Top offset of rendered Bars. */

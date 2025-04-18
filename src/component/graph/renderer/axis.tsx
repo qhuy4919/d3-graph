@@ -31,7 +31,7 @@ export const AxisRenderer = ({
     const axisBackbone = ({
         orient,
         scale,
-        ticks,
+        ticks = 5,
         tickPadding,
     }: D3AxisSpec) => {
         let axis;

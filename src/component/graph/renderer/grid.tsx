@@ -32,9 +32,8 @@ export const GridRenderer = ({
     } = spec
 
     const scaleSpec = schema?.spec.getScale(scale);
-    const ticks = scaleSpec?.ticks
     const gridScale = ScaleRenderer(scaleSpec) as AnyD3Scale;
-    const tickData = getScaleTicks(gridScale, ticks)
+    const tickData = getScaleTicks(gridScale)
 
     useEffect(() => {
         if (gridRef) {
@@ -88,7 +87,7 @@ export const GridRenderer = ({
 
     return <D3Group
         innerRef={gridRef}
-        className={mergeClass('d3-grid-row', className)}
+        className={mergeClass(`d3-grid_${orient}`, className)}
 
     >
 

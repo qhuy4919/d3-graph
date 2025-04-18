@@ -1,5 +1,4 @@
 import { D3ScaleDomain, D3ScaleRange, D3ScaleRangeRound, D3ScaleType } from "../model";
-import { ScaleRenderer } from "../renderer/scale";
 import { D3ScaleSpec } from "../spec";
 
 /** 
@@ -30,7 +29,7 @@ export class ScaleBuilder {
         return this;
     }
 
-    public nice(value: number) {
+    public nice(value?: number) {
         this.spec.nice = value;
         return this;
     }

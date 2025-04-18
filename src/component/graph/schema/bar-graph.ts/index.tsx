@@ -2,7 +2,7 @@ import { D3GraphSceneBuilder, GraphOptionsManager, GridBuilder } from "../../bui
 import { AxisBuilder } from "../../builder/axis"
 import { ScaleBuilder } from "../../builder/scale"
 import { D3Graph } from '../../graph';
-import { D3BaseGraph, Datum, PickD3Scale } from "../../model";
+import { D3BaseGraph, D3ScaleOutput, Datum, PickD3Scale } from "../../model";
 import { D3Axis, D3Grid, D3GroupBar } from "../../renderer";
 import { max as d3Max } from 'd3-array'
 import { ScaleRenderer } from "../../renderer/scale";
@@ -21,30 +21,29 @@ export const BarChartBuilder = <Data extends Datum>({
 
 
     const amountScale = new ScaleBuilder('amountScale', 'linear')
-        .domain([0, d3Max(data, d => d.amount) ?? 0])
-        .rangeRound([0, graphWidth])
-        .ticks(5);
+        .domain([0, (d3Max(data, d => d.amount) ?? 0)])
+        .rangeRound([graphHeight, 0])
+        .nice()
 
     const periodScale = new ScaleBuilder('periodScale', 'band')
         .domain(data.map(d => d?.period))
-        .rangeRound([0, graphHeight])
-        .ticks(data.length);
+        .rangeRound([0, graphWidth])
+        .padding(0.1);
 
     const typeScale = new ScaleBuilder('typeScale', 'band')
-        .domain(data.map(d => d?.type))
-        .ticks(data.length);
+        .domain(data.map(d => d?.type));
 
-    const colorScale = new ScaleBuilder('typeScale', 'band')
+    const colorScale = new ScaleBuilder('colorScale', 'ordinal')
         .domain(data.map(d => d?.type))
         .range(data.map(d => d.color))
 
     chart
         .axes(
-            new AxisBuilder('amountScale', 'bottom')
+            new AxisBuilder('amountScale', 'left')
+                .className('axis-y'),
+            new AxisBuilder('periodScale', 'bottom')
                 .transform(`translate(0, ${graphHeight})`)
-                .className('axis-x'),
-            new AxisBuilder('periodScale', 'left')
-                .className('axis-y')
+                .className('axis-x')
         )
         .scale(
             amountScale,
@@ -53,8 +52,8 @@ export const BarChartBuilder = <Data extends Datum>({
             colorScale
         )
         .grid(
-            new GridBuilder('amountScale', 'col'),
-            new GridBuilder('periodScale', 'row')
+            new GridBuilder('amountScale', 'row'),
+            new GridBuilder('periodScale', 'col'),
         )
 
     return chart;
@@ -65,22 +64,26 @@ export const D3BarChart = <Data extends Datum>(props: D3BaseGraph<Data>) => {
     const {
         data,
         options,
-        builder,
     } = props;
     const {
         graphSpace: {
             shape,
-        }
+        },
     } = new GraphOptionsManager(options);
 
-    function getScale<T extends D3ScaleSpec['type']>(name: string) {
-        return ScaleRenderer<T>(builder?.spec.getScale(name));
+    function getScale<
+        T extends D3ScaleSpec['type'],
+        Output extends D3ScaleOutput
+    >
+        (name: string) {
+        const spec = chart.spec.getScale(name);
+        return ScaleRenderer<T, Output>(spec);
     }
 
-    const periodScale = getScale<'band'>('periodScale');
-    const amountScale = getScale<'linear'>('amountScale');
-    const typeScale = getScale<'band'>('typeScale');
-    const colorScale = getScale<'ordinal'>('colorScale');
+    const periodScale = getScale<'band', string>('periodScale');
+    const amountScale = getScale<'linear', number>('amountScale');
+    const typeScale = getScale<'band', string>('typeScale');
+    const colorScale = getScale<'ordinal', string>('colorScale');
 
     if (
         !periodScale ||
@@ -88,11 +91,9 @@ export const D3BarChart = <Data extends Datum>(props: D3BaseGraph<Data>) => {
         !typeScale ||
         !colorScale
     )
-        throw new Error('Something wrong with scale');
+        throw new Error('Something wrong with scale list');
 
     typeScale.rangeRound([0, getScaleBandwidth(periodScale)])
-
-
 
     return <D3Graph
         {...props}
@@ -102,18 +103,16 @@ export const D3BarChart = <Data extends Datum>(props: D3BaseGraph<Data>) => {
         <D3Grid />
         <D3GroupBar<
             Datum,
-            string,
             PickD3Scale<'band'>,
             PickD3Scale<'band'>
         >
             data={data}
             width={shape.width}
             height={shape.height}
-            x0={(d: Datum) => d.period}
             x0Scale={periodScale}
             x1Scale={typeScale}
             yScale={amountScale}
-            color={colorScale}
+            colorScale={colorScale}
         />
     </D3Graph>
 }

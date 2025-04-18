@@ -3,4 +3,5 @@ export { GridRenderer, D3Grid } from './grid';
 export {
     D3Bar,
     D3GroupBar,
+    D3GroupBarHorizontal,
 } from './shape'

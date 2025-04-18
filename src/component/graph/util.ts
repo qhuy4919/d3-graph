@@ -1,5 +1,5 @@
 import { DefaultGraphColorSchema } from "../theme";
-import { AnyD3Scale, D3DataSchema, Datum, ScaleInput } from "./model";
+import { AnyD3Scale, D3DataSchema, Datum, DEFAULT_FONT_STYLE, DEFAULT_TEXT_SIZE, ScaleInput } from "./model";
 
 export function D3reduceData<ChartData extends Record<string, unknown>>(
     data: ChartData[],
@@ -29,7 +29,23 @@ export function mergeClass(...args: (boolean | string | undefined | null)[]) {
     return args.filter(Boolean).join(' ');
 }
 
+export const getTextWidth = (
+    text: string,
+    maxWidth: number,
+    fontSize = DEFAULT_TEXT_SIZE,
+    fontStyle = DEFAULT_FONT_STYLE
+) => {
+    const a = document.createElement('canvas');
+    const b = a.getContext('2d');
 
+    if (b) {
+        b.font = fontSize + 'px ' + fontStyle;
+
+        return b.measureText(text).width
+    };
+
+    return maxWidth
+}
 //util for scale
 export function getScaleTicks<Scale extends AnyD3Scale>(
     scale: Scale,

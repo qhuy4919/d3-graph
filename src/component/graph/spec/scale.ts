@@ -18,7 +18,7 @@ export class D3ScaleSpec implements D3BaseScale {
     private _range: D3ScaleRange;
     private _rangeRound: D3ScaleRangeRound;
     private _padding: number = 0;
-    private _nice: number = 0;
+    private _nice?: number = 0;
     private _ticks: number = 0;
 
 
@@ -66,10 +66,10 @@ export class D3ScaleSpec implements D3BaseScale {
     set padding(value: number) {
         this._padding = value;
     }
-    get nice(): number {
+    get nice(): number | undefined {
         return this._nice;
     }
-    set nice(value: number) {
+    set nice(value: number | undefined) {
         this._nice = value;
     }
 
