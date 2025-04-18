@@ -10,6 +10,7 @@ export const D3text = ({
     innerTextRef,
     transform,
     children,
+    overflow = 'visible',
     ...textProps
 }: D3TextProps) => {
     return <svg
@@ -17,7 +18,7 @@ export const D3text = ({
         x={dx}
         y={dy}
         fontSize={fontSize}
-        overflow={'visible'}
+        overflow={overflow}
     >
         <text ref={innerTextRef} {...textProps} transform={transform} textAnchor={textAnchor} >
             <tspan x={x} >
