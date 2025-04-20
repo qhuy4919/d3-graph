@@ -14,3 +14,5 @@ export * from './mark';
 export * from './data';
 export * from './shape';
 export * from './text';
+export * from './legend';
+export * from './style'

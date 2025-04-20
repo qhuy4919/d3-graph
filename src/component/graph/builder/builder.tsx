@@ -1,10 +1,11 @@
 import { Subject } from 'rxjs';
 import { AxisBuilder } from './axis';
 import { GraphScene } from '../model';
-import { GraphSceneSpec } from '../spec';
+import { D3ScaleSpec, GraphSceneSpec } from '../spec';
 import { ScaleBuilder } from './scale';
 import { GridBuilder } from './grid';
 import { MarkBuilder } from './mark';
+import { LegendBuilder } from './legend';
 
 export class D3GraphSceneBuilder {
     public readonly onChange = new Subject<unknown>();
@@ -28,6 +29,13 @@ export class D3GraphSceneBuilder {
     public grid(...builder: GridBuilder[]): D3GraphSceneBuilder {
         builder.forEach(b => {
             this.spec.addGrid(b.spec)
+        });
+        return this;
+    }
+
+    public legend(...builder: LegendBuilder<D3ScaleSpec>[]): D3GraphSceneBuilder {
+        builder.forEach(b => {
+            this.spec.addLegend(b.spec)
         });
         return this;
     }

@@ -7,7 +7,9 @@ export {
 export {
     GridBuilder
 } from './grid';
-
+export {
+    LegendBuilder,
+} from './legend'
 export {
     markGroup
-} from './factory'
+} from './factory';

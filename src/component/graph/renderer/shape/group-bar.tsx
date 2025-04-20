@@ -6,6 +6,7 @@ import {
     BarGroup,
     AddSVGProps,
     PickD3Scale,
+    D3BaseGraph,
 } from '../../model'
 import { getScaleBandwidth, mergeClass } from '../../util';
 import { D3Group } from '../group';
@@ -25,8 +26,9 @@ export type D3GroupBar<
     colorScale: PickD3Scale<'ordinal', string>
     height: number,
     /** Override render function which is passed the computed BarGroups. */
-    children?: (barGroups: BarGroup[]) => React.ReactNode;
-}
+    children?: (barGroups: BarGroup[]) => React.ReactNode,
+} & Pick<D3BaseGraph<Datum>, 'signalListener'>;
+
 export const D3GroupBar = <
     Datum extends D3Datum,
     X0Scale extends AnyBandScale = AnyBandScale,
@@ -41,11 +43,15 @@ export const D3GroupBar = <
     x1Scale,
     yScale,
     colorScale,
+    signalListener,
     children,
     ...rest
 }: AddSVGProps<D3GroupBar<Datum, X0Scale, X1Scale>, SVGRectElement>) => {
     const barWidth = getScaleBandwidth(x1Scale);
     const groupData = d3Groups(data, d => d['period']);
+    const {
+        barClick,
+    } = signalListener ?? {};
 
     const barGroups: BarGroup[] = groupData.map((group, i) => {
         const [key, dataList] = group;
@@ -62,6 +68,7 @@ export const D3GroupBar = <
                 return {
                     index: j,
                     key: `${period}-${type}`,
+                    data: data,
                     value: amount,
                     width: barWidth,
                     x: x1Scale(type) || 0,
@@ -85,23 +92,34 @@ export const D3GroupBar = <
             {
                 barGroups.map(barGroup => (
                     <D3Group
-                        key={`d3-group-bar-${barGroup.x0}--${barGroup.index}`}
+                        key={`d3-group-bar-${barGroup.x0}-${barGroup.index}`}
                         left={barGroup.x0}
                     >
                         {
                             barGroup.bars.map((bar) => {
-                                const { x, y, width, height, color, value } = bar;
-                                return <>
+                                const { x, y, width, height, color, value, key, data } = bar;
+                                return <React.Fragment
+                                    key={`d3-bar-${barGroup.index}-${bar.index}-${bar.key}`}
+                                >
                                     <D3Bar
                                         {...rest}
-                                        key={`d3-bar-${barGroup.index}-${bar.index}-${bar.key}`}
                                         x={x}
                                         y={y}
                                         width={width}
                                         height={height}
                                         fill={color}
+                                        onClick={() => {
+                                            barClick?.(key, data)
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.opacity = '0.8';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.opacity = '1';
+                                        }}
                                     />
                                     <D3text
+                                        key={`d3-bar-text-${barGroup.index}-${bar.index}-${bar.key}`}
                                         x={x + width / 2}
                                         y={y - 10}
                                         fill="grey"
@@ -111,7 +129,7 @@ export const D3GroupBar = <
                                     >
                                         {value}
                                     </D3text>
-                                </>
+                                </React.Fragment>
                             })
                         }
                     </D3Group>

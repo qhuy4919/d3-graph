@@ -1,9 +1,9 @@
-import { D3GraphSceneBuilder, GraphOptionsManager, GridBuilder } from "../../builder"
+import { D3GraphSceneBuilder, GraphOptionsManager, GridBuilder, LegendBuilder } from "../../builder"
 import { AxisBuilder } from "../../builder/axis"
 import { ScaleBuilder } from "../../builder/scale"
 import { D3Graph } from '../../graph';
 import { D3BaseGraph, D3ScaleOutput, Datum, PickD3Scale } from "../../model";
-import { D3Axis, D3Grid, D3GroupBar } from "../../renderer";
+import { D3GroupBar } from "../../renderer";
 import { max as d3Max } from 'd3-array'
 import { ScaleRenderer } from "../../renderer/scale";
 import { getScaleBandwidth } from "../../util";
@@ -18,7 +18,6 @@ export const BarChartBuilder = <Data extends Datum>({
     const {
         shape: { width: graphWidth = 0, height: graphHeight = 0 }
     } = graphSpace;
-
 
     const amountScale = new ScaleBuilder('amountScale', 'linear')
         .domain([0, (d3Max(data, d => d.amount) ?? 0)])
@@ -55,6 +54,27 @@ export const BarChartBuilder = <Data extends Datum>({
             new GridBuilder('amountScale', 'row'),
             new GridBuilder('periodScale', 'col'),
         )
+        .legend(
+            new LegendBuilder('rect', typeScale.spec, colorScale.spec)
+                .style({
+                    display: 'flex',
+                    maxWidth: graphWidth,
+                    padding: '0 15px',
+                    flexWrap: 'wrap',
+                })
+                .shapeAttr({
+                    shapeWidth: '12px',
+                    shapeHeight: '12px',
+                    shapeMargin: '0 10px',
+                })
+                .labelAttr({
+                    style: {
+                        fontSize: '12px',
+                        display: 'flex',
+                        alignItems: 'center'
+                    }
+                })
+        )
 
     return chart;
 }
@@ -64,6 +84,7 @@ export const D3BarChart = <Data extends Datum>(props: D3BaseGraph<Data>) => {
     const {
         data,
         options,
+        signalListener
     } = props;
     const {
         graphSpace: {
@@ -99,8 +120,6 @@ export const D3BarChart = <Data extends Datum>(props: D3BaseGraph<Data>) => {
         {...props}
         builder={chart}
     >
-        <D3Axis />
-        <D3Grid />
         <D3GroupBar<
             Datum,
             PickD3Scale<'band'>,
@@ -113,6 +132,8 @@ export const D3BarChart = <Data extends Datum>(props: D3BaseGraph<Data>) => {
             x1Scale={typeScale}
             yScale={amountScale}
             colorScale={colorScale}
+            signalListener={signalListener}
         />
     </D3Graph>
+
 }

@@ -24,10 +24,10 @@ export type ViewSize = {
 }
 
 export const defaultChartOptionPadding: GraphPadding = {
-    top: 50,
-    right: 50,
-    bottom: 150,
-    left: 150,
+    top: 20,
+    right: 20,
+    bottom: 50,
+    left: 50,
 }
 export const getDefaultChartOptions = (): ChartOptions => ({
     width: 0,

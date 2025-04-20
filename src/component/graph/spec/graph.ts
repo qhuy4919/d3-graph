@@ -1,6 +1,7 @@
 import { D3GridOrientation, GraphScene } from "../model"
 import { D3AxisSpec } from "./axis"
 import { D3GridSpec } from "./grid"
+import { D3LegendSpec } from "./legend"
 import { D3MarkSpec } from "./mark"
 import { D3ScaleSpec } from "./scale"
 
@@ -9,6 +10,7 @@ export class GraphSceneSpec implements GraphScene {
     private _axes: D3AxisSpec[] = [];
     private _grid: D3GridSpec[] = [];
     private _marks: D3MarkSpec[] = [];
+    private _legends: D3LegendSpec<D3ScaleSpec>[] = []
 
     public get scales() {
         return this._scales
@@ -20,6 +22,10 @@ export class GraphSceneSpec implements GraphScene {
 
     public get grid() {
         return this._grid;
+    }
+
+    public get legend() {
+        return this._legends;
     }
 
     public addAxis(value: D3AxisSpec) {
@@ -44,6 +50,14 @@ export class GraphSceneSpec implements GraphScene {
 
     public removeGrid(value: D3GridSpec) {
         this._grid = this._grid.filter(m => m !== value)
+    }
+
+    public addLegend(value: D3LegendSpec<D3ScaleSpec>) {
+        this._legends.push(value)
+    }
+
+    public removeLegend(value: D3LegendSpec<D3ScaleSpec>) {
+        this._legends = this._legends.filter(m => m !== value)
     }
 
     public addMark(value: D3MarkSpec) {

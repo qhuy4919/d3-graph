@@ -1,13 +1,15 @@
-import { Datum as D3Datum } from "../base";
+import { Datum as D3Datum, Datum } from "../base";
 
 /** Unique key for item in a group. */
 export type D3GroupKey = string;
 
-export interface BarGroupBar {
+export interface BarGroupBar<Data extends Datum> {
     /** group key */
     key: string;
     /** index of BarGroup (matches input Datum index). */
     index: number;
+    /** data refer to bar */
+    data: Data
     /** group value (Datum[key]) */
     value: number;
     /** height of bar. */
@@ -22,21 +24,21 @@ export interface BarGroupBar {
     color: string;
 }
 
-interface BaseBarGroup {
+interface BaseBarGroup<Data extends Datum> {
     /** index of BarGroup (matches input Datum index). */
     index: number;
     /** bars within group, one for each key. */
-    bars: BarGroupBar[];
+    bars: BarGroupBar<Data>[];
 }
 
 /** One BarGroup is returned for each datum, which has multiple sub-bars (based on keys). */
-export interface BarGroup extends BaseBarGroup {
+export interface BarGroup extends BaseBarGroup<Datum> {
     /** x0 position of bar group */
     x0: number;
 }
 
 /** One BarGroup is returned for each datum, which has multiple sub-bars (based on keys). */
-export interface BarGroupHorizontal extends BaseBarGroup {
+export interface BarGroupHorizontal extends BaseBarGroup<Datum> {
     /** y0 position of bar group */
     y0: number;
 }

@@ -3,6 +3,7 @@ import { D3GraphSceneContext } from "./context";
 import styled from 'styled-components'
 import { GraphOptionsManager } from "./builder";
 import { D3Group } from "./renderer/group";
+import { D3Axis, D3Grid, D3Legend } from "./renderer";
 
 export const StyledD3GraphContainer = styled.div`
     position: absolute;
@@ -28,7 +29,7 @@ export const D3Graph = <Data extends Datum>(props: D3Graph<Data>) => {
         builder,
     } = props;
     const { graphSpace, paddingLeft, paddingTop } = new GraphOptionsManager(options);
-    const { shape } = graphSpace
+    const { shape } = graphSpace;
 
     return <D3GraphSceneContext.Provider
         value={{
@@ -47,9 +48,12 @@ export const D3Graph = <Data extends Datum>(props: D3Graph<Data>) => {
                     width={shape.width}
                     transform={`translate(${paddingLeft},${paddingTop})`}
                 >
+                    <D3Axis />
+                    <D3Grid />
                     {children}
                 </D3Group>
             </StyledD3Graph>
+            <D3Legend />
         </StyledD3GraphContainer>
     </D3GraphSceneContext.Provider>
 };

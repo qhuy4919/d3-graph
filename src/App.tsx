@@ -15,8 +15,8 @@ function App() {
     <D3BarChart
       data={normalizeData}
       options={{
-        height: 800,
-        width: 1500,
+        height: 500,
+        width: 1200,
         padding: defaultChartOptionPadding
       }
       }
