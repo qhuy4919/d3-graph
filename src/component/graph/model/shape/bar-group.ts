@@ -32,13 +32,13 @@ interface BaseBarGroup<Data extends Datum> {
 }
 
 /** One BarGroup is returned for each datum, which has multiple sub-bars (based on keys). */
-export interface BarGroup extends BaseBarGroup<Datum> {
+export interface BarGroup<Datum extends D3Datum = D3Datum> extends BaseBarGroup<Datum> {
     /** x0 position of bar group */
     x0: number;
 }
 
 /** One BarGroup is returned for each datum, which has multiple sub-bars (based on keys). */
-export interface BarGroupHorizontal extends BaseBarGroup<Datum> {
+export interface BarGroupHorizontal<Datum extends D3Datum = D3Datum> extends BaseBarGroup<Datum> {
     /** y0 position of bar group */
     y0: number;
 }

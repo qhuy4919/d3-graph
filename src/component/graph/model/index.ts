@@ -15,4 +15,5 @@ export * from './data';
 export * from './shape';
 export * from './text';
 export * from './legend';
-export * from './style'
+export * from './style';
+export * from './tooltip';

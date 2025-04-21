@@ -9,8 +9,6 @@ import {
  * @Category Scale Specification
  * */
 
-
-
 export class D3ScaleSpec implements D3BaseScale {
     private _name: string = '';
     private _type: D3ScaleType;

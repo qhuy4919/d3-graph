@@ -11,5 +11,8 @@ export {
     LegendBuilder,
 } from './legend'
 export {
+    TooltipBuilder,
+} from './tooltip'
+export {
     markGroup
 } from './factory';

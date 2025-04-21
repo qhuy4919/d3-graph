@@ -13,6 +13,10 @@ import { D3Group } from '../group';
 import { D3Bar } from './bar';
 import { groups as d3Groups } from 'd3-array';
 import { D3text } from '../text';
+import { useTooltip, useTooltipInPortal } from '@visx/tooltip';
+import { localPoint } from '@visx/event';
+import { useD3GraphSceneContext } from '../../context';
+import { TooltipRenderer } from '../tooltip';
 
 export type D3GroupBar<
     Datum extends D3Datum,
@@ -47,13 +51,32 @@ export const D3GroupBar = <
     children,
     ...rest
 }: AddSVGProps<D3GroupBar<Datum, X0Scale, X1Scale>, SVGRectElement>) => {
+    const { schema } = useD3GraphSceneContext();
+    const tooltipSpec = schema?.spec.getTooltip('graph');
     const barWidth = getScaleBandwidth(x1Scale);
     const groupData = d3Groups(data, d => d['period']);
     const {
         barClick,
     } = signalListener ?? {};
 
-    const barGroups: BarGroup[] = groupData.map((group, i) => {
+    const {
+        tooltipOpen,
+        tooltipLeft,
+        tooltipTop,
+        tooltipData,
+        hideTooltip,
+        showTooltip
+    } = useTooltip<Datum>();
+    const {
+        containerRef,
+        TooltipInPortal
+    } = useTooltipInPortal({
+        scroll: true,
+        detectBounds: true
+    });
+
+
+    const barGroups: BarGroup<Datum>[] = groupData.map((group, i) => {
         const [key, dataList] = group;
 
         return {
@@ -85,6 +108,7 @@ export const D3GroupBar = <
 
     return (
         <D3Group
+            ref={containerRef}
             top={top}
             left={left}
             className={mergeClass('d3-group-bar', className)}
@@ -116,6 +140,16 @@ export const D3GroupBar = <
                                         }}
                                         onMouseLeave={(e) => {
                                             e.currentTarget.style.opacity = '1';
+                                            hideTooltip();
+                                        }}
+                                        onMouseMove={(e) => {
+                                            const eventSvgCoords = localPoint(e);
+                                            showTooltip({
+                                                tooltipData: bar.data,
+                                                tooltipTop: eventSvgCoords?.y ?? 0,
+                                                tooltipLeft: eventSvgCoords?.x ?? 0,
+                                            });
+
                                         }}
                                     />
                                     <D3text
@@ -134,6 +168,22 @@ export const D3GroupBar = <
                         }
                     </D3Group>
                 ))
+            }
+
+            {
+                tooltipOpen && tooltipData && (
+                    <div>
+                        <TooltipInPortal
+                            top={tooltipTop}
+                            left={tooltipLeft}
+                        >
+                            <TooltipRenderer
+                                data={tooltipData}
+                                spec={tooltipSpec}
+                            />
+                        </TooltipInPortal>
+                    </div>
+                )
             }
         </D3Group>
     )

@@ -6,6 +6,7 @@ import { ScaleBuilder } from './scale';
 import { GridBuilder } from './grid';
 import { MarkBuilder } from './mark';
 import { LegendBuilder } from './legend';
+import { TooltipBuilder } from './tooltip';
 
 export class D3GraphSceneBuilder {
     public readonly onChange = new Subject<unknown>();
@@ -36,6 +37,13 @@ export class D3GraphSceneBuilder {
     public legend(...builder: LegendBuilder<D3ScaleSpec>[]): D3GraphSceneBuilder {
         builder.forEach(b => {
             this.spec.addLegend(b.spec)
+        });
+        return this;
+    }
+
+    public tooltip(...builder: TooltipBuilder[]): D3GraphSceneBuilder {
+        builder.forEach(b => {
+            this.spec.addTooltip(b.spec)
         });
         return this;
     }

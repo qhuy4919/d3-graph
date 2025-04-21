@@ -1,4 +1,4 @@
-import { D3AxisSpec, D3GridSpec, D3LegendSpec, D3ScaleSpec } from "../spec";
+import { D3AxisSpec, D3GridSpec, D3LegendSpec, D3ScaleSpec, D3TooltipSpec } from "../spec";
 import { D3MarkSpec } from "../spec/mark";
 
 export interface GraphScene {
@@ -7,6 +7,7 @@ export interface GraphScene {
     grid?: D3GridSpec[],
     mark?: D3MarkSpec[],
     legend?: D3LegendSpec<D3ScaleSpec>[],
+    tooltip?: D3TooltipSpec[]
 }
 
 export enum MarkEncodingKey {

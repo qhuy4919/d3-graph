@@ -1,4 +1,4 @@
-import { D3GraphSceneBuilder, GraphOptionsManager, GridBuilder, LegendBuilder } from "../../builder"
+import { D3GraphSceneBuilder, GraphOptionsManager, GridBuilder, LegendBuilder, TooltipBuilder } from "../../builder"
 import { AxisBuilder } from "../../builder/axis"
 import { ScaleBuilder } from "../../builder/scale"
 import { D3Graph } from '../../graph';
@@ -53,6 +53,18 @@ export const BarChartBuilder = <Data extends Datum>({
         .grid(
             new GridBuilder('amountScale', 'row'),
             new GridBuilder('periodScale', 'col'),
+        )
+        .tooltip(
+            new TooltipBuilder(
+                'graph',
+                {
+                    type: 'Type',
+                    amount: 'Amount',
+                    period: 'On'
+                },
+                {
+                }
+            )
         )
         .legend(
             new LegendBuilder('rect', typeScale.spec, colorScale.spec)

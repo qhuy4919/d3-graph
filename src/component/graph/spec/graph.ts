@@ -1,16 +1,18 @@
-import { D3GridOrientation, GraphScene } from "../model"
+import { D3GridOrientation, D3TooltipType, GraphScene } from "../model"
 import { D3AxisSpec } from "./axis"
 import { D3GridSpec } from "./grid"
 import { D3LegendSpec } from "./legend"
 import { D3MarkSpec } from "./mark"
 import { D3ScaleSpec } from "./scale"
+import { D3TooltipSpec } from "./tooltip"
 
 export class GraphSceneSpec implements GraphScene {
     private _scales: D3ScaleSpec[] = []
     private _axes: D3AxisSpec[] = [];
     private _grid: D3GridSpec[] = [];
     private _marks: D3MarkSpec[] = [];
-    private _legends: D3LegendSpec<D3ScaleSpec>[] = []
+    private _legends: D3LegendSpec<D3ScaleSpec>[] = [];
+    private _tooltips: D3TooltipSpec[] = []
 
     public get scales() {
         return this._scales
@@ -60,6 +62,14 @@ export class GraphSceneSpec implements GraphScene {
         this._legends = this._legends.filter(m => m !== value)
     }
 
+    public addTooltip(value: D3TooltipSpec) {
+        this._tooltips.push(value)
+    }
+
+    public removeTooltip(value: D3TooltipSpec) {
+        this._tooltips = this._tooltips.filter(m => m !== value)
+    }
+
     public addMark(value: D3MarkSpec) {
         this._marks.push(value)
     }
@@ -74,6 +84,10 @@ export class GraphSceneSpec implements GraphScene {
 
     public getGrid(orient: D3GridOrientation) {
         return this._grid.find(grid => grid.orient === orient);
+    }
+
+    public getTooltip(type: D3TooltipType) {
+        return this._tooltips.find(tooltip => tooltip.type === type);
     }
 
 }
