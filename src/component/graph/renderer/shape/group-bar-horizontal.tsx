@@ -17,10 +17,9 @@ import { D3Bar } from './bar';
 
 export type D3GroupBarHorizontal<
     Datum extends D3Datum,
-    Key extends D3GroupKey = D3GroupKey,
     Y0Scale extends AnyBandScale = AnyBandScale,
     Y1Scale extends AnyBandScale = AnyBandScale,
-> = BaseBarGroupProps<Datum, Key> & {
+> = BaseBarGroupProps<Datum> & {
     /** Returns the value (Datum[key]) mapped to the x of a bar */
     x?: (barValue: number) => number;
     /** Returns the value mapped to the y0 (group position) of a bar */
@@ -31,11 +30,10 @@ export type D3GroupBarHorizontal<
     colorScale: PickD3Scale<'ordinal', string>
     width: number,
     /** Override render function which is passed the computed BarGroups. */
-    children?: (barGroups: BarGroupHorizontal<Key>[]) => React.ReactNode;
+    children?: (barGroups: BarGroupHorizontal[]) => React.ReactNode;
 }
 export const D3GroupBarHorizontal = <
     Datum extends D3Datum,
-    Key extends D3GroupKey = D3GroupKey,
     Y0Scale extends AnyBandScale = AnyBandScale,
     Y1Scale extends AnyBandScale = AnyBandScale,
 >({
@@ -49,14 +47,13 @@ export const D3GroupBarHorizontal = <
     y1Scale,
     xScale,
     colorScale,
-    keys,
     y0,
     children,
     ...rest
-}: AddSVGProps<D3GroupBarHorizontal<Datum, Key, Y0Scale, Y1Scale>, SVGRectElement>) => {
+}: AddSVGProps<D3GroupBarHorizontal<Datum, Y0Scale, Y1Scale>, SVGRectElement>) => {
     const harHeight = getScaleBandwidth(y1Scale);
 
-    const barGroups: BarGroupHorizontal<Key>[] = data.map((group, i) => {
+    const barGroups: BarGroupHorizontal[] = data.map((group, i) => {
         return {
             index: i,
             y0: y0Scale(y0(group)) || 0,

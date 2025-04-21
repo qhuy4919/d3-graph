@@ -7,16 +7,19 @@ import {
     AddSVGProps,
     PickD3Scale,
     D3BaseGraph,
+    DEFAULT_GRID_DASHARRAY,
 } from '../../model'
 import { getScaleBandwidth, mergeClass } from '../../util';
 import { D3Group } from '../group';
 import { D3Bar } from './bar';
 import { groups as d3Groups } from 'd3-array';
-import { D3text } from '../text';
+import { D3Text } from '../text';
 import { useTooltip, useTooltipInPortal } from '@visx/tooltip';
 import { localPoint } from '@visx/event';
 import { useD3GraphSceneContext } from '../../context';
 import { TooltipRenderer } from '../tooltip';
+import { D3Line } from './line';
+import { GraphOptionsManager } from '../../builder';
 
 export type D3GroupBar<
     Datum extends D3Datum,
@@ -51,7 +54,8 @@ export const D3GroupBar = <
     children,
     ...rest
 }: AddSVGProps<D3GroupBar<Datum, X0Scale, X1Scale>, SVGRectElement>) => {
-    const { schema } = useD3GraphSceneContext();
+    const { schema, options } = useD3GraphSceneContext();
+    const { graphSpace } = new GraphOptionsManager(options)
     const tooltipSpec = schema?.spec.getTooltip('graph');
     const barWidth = getScaleBandwidth(x1Scale);
     const groupData = d3Groups(data, d => d['period']);
@@ -68,10 +72,8 @@ export const D3GroupBar = <
         showTooltip
     } = useTooltip<Datum>();
     const {
-        containerRef,
         TooltipInPortal
     } = useTooltipInPortal({
-        scroll: true,
         detectBounds: true
     });
 
@@ -108,7 +110,6 @@ export const D3GroupBar = <
 
     return (
         <D3Group
-            ref={containerRef}
             top={top}
             left={left}
             className={mergeClass('d3-group-bar', className)}
@@ -152,7 +153,7 @@ export const D3GroupBar = <
 
                                         }}
                                     />
-                                    <D3text
+                                    <D3Text
                                         key={`d3-bar-text-${barGroup.index}-${bar.index}-${bar.key}`}
                                         x={x + width / 2}
                                         y={y - 10}
@@ -162,27 +163,38 @@ export const D3GroupBar = <
                                         fontSize={14}
                                     >
                                         {value}
-                                    </D3text>
+                                    </D3Text>
                                 </React.Fragment>
                             })
                         }
                     </D3Group>
                 ))
             }
-
             {
                 tooltipOpen && tooltipData && (
-                    <div>
-                        <TooltipInPortal
-                            top={tooltipTop}
-                            left={tooltipLeft}
-                        >
-                            <TooltipRenderer
-                                data={tooltipData}
-                                spec={tooltipSpec}
-                            />
-                        </TooltipInPortal>
-                    </div>
+                    <TooltipInPortal
+                        top={tooltipTop}
+                        left={tooltipLeft}
+                    >
+                        <TooltipRenderer
+                            data={tooltipData}
+                            spec={tooltipSpec}
+                        />
+                    </TooltipInPortal>
+                )
+            }
+            {
+                tooltipOpen && tooltipData && (
+                    <g>
+                        <D3Line
+                            from={{ x: 0, y: yScale(tooltipData.amount) }}
+                            to={{ x: graphSpace.shape.width, y: yScale(tooltipData.amount) }}
+                            stroke={colorScale(tooltipData.type)}
+                            strokeWidth={1}
+                            pointerEvents="none"
+                            strokeDasharray={DEFAULT_GRID_DASHARRAY}
+                        />
+                    </g>
                 )
             }
         </D3Group>

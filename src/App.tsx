@@ -35,7 +35,7 @@ const data = [
     "insurer_id": "d1473906-d137-085e-9010-4f6d36df0912",
     "insurer_bgcolor": "#DBA39A",
     "network_identifier": "ANN",
-    "amount": 1
+    "amount": 100
   },
   {
     "period": "Anthem MA",

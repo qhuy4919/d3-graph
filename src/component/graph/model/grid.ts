@@ -13,7 +13,7 @@ export type GridSpec = {
     offset?: number,
     opacity: number,
 }
-export type D3GridOrientation = 'row' | 'col';
+export type D3GridOrientation = 'horizontal' | 'vertical';
 //const
 export const DEFAULT_GRID_STROKE_WIDTH = '1px';
 export const DEFAULT_GRID_STROKE = '#f8f8f8';

@@ -1,5 +1,6 @@
+import { BaseType, select } from "d3-selection";
 import { DefaultGraphColorSchema } from "../theme";
-import { AnyD3Scale, D3DataSchema, Datum, DEFAULT_FONT_STYLE, DEFAULT_TEXT_SIZE, ScaleInput } from "./model";
+import { AnyD3Scale, AxisScale, D3DataSchema, D3Selection, Datum, DEFAULT_FONT_STYLE, DEFAULT_TEXT_SIZE, ScaleInput } from "./model";
 
 export function D3reduceData<ChartData extends Record<string, unknown>>(
     data: ChartData[],
@@ -32,7 +33,7 @@ export function mergeClass(...args: (boolean | string | undefined | null)[]) {
 export const getTextWidth = (
     text: string,
     maxWidth: number,
-    fontSize = DEFAULT_TEXT_SIZE,
+    fontSize: React.CSSProperties['fontSize'],
     fontStyle = DEFAULT_FONT_STYLE
 ) => {
     const a = document.createElement('canvas');
@@ -72,13 +73,49 @@ export function getScaleTicks<Scale extends AnyD3Scale>(
 
 
 }
-export function getScaleBandwidth(scale: AnyD3Scale) {
+export function getScaleBandwidth(scale: AnyD3Scale | AxisScale) {
     if (!scale) return 0;
     if ('bandwidth' in scale) {
-        return scale.bandwidth();
+        return scale.bandwidth?.() ?? 0;
     }
 
     const range = scale.range();
     const domain = scale.domain();
     return Math.abs(range[range.length - 1] - range[0]) / domain.length;
+}
+
+
+//style
+export function stringifyStyling(style: React.CSSProperties) {
+    if (!style) return '';
+    return Object.keys(style).reduce((acc, key) => (
+        acc + key.split(/(?=[A-Z])/).join('-').toLowerCase() + ':' + style[key as keyof React.CSSProperties] + ';'
+    ), '');
+}
+
+export function truncateLabel(
+    text: D3Selection<BaseType, unknown, BaseType, Datum>,
+    width: number = 0,
+    fontSize: number = 12,
+) {
+    const truncateText = '...';
+
+
+    text.each(function () {
+        let labelName = select(this).text();
+        const textWidth = getTextWidth(labelName, width, fontSize);
+
+        if (textWidth >= width) {
+            const truncateLength =
+                Math.round((textWidth - width) / fontSize) +
+                truncateText.length;
+
+
+            labelName =
+                labelName.slice(0, labelName.length - truncateLength) +
+                truncateText;
+        }
+
+        select(this).text(labelName)
+    })
 }

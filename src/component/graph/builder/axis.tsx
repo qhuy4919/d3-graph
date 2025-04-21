@@ -38,11 +38,21 @@ export class AxisBuilder {
         return this;
     }
 
+    public title(value: string) {
+        this.spec.title = value;
+        return this;
+    }
+
+    public titleStyle(value: React.CSSProperties) {
+        this.spec.titleStyle = {
+            ...this.spec.titleStyle,
+            ...value,
+        }
+        return this;
+    }
+
     public build() {
         return this.spec;
     }
-
-
-
 }
 

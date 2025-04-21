@@ -24,10 +24,11 @@ export type ViewSize = {
 }
 
 export const defaultChartOptionPadding: GraphPadding = {
-    top: 20,
-    right: 20,
-    bottom: 50,
-    left: 50,
+    top: 40,
+    //Make sure min bottom, left and right are below 100 for axis label spacing
+    right: 80,
+    bottom: 80,
+    left: 80,
 }
 export const getDefaultChartOptions = (): ChartOptions => ({
     width: 0,
@@ -48,5 +49,6 @@ export type ChartOptions = {
 export type D3Selection<
     T extends BaseType = BaseType,
     D extends Record<string, unknown> | unknown = Datum,
-    X extends Record<string, unknown> | undefined = undefined
-> = Selection<T | null, D, T | null, X>;
+    X extends BaseType = BaseType,
+    Y extends Record<string, unknown> | unknown = Datum,
+> = Selection<T | null, D, X, Y>;

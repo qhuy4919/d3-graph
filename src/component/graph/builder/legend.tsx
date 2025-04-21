@@ -24,6 +24,11 @@ export class LegendBuilder<
         return this;
     }
 
+    public label(value: string) {
+        this.spec.label = value;
+        return this;
+    }
+
     public style(style: React.CSSProperties) {
         this.spec.style = style;
         return this;

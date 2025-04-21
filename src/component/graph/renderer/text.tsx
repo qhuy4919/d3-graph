@@ -1,6 +1,6 @@
 import { D3TextProps } from "../model";
 
-export const D3text = ({
+export const D3Text = ({
     dx,
     dy,
     x = 0,

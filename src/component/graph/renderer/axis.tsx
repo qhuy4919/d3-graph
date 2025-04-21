@@ -1,12 +1,25 @@
 import { useEffect, useRef } from "react"
-import { AxisScale } from "../model"
+import {
+    AxisOrientation,
+    AxisScale,
+    D3Selection,
+    Datum,
+    DEFAULT_AXIS_LABEL_FONT_SIZE
+} from "../model"
 import { D3AxisSpec } from "../spec"
-import { mergeClass } from "../util"
+import {
+    getScaleBandwidth,
+    getTextWidth,
+    mergeClass,
+    stringifyStyling,
+    truncateLabel
+} from "../util"
 import { D3Group } from "./group"
-import { select } from "d3-selection"
+import { BaseType, select } from "d3-selection"
 import { axisBottom, axisLeft, axisRight, axisTop } from "d3-axis"
 import { useD3GraphSceneContext } from "../context"
 import { ScaleRenderer } from "./scale"
+import { GraphOptionsManager } from "../builder"
 
 export type AxisRenderer = {
     spec: D3AxisSpec
@@ -18,19 +31,52 @@ export const AxisRenderer = ({
 
     const {
         width = 0,
-        height = 0
+        height = 0,
     } = options;
 
     const {
         className,
         transform,
-    } = spec
+        orient,
+        title,
+        titleStyle,
+        scale,
+        labelFontSize = DEFAULT_AXIS_LABEL_FONT_SIZE
+    } = spec;
+
+    const {
+        fontSize: titleFontSize = DEFAULT_AXIS_LABEL_FONT_SIZE,
+    } = titleStyle
 
     const axisRef = useRef<SVGGElement>(null);
 
+    const scaleName = scale;
+    const axisScale = ScaleRenderer(schema?.spec.getScale(scaleName)) as AxisScale;
+
+
+    const {
+        paddingLeft,
+        paddingBottom,
+        paddingRight,
+        paddingTop,
+        graphSpace: {
+            shape: {
+                height: graphHeight,
+                width: graphWidth
+            }
+        }
+    } = new GraphOptionsManager(options);
+
+    const {
+        axisLabelSpacing,
+        tickLabelSpacing,
+    } = getSpacingRatio(orient);
+
+    const labelWidth = getTextWidth(title, axisLabelSpacing, titleFontSize)
+
+
     const axisBackbone = ({
         orient,
-        scale,
         ticks = 5,
         tickPadding,
     }: D3AxisSpec) => {
@@ -51,8 +97,7 @@ export const AxisRenderer = ({
             default:
                 throw new Error('Invalid axis orientation')
         }
-        const scaleName = scale;
-        const axisScale = ScaleRenderer(schema?.spec.getScale(scaleName)) as AxisScale;
+
         if (!axisScale) throw new Error('axis scale error!');
 
         return axis(axisScale)
@@ -60,12 +105,102 @@ export const AxisRenderer = ({
             .tickPadding(tickPadding)
     };
 
+    function getSpacingRatio(orient: AxisOrientation) {
+
+        switch (orient) {
+            case 'bottom':
+                return {
+                    axisLabelSpacing: paddingBottom / 2,
+                    tickLabelSpacing: paddingBottom / 2,
+                }
+            case 'top':
+                return {
+                    axisLabelSpacing: paddingTop / 2,
+                    tickLabelSpacing: paddingTop / 2,
+                }
+            case 'left':
+                return {
+                    axisLabelSpacing: paddingLeft / 2,
+                    tickLabelSpacing: paddingLeft / 2,
+                }
+            case 'right':
+                return {
+                    axisLabelSpacing: paddingRight / 2,
+                    tickLabelSpacing: paddingRight / 2,
+                }
+            default:
+                throw new Error('Invalid axis orientation')
+        }
+
+    }
+
+    function transformLabel(orient: AxisOrientation) {
+        const fontSize = typeof titleFontSize === 'string'
+            ? parseFloat(titleFontSize)
+            : titleFontSize;
+
+        switch (orient) {
+            case 'bottom':
+                return `translate(
+                    ${graphWidth / 2}, 
+                    ${axisLabelSpacing + fontSize})
+                `
+            case 'top':
+                return `translate(
+                    ${graphWidth / 2}, 
+                    ${-graphHeight - fontSize})
+                `
+            case 'left':
+                return `translate
+                (${-axisLabelSpacing - fontSize}, 
+                ${graphHeight / 2 - labelWidth}), 
+                rotate(-90)
+            `
+            case 'right':
+                return `translate
+                (${axisLabelSpacing + fontSize}, 
+                ${graphHeight / 2 - labelWidth}), 
+                rotate(90)
+            `
+            default:
+                throw new Error('Invalid axis orientation')
+        }
+    }
+
+    function truncateText(selection: D3Selection<BaseType, unknown, BaseType, Datum>) {
+        let bandWidth = 0;
+        //Xử lý truncate đặc biệt với những scale không có band width
+        if (axisScale.bandwidth?.()) {
+            bandWidth = getScaleBandwidth(axisScale)
+        }
+        else {
+            bandWidth = tickLabelSpacing
+        }
+
+        const fontSize = typeof labelFontSize === 'string'
+            ? parseFloat(labelFontSize)
+            : labelFontSize;
+
+        truncateLabel(selection, bandWidth, fontSize);
+    }
+
 
     useEffect(() => {
         if (axisRef) {
-            select(axisRef.current)
+            const axisSelection = select<BaseType, Datum>(axisRef.current)
                 .call(d => axisBackbone(spec)(d))
                 .attr('transform', transform)
+
+            axisSelection
+                .append('text')
+                .text(title)
+                .classed('axis-label', true)
+                .attr('transform', transformLabel(orient))
+                .attr('style', stringifyStyling(titleStyle));
+
+            axisSelection.selectAll('.tick text')
+                .call(truncateText);
+
         }
     }, [axisRef])
 

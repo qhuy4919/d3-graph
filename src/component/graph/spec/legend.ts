@@ -15,6 +15,7 @@ export class D3LegendSpec<
     private _colorScale: Scale
     //
     private _shape: LegendShape
+    private _label: string
     private _shapeProps: LegendShapeProps
     private _labelProps: LegendLabelProps
 
@@ -58,6 +59,14 @@ export class D3LegendSpec<
 
     set colorScale(value: Scale) {
         this.colorScale = value;
+    }
+
+    get label() {
+        return this._label
+    }
+
+    set label(value: string) {
+        this._label = value;
     }
 
     get shape(): LegendShape {

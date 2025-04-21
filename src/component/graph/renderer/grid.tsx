@@ -37,7 +37,7 @@ export const GridRenderer = ({
 
     useEffect(() => {
         if (gridRef) {
-            if (orient === 'row') {
+            if (orient === 'horizontal') {
                 select(gridRef.current)
                     .selectAll('line.grid-row-line')
                     .data(tickData)
@@ -54,7 +54,7 @@ export const GridRenderer = ({
                     .style('stroke-dasharray', strokeDasharray);
             }
 
-            else if (orient === 'col') {
+            else if (orient === 'vertical') {
                 select(gridRef.current)
                     .selectAll('line.grid-col-line')
                     .data(tickData)

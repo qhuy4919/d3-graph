@@ -2,7 +2,7 @@ import { D3GraphSceneBuilder, GraphOptionsManager, GridBuilder, LegendBuilder, T
 import { AxisBuilder } from "../../builder/axis"
 import { ScaleBuilder } from "../../builder/scale"
 import { D3Graph } from '../../graph';
-import { D3BaseGraph, D3ScaleOutput, Datum, PickD3Scale } from "../../model";
+import { D3BaseGraph, D3ScaleOutput, Datum, defaultAxisLabelStyle, PickD3Scale } from "../../model";
 import { D3GroupBar } from "../../renderer";
 import { max as d3Max } from 'd3-array'
 import { ScaleRenderer } from "../../renderer/scale";
@@ -39,10 +39,14 @@ export const BarChartBuilder = <Data extends Datum>({
     chart
         .axes(
             new AxisBuilder('amountScale', 'left')
-                .className('axis-y'),
+                .className('axis-y')
+                .title('Number of Members')
+                .titleStyle(defaultAxisLabelStyle),
             new AxisBuilder('periodScale', 'bottom')
                 .transform(`translate(0, ${graphHeight})`)
                 .className('axis-x')
+                .title('Health Plan')
+                .titleStyle(defaultAxisLabelStyle),
         )
         .scale(
             amountScale,
@@ -51,8 +55,8 @@ export const BarChartBuilder = <Data extends Datum>({
             colorScale
         )
         .grid(
-            new GridBuilder('amountScale', 'row'),
-            new GridBuilder('periodScale', 'col'),
+            new GridBuilder('amountScale', 'horizontal'),
+            new GridBuilder('periodScale', 'vertical'),
         )
         .tooltip(
             new TooltipBuilder(
@@ -71,8 +75,8 @@ export const BarChartBuilder = <Data extends Datum>({
                 .style({
                     display: 'flex',
                     maxWidth: graphWidth,
-                    padding: '0 15px',
                     flexWrap: 'wrap',
+                    fontSize: '12px',
                 })
                 .shapeAttr({
                     shapeWidth: '12px',
@@ -81,13 +85,11 @@ export const BarChartBuilder = <Data extends Datum>({
                 })
                 .labelAttr({
                     style: {
-                        fontSize: '12px',
                         display: 'flex',
                         alignItems: 'center'
                     }
                 })
         )
-
     return chart;
 }
 

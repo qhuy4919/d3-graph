@@ -11,10 +11,11 @@ export const StyledD3Tooltip = styled.div`
     column-gap: 10px;
     row-gap: 10px;
     .tooltip-label {
+        color: #a1a1aa;
         text-align: end;
     }
     .tooltip-value {
-        font-weight: bold;
+        color: #3c3e46;
     }
 `;
 

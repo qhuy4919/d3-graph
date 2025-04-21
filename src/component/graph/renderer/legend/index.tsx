@@ -1,14 +1,20 @@
+import { GraphOptionsManager } from "../../builder"
 import { useD3GraphSceneContext } from "../../context"
 import { D3LegendSpec, D3ScaleSpec } from "../../spec"
 import { mergeClass } from "../../util"
 import { ScaleRenderer } from "../scale"
 import { D3LegendLabel } from "./label"
 import { LegendItem } from "./legend-item"
-import { D3LegendShape } from "./shape"
+import { D3LegendShape } from "./shape";
+import styled from 'styled-components';
 
 export type LegendRenderer = {
     spec: D3LegendSpec<D3ScaleSpec>
 }
+export const StyledLegendSectionLabel = styled.span`
+    font-weight: bold;
+`;
+
 export const LegendRenderer = ({
     spec
 }: LegendRenderer) => {
@@ -18,10 +24,13 @@ export const LegendRenderer = ({
         className,
         style,
         shape,
+        label = 'Legend',
         shapeProps,
         labelProps,
     } = spec;
 
+    const { options } = useD3GraphSceneContext();
+    const { paddingLeft } = new GraphOptionsManager(options);
     const colorScale = ScaleRenderer<'ordinal', string>(colorScaleSpec);
     const domain = 'domain' in scale ? scale.domain : []
     const labelList = [... new Set(domain)] as string[];
@@ -34,8 +43,12 @@ export const LegendRenderer = ({
 
     return <div
         className={mergeClass('d3-legend', className)}
-        style={style}
+        style={{
+            ...style,
+            marginLeft: paddingLeft
+        }}
     >
+        <StyledLegendSectionLabel style={style}>{label}:</StyledLegendSectionLabel>
         {
             labelList.map((label, i) => (
                 <LegendItem
