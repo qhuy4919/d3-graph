@@ -36,14 +36,16 @@ export const GridRenderer = ({
     const tickData = getScaleTicks(gridScale)
 
     useEffect(() => {
-        if (gridRef) {
+        if (gridRef.current) {
             if (orient === 'horizontal') {
-                select(gridRef.current)
+                const gridElement = select(gridRef.current);
+                gridElement.selectAll('*').remove();
+                gridElement
                     .selectAll('line.grid-row-line')
                     .data(tickData)
                     .enter()
                     .append('line')
-                    .attr('class', 'grid-row-line')
+                    .attr('class', 'd3-grid grid-row-line')
                     .attr('x1', 0)
                     .attr('x2', shape?.width ?? 0)
                     .attr('y1', (d) => gridScale(d))
@@ -52,15 +54,18 @@ export const GridRenderer = ({
                     .attr('stroke-width', strokeWidth)
                     .style('opacity', opacity)
                     .style('stroke-dasharray', strokeDasharray);
+
             }
 
             else if (orient === 'vertical') {
-                select(gridRef.current)
+                const gridElement = select(gridRef.current);
+                gridElement.selectAll('*').remove();
+                gridElement
                     .selectAll('line.grid-col-line')
                     .data(tickData)
                     .enter()
                     .append('line')
-                    .attr('class', 'grid-col-line')
+                    .attr('class', 'd3-grid grid-col-line')
                     .attr('y1', 0)
                     .attr('y2', shape?.height ?? 0)
                     .attr('x1', (d) => gridScale(d))
@@ -72,6 +77,7 @@ export const GridRenderer = ({
             }
 
         }
+
     }, [
         gridRef,
         gridScale,
@@ -82,7 +88,7 @@ export const GridRenderer = ({
         stroke,
         strokeDasharray,
         strokeWidth,
-        tickData
+        tickData,
     ]);
 
     return <D3Group
@@ -90,7 +96,6 @@ export const GridRenderer = ({
         className={mergeClass(`d3-grid_${orient}`, className)}
 
     >
-
     </D3Group>
 }
 

@@ -4,7 +4,8 @@ import {
     AxisScale,
     D3Selection,
     Datum,
-    DEFAULT_AXIS_LABEL_FONT_SIZE
+    DEFAULT_AXIS_LABEL_FONT_SIZE,
+    DEFAULT_AXIS_TOOLTIP_KEY
 } from "../model"
 import { D3AxisSpec } from "../spec"
 import {
@@ -20,6 +21,9 @@ import { axisBottom, axisLeft, axisRight, axisTop } from "d3-axis"
 import { useD3GraphSceneContext } from "../context"
 import { ScaleRenderer } from "./scale"
 import { GraphOptionsManager } from "../builder"
+import { useTooltip, useTooltipInPortal } from "@visx/tooltip"
+import { localPoint } from "@visx/event"
+import { TooltipRenderer } from "./tooltip"
 
 export type AxisRenderer = {
     spec: D3AxisSpec
@@ -50,9 +54,10 @@ export const AxisRenderer = ({
 
     const axisRef = useRef<SVGGElement>(null);
 
+    const axistooltipSpec = schema?.spec.getTooltip('axis');
     const scaleName = scale;
     const axisScale = ScaleRenderer(schema?.spec.getScale(scaleName)) as AxisScale;
-
+    const axisLabelClassName = 'axis-label';
 
     const {
         paddingLeft,
@@ -66,6 +71,21 @@ export const AxisRenderer = ({
             }
         }
     } = new GraphOptionsManager(options);
+
+    const {
+        tooltipOpen,
+        tooltipLeft,
+        tooltipTop,
+        tooltipData,
+        hideTooltip,
+        showTooltip
+    } = useTooltip<Record<string, string>>();
+    const {
+        TooltipInPortal
+    } = useTooltipInPortal({
+        detectBounds: true
+    });
+
 
     const {
         axisLabelSpacing,
@@ -194,15 +214,33 @@ export const AxisRenderer = ({
             axisSelection
                 .append('text')
                 .text(title)
-                .classed('axis-label', true)
+                .classed(axisLabelClassName, true)
                 .attr('transform', transformLabel(orient))
                 .attr('style', stringifyStyling(titleStyle));
 
-            axisSelection.selectAll('.tick text')
-                .call(truncateText);
+            axisSelection
+                .selectAll('.tick text')
+                .call(truncateText)
+                .on('mouseenter', function (e) {
+                    const label = select(this).datum() as string;
+                    const eventSvgCoords = localPoint(e);
+                    showTooltip({
+                        tooltipData: { [DEFAULT_AXIS_TOOLTIP_KEY]: label },
+                        tooltipTop: eventSvgCoords?.y ?? 0,
+                        tooltipLeft: eventSvgCoords?.x ?? 0,
+                    });
+                })
+                .on('mouseleave', function () {
+                    hideTooltip()
+                });
 
         }
-    }, [axisRef])
+
+        return () => {
+            select<BaseType, Datum>(`.${axisLabelClassName}`).remove()
+
+        }
+    }, [axisRef, spec])
 
     return <D3Group
         innerRef={axisRef}
@@ -210,6 +248,19 @@ export const AxisRenderer = ({
         height={height}
         width={width}
     >
+        {
+            tooltipOpen && tooltipData && (
+                <TooltipInPortal
+                    top={tooltipTop}
+                    left={tooltipLeft}
+                >
+                    <TooltipRenderer
+                        data={tooltipData}
+                        spec={axistooltipSpec}
+                    />
+                </TooltipInPortal>
+            )
+        }
     </D3Group>
 }
 

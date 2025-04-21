@@ -1,13 +1,27 @@
-import { D3GraphSceneBuilder, GraphOptionsManager, GridBuilder, LegendBuilder, TooltipBuilder } from "../../builder"
-import { AxisBuilder } from "../../builder/axis"
-import { ScaleBuilder } from "../../builder/scale"
-import { D3Graph } from '../../graph';
-import { D3BaseGraph, D3ScaleOutput, Datum, defaultAxisLabelStyle, PickD3Scale } from "../../model";
+import {
+    D3GraphSceneBuilder,
+    GraphOptionsManager,
+    GridBuilder,
+    LegendBuilder,
+    TooltipBuilder
+} from "../../builder"
+import {
+    D3BaseGraph,
+    D3ScaleOutput,
+    Datum,
+    DEFAULT_AXIS_TOOLTIP_KEY,
+    DEFAULT_LEGEND_TOOLTIP_KEY,
+    defaultAxisLabelStyle,
+    PickD3Scale
+} from "../../model";
 import { D3GroupBar } from "../../renderer";
 import { max as d3Max } from 'd3-array'
 import { ScaleRenderer } from "../../renderer/scale";
 import { getScaleBandwidth } from "../../util";
 import { D3ScaleSpec } from "../../spec";
+import { AxisBuilder } from "../../builder/axis"
+import { ScaleBuilder } from "../../builder/scale"
+import { D3Graph } from '../../graph';
 
 export const BarChartBuilder = <Data extends Datum>({
     data,
@@ -65,6 +79,24 @@ export const BarChartBuilder = <Data extends Datum>({
                     type: 'Type',
                     amount: 'Amount',
                     period: 'On'
+                },
+                {
+                }
+            ),
+            new TooltipBuilder(
+                'axis',
+                {
+                    [DEFAULT_AXIS_TOOLTIP_KEY]: '',
+
+                },
+                {
+                    [DEFAULT_AXIS_TOOLTIP_KEY]: (value) => value + '123'
+                }
+            ),
+            new TooltipBuilder(
+                'legend',
+                {
+                    [DEFAULT_LEGEND_TOOLTIP_KEY]: '',
                 },
                 {
                 }

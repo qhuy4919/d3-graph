@@ -20,11 +20,11 @@ export const StyledD3Tooltip = styled.div`
 `;
 
 
-export type TooltipRenderer<Data extends Datum> = {
+export type TooltipRenderer<Data extends Record<string, string>> = {
     data: Data,
     spec?: Pick<D3TooltipSpec, 'labelSchema' | 'valueSchema'>
 }
-export const TooltipRenderer = <Data extends Datum>({
+export const TooltipRenderer = <Data extends Record<string, string>>({
     data,
     spec
 }: TooltipRenderer<Data>) => {

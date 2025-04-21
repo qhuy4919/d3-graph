@@ -1,6 +1,8 @@
+import { Button } from 'antd';
 import { D3BarChart } from './component';
 import { defaultChartOptionPadding } from './component/graph/model';
 import { D3reduceData } from './component/graph/util';
+import { useState } from 'react';
 
 
 function App() {
@@ -11,16 +13,25 @@ function App() {
     color: "network_bgcolor",
   });
 
+  const [customWidth, setCustomWidth] = useState(1000);
+
   return (
-    <D3BarChart
-      data={normalizeData}
-      options={{
-        height: 500,
-        width: 1200,
-        padding: defaultChartOptionPadding
-      }
-      }
-    />
+    <div style={{ width: '100vw', height: '100vh' }}>
+      <Button
+        onClick={() => { setCustomWidth(prev => prev + 100) }}
+      >Set Width</Button>
+      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+        <D3BarChart
+          data={normalizeData}
+          options={{
+            height: 500,
+            width: customWidth,
+            padding: defaultChartOptionPadding
+          }
+          }
+        />
+      </div>
+    </div>
   )
 }
 
