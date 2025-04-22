@@ -14,16 +14,16 @@ import {
     defaultAxisLabelStyle,
     PickD3Scale
 } from "../../model";
-import { D3GroupBar } from "../../renderer";
+import { D3StackedBar } from "../../renderer";
 import { max as d3Max } from 'd3-array'
 import { ScaleRenderer } from "../../renderer/scale";
-import { getScaleBandwidth } from "../../util";
+import { getScaleBandwidth, stackedTransformData } from "../../util";
 import { D3ScaleSpec } from "../../spec";
 import { AxisBuilder } from "../../builder/axis"
 import { ScaleBuilder } from "../../builder/scale"
 import { D3Graph } from '../../graph';
 
-export const BarGraphBuilder = <Data extends Datum>({
+export const StackedBarGraphBuilder = <Data extends Datum>({
     data,
     options
 }: D3BaseGraph<Data>) => {
@@ -32,9 +32,11 @@ export const BarGraphBuilder = <Data extends Datum>({
     const {
         shape: { width: graphWidth = 0, height: graphHeight = 0 }
     } = graphSpace;
+    const groupedStackedData = stackedTransformData(data)
+    const maxTick = d3Max(groupedStackedData, d => d._total);
 
     const amountScale = new ScaleBuilder('amountScale', 'linear')
-        .domain([0, (d3Max(data, d => d.amount) ?? 0)])
+        .domain([0, maxTick])
         .rangeRound([graphHeight, 0])
         .nice()
 
@@ -90,7 +92,6 @@ export const BarGraphBuilder = <Data extends Datum>({
 
                 },
                 {
-                    [DEFAULT_AXIS_TOOLTIP_KEY]: (value) => value + '123'
                 }
             ),
             new TooltipBuilder(
@@ -125,8 +126,8 @@ export const BarGraphBuilder = <Data extends Datum>({
     return chart;
 }
 
-export const D3BarGraph = <Data extends Datum>(props: D3BaseGraph<Data>) => {
-    const chart = BarGraphBuilder(props);
+export const D3StackedBarGraph = <Data extends Datum>(props: D3BaseGraph<Data>) => {
+    const chart = StackedBarGraphBuilder(props);
     const {
         data,
         options,
@@ -166,16 +167,15 @@ export const D3BarGraph = <Data extends Datum>(props: D3BaseGraph<Data>) => {
         {...props}
         builder={chart}
     >
-        <D3GroupBar<
+        <D3StackedBar<
             Datum,
             PickD3Scale<'band'>,
-            PickD3Scale<'band'>
+            PickD3Scale<'linear', number>
         >
             data={data}
             width={shape.width}
             height={shape.height}
-            x0Scale={periodScale}
-            x1Scale={typeScale}
+            xScale={periodScale}
             yScale={amountScale}
             colorScale={colorScale}
             signalListener={signalListener}

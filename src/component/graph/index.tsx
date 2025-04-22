@@ -1,5 +1,5 @@
 export { D3Graph } from './graph';
 export {
-    BarChartBuilder,
-    D3BarChart,
+    D3BarGraph,
+    D3StackedBarGraph,
 } from './schema';

@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { D3BarChart } from './component';
+import { D3BarGraph, D3StackedBarGraph } from './component';
 import { defaultChartOptionPadding } from './component/graph/model';
 import { D3reduceData } from './component/graph/util';
 import { useState } from 'react';
@@ -14,22 +14,60 @@ function App() {
   });
 
   const [customWidth, setCustomWidth] = useState(1000);
+  const [customHeight, setCustomHeight] = useState(400);
+  const [type, setType] = useState('stacked');
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <Button
-        onClick={() => { setCustomWidth(prev => prev + 100) }}
-      >Set Width</Button>
+        onClick={() => {
+          setCustomWidth(prev => prev + 100);
+          setCustomHeight(prev => prev + 50)
+        }}
+      >
+        Zoom in
+      </Button>
+      <Button
+        onClick={() => {
+          setCustomWidth(prev => prev - 100);
+          setCustomHeight(prev => prev - 50)
+        }}
+      >
+        Zoom out
+      </Button>
+      <Button
+        onClick={() => setType('group')}
+      >
+        Switch to Group
+      </Button>
+      <Button
+        onClick={() => setType('stacked')}
+      >
+        Switch to Stacked
+      </Button>
       <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-        <D3BarChart
-          data={normalizeData}
-          options={{
-            height: 500,
-            width: customWidth,
-            padding: defaultChartOptionPadding
-          }
-          }
-        />
+        {
+          type === 'group'
+            ? <D3BarGraph
+              data={normalizeData}
+              options={{
+                height: customHeight,
+                width: customWidth,
+                padding: defaultChartOptionPadding
+              }
+              }
+            />
+            : <D3StackedBarGraph
+              data={normalizeData}
+              options={{
+                height: customHeight,
+                width: customWidth,
+                padding: defaultChartOptionPadding
+              }
+              }
+            />
+        }
+
       </div>
     </div>
   )
@@ -46,7 +84,7 @@ const data = [
     "insurer_id": "d1473906-d137-085e-9010-4f6d36df0912",
     "insurer_bgcolor": "#DBA39A",
     "network_identifier": "ANN",
-    "amount": 100
+    "amount": 1
   },
   {
     "period": "Anthem MA",

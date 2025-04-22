@@ -80,3 +80,5 @@ export type ScaleInput<Scale extends AnyD3Scale> = Parameters<Scale>[0];
 //any scale casting type
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyBandScale = PickD3Scale<'band', any, any>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type PositionScale = D3Scale<number, any, any>

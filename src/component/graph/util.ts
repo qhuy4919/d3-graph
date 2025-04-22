@@ -1,7 +1,17 @@
 import { BaseType, select } from "d3-selection";
+import { groups as d3Groups } from 'd3-array'
 import { DefaultGraphColorSchema } from "../theme";
-import { AnyD3Scale, AxisScale, D3DataSchema, D3Selection, Datum, DEFAULT_FONT_STYLE, DEFAULT_TEXT_SIZE, ScaleInput } from "./model";
-
+import {
+    AnyD3Scale,
+    AxisScale,
+    D3DataSchema,
+    D3Selection,
+    Datum,
+    DEFAULT_FONT_STYLE,
+    ScaleInput,
+    STACK_OFFSETS,
+    STACK_ORDERS,
+} from "./model";
 export function D3reduceData<ChartData extends Record<string, unknown>>(
     data: ChartData[],
     dataSchema: D3DataSchema
@@ -118,4 +128,36 @@ export function truncateLabel(
 
         select(this).text(labelName)
     })
+}
+
+//shape util
+export function stackOrder(order?: keyof typeof STACK_ORDERS) {
+    return (order && STACK_ORDERS[order]) || STACK_ORDERS.none;
+}
+export function stackOffset(offset?: keyof typeof STACK_OFFSETS) {
+    return (offset && STACK_OFFSETS[offset]) || STACK_OFFSETS.none;
+}
+
+export function stackedTransformData<Data extends Datum>(data: Data[]) {
+    return d3Groups(data, d => d.period).reduce(
+        (acc: Data[], d: [string, Data[]]) => {
+            let total = 0;
+            const newEntry = {} as Data;
+
+            (d?.[1] ?? []).forEach((entry) => {
+                if (typeof entry.type === 'string')
+                    Object.assign(newEntry, { [entry.type]: entry })
+                total += entry.amount;
+
+            });
+            Object.assign(newEntry, { _dataKey: d[0] })
+            Object.assign(newEntry, { _total: total })
+
+            return [
+                ...acc,
+                newEntry
+            ]
+
+        }, []
+    )
 }

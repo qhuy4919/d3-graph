@@ -6,4 +6,6 @@ export {
     D3Bar,
     D3GroupBar,
     D3GroupBarHorizontal,
+    D3Line,
+    D3StackedBar,
 } from './shape';
