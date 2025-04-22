@@ -11,11 +11,17 @@ import {
     PositionScale,
     AnyBandScale,
 } from '../../model'
-import { getScaleBandwidth, mergeClass, stackedTransformData, stackOffset, stackOrder } from '../../util';
+import {
+    getScaleBandwidth,
+    mergeClass,
+    stackedTransformData,
+    stackOffset,
+    stackOrder,
+} from '../../util';
 import { D3Group } from '../group';
 import { D3Bar } from './bar';
-import { stack as d3Stack } from 'd3-shape';
-import { union as d3Union, groups as d3Groups } from 'd3-array'
+import { stack as d3Stack, SeriesPoint } from 'd3-shape';
+import { union as d3Union, } from 'd3-array'
 import { D3Text } from '../text';
 import { useTooltip, useTooltipInPortal } from '@visx/tooltip';
 import { useD3GraphSceneContext } from '../../context';
@@ -24,6 +30,10 @@ import { D3Line } from './line';
 import { GraphOptionsManager } from '../../builder';
 import { localPoint } from '@visx/event';
 
+type D3StackToolTipData<Datum extends D3Datum> = {
+    key: string,
+    barStack: SeriesPoint<Datum>
+};
 export type D3StackedBar<
     Datum extends D3Datum,
     XScale extends AnyBandScale = AnyBandScale,
@@ -63,13 +73,13 @@ export const D3StackedBar = <
     const tooltipSpec = schema?.spec.getTooltip('graph');
     const barWidth = getScaleBandwidth(xScale);
 
-    const stack = d3Stack<Datum>();
-    const groupedStackedData = stackedTransformData(data)
-    if (order) stack.order(stackOrder(order));
-    if (offset) stack.offset(stackOffset(offset));
-    stack.value((d, k) => d?.[k]?.amount ?? 0);
-    stack.keys(d3Union(data.map(d => d.type)));
-    const stacks = stack(groupedStackedData);
+    const stackBuilder = d3Stack<Datum>();
+    const groupedData = stackedTransformData(data)
+    if (order) stackBuilder.order(stackOrder(order));
+    if (offset) stackBuilder.offset(stackOffset(offset));
+    stackBuilder.value((d, k) => d?.[k]?.amount ?? 0);
+    stackBuilder.keys(d3Union(data.map(d => d.type)));
+    const stacks = stackBuilder(groupedData);
 
     const {
         barClick,
@@ -82,7 +92,7 @@ export const D3StackedBar = <
         tooltipData,
         hideTooltip,
         showTooltip
-    } = useTooltip<Datum>();
+    } = useTooltip<D3StackToolTipData<Datum>>();
     const {
         TooltipInPortal
     } = useTooltipInPortal({
@@ -125,11 +135,11 @@ export const D3StackedBar = <
             left={left}
             className={mergeClass('d3-group-bar', className)}
         >
-            {barStacks.map((barStack) => {
+            {/*check `i` to make sure that total value just render once in single stack bar */}
+            {barStacks.map((barStack, i) => {
                 return barStack.bars.map((stack) => {
                     const { key } = stack;
                     const { data } = stack.bar;
-                    const stackedData = data[key];
                     const total = data['_total'];
                     const stackedName = data['_dataKey'];
 
@@ -155,25 +165,31 @@ export const D3StackedBar = <
                                 onMouseMove={(e) => {
                                     const eventSvgCoords = localPoint(e);
                                     showTooltip({
-                                        tooltipData: stackedData,
+                                        tooltipData: {
+                                            key,
+                                            barStack: stack.bar
+                                        },
                                         tooltipTop: eventSvgCoords?.y ?? 0,
                                         tooltipLeft: eventSvgCoords?.x ?? 0,
                                     });
 
                                 }}
                             />
+                            {
+                                i === 0 &&
+                                <D3Text
+                                    key={`d3-bar-text-${barStack.index}-${total}`}
+                                    x={(xScale(stackedName) ?? 0) + stack.width / 2}
+                                    y={(yScale(total) ?? 0) - 10}
+                                    fill="grey"
+                                    fontWeight={'bold'}
+                                    textAnchor='middle'
+                                    fontSize={14}
+                                >
+                                    {total}
+                                </D3Text>
+                            }
 
-                            <D3Text
-                                key={`d3-bar-text-${barStack.index}-${total}`}
-                                x={(xScale(stackedName) ?? 0) + stack.width / 2}
-                                y={(yScale(total) ?? 0) - 10}
-                                fill="grey"
-                                fontWeight={'bold'}
-                                textAnchor='middle'
-                                fontSize={14}
-                            >
-                                {total}
-                            </D3Text>
 
                         </React.Fragment>
                     )
@@ -188,7 +204,7 @@ export const D3StackedBar = <
                         left={tooltipLeft}
                     >
                         <TooltipRenderer
-                            data={tooltipData}
+                            data={tooltipData.barStack.data[tooltipData.key]}
                             spec={tooltipSpec}
                         />
                     </TooltipInPortal>
@@ -198,9 +214,9 @@ export const D3StackedBar = <
                 tooltipOpen && tooltipData && (
                     <g>
                         <D3Line
-                            from={{ x: 0, y: yScale(tooltipData.amount) }}
-                            to={{ x: graphSpace.shape.width, y: yScale(tooltipData.amount) }}
-                            stroke={colorScale(tooltipData.type)}
+                            from={{ x: 0, y: yScale(tooltipData.barStack[1]) }}
+                            to={{ x: graphSpace.shape.width, y: yScale(tooltipData.barStack[1]) }}
+                            stroke={colorScale(tooltipData.key)}
                             strokeWidth={1}
                             pointerEvents="none"
                             strokeDasharray={DEFAULT_GRID_DASHARRAY}

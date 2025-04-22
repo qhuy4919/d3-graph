@@ -50,28 +50,31 @@ export const LegendRenderer = ({
     >
         <StyledLegendSectionLabel style={style}>{label}:</StyledLegendSectionLabel>
         {
-            labelList.map((label, i) => (
-                <LegendItem
-                    key={`legend-item_${label}`}
-                >
-                    <D3LegendShape
-                        shape={shape}
-                        itemIndex={i}
-                        height={shapeHeight}
-                        width={shapeWidth}
-                        style={{
-                            margin: shapeMargin
+            labelList.map((label, i) => {
+                console.log('colorScale(label)', label, colorScale(label))
+                return (
+                    <LegendItem
+                        key={`legend-item_${label}`}
+                    >
+                        <D3LegendShape
+                            shape={shape}
+                            itemIndex={i}
+                            height={shapeHeight}
+                            width={shapeWidth}
+                            style={{
+                                margin: shapeMargin
 
-                        }}
-                        label={label}
-                        fill={colorScale(label)}
-                    />
-                    <D3LegendLabel
-                        label={label}
-                        {...labelProps}
-                    />
-                </LegendItem>
-            ))
+                            }}
+                            label={label}
+                            fill={colorScale(label)}
+                        />
+                        <D3LegendLabel
+                            label={label}
+                            {...labelProps}
+                        />
+                    </LegendItem>
+                )
+            })
         }
     </div>
 

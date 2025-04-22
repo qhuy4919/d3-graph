@@ -153,6 +153,7 @@ export function stackedTransformData<Data extends Datum>(data: Data[]) {
             Object.assign(newEntry, { _dataKey: d[0] })
             Object.assign(newEntry, { _total: total })
 
+
             return [
                 ...acc,
                 newEntry

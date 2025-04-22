@@ -47,8 +47,9 @@ export const BarGraphBuilder = <Data extends Datum>({
         .domain(data.map(d => d?.type));
 
     const colorScale = new ScaleBuilder('colorScale', 'ordinal')
-        .domain(data.map(d => d?.type))
-        .range(data.map(d => d.color))
+        .domain([...new Set(data.map(d => d.type))])
+        .range([...new Set(data.map(d => d.color))]);
+
 
     chart
         .axes(
