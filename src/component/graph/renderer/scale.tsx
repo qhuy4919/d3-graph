@@ -1,6 +1,7 @@
 import { scaleBand, scaleLinear, scaleOrdinal, scaleTime } from "d3-scale";
 import { D3ScaleSpec } from "../spec";
 import { D3ScaleOutput, PickD3Scale } from "../model";
+import { extent as D3Extent } from 'd3-array';
 
 export const ScaleRenderer = <
     T extends D3ScaleSpec['type'],
@@ -42,7 +43,7 @@ export const ScaleRenderer = <
                 .range(range as string[]) as PickD3Scale<T, Output>
         case 'time':
             return scaleTime<string>()
-                .domain(domain as Iterable<Date | number>)
+                .domain(D3Extent(domain.map(d => new Date(d))) as Iterable<Date | number>)
                 .range(range as string[]) as PickD3Scale<T, Output>
         default:
             throw new Error(`Something wrong with ${name}`)

@@ -48,4 +48,3 @@ export type SignalListener<Data extends Datum = Datum> = (name: string, value: D
 export type AddSVGProps<Props, Element extends SVGElement> = Props &
     Omit<SVGProps<Element>, keyof Props>;
 
-

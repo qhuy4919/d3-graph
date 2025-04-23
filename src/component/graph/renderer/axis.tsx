@@ -57,7 +57,9 @@ export const AxisRenderer = ({
     const axistooltipSpec = schema?.spec.getTooltip('axis');
     const scaleName = scale;
     const axisScale = ScaleRenderer(schema?.spec.getScale(scaleName)) as AxisScale;
+    console.log("🚀 ~ axisScale:", schema?.spec.getScale(scaleName), axisScale)
     const axisLabelClassName = 'axis-label';
+    console.log('spec', axisScale(100))
 
     const {
         paddingLeft,

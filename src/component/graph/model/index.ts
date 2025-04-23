@@ -17,3 +17,4 @@ export * from './text';
 export * from './legend';
 export * from './style';
 export * from './tooltip';
+export * from './accessor';

@@ -4,12 +4,12 @@ import {
     LinePathConfig,
     Datum as D3Datum,
     PickD3Scale,
-    AddSVGProps,
 } from '../../model';
 import { group as d3Group } from 'd3-array';
 import { D3LinePath } from './line-path';
 import { D3Group } from '../group';
 import { mergeClass } from '../../util';
+import { curveBasis } from 'd3-shape';
 
 
 export type D3LineSeries<
@@ -29,7 +29,7 @@ export type D3LineSeries<
     /** Rendered component which is passed path props by D3LineSeries after processing. */
     PathComponent?: React.FC<Omit<React.SVGProps<SVGPathElement>, 'ref'>> | 'path';
     /** Sets the curve factory (from @visx/curve or d3-curve) for the line generator. Defaults to curveLinear. */
-    curve?: LinePathConfig['curve'];
+    curve?: LinePathConfig<Datum>['curve'];
 
     top?: number;
     left?: number;
@@ -54,7 +54,6 @@ export function D3LineSeries<
 }: D3LineSeries<XScale, YScale, ColorScale, Datum>) {
     const seriesData = d3Group(data, d => d.period);
     const groupKey = [...seriesData.keys()]
-    console.log("🚀 ~ groupKey:", groupKey)
 
     return <D3Group
         top={top}
@@ -62,20 +61,19 @@ export function D3LineSeries<
         className={mergeClass('d3-line-graph', className)}
     >
         {
-            groupKey.map((key) => {
+            groupKey.map((key, i) => {
                 const groupData = seriesData.get(key) ?? [];
-                return groupData.map(d => {
-                    console.log("🚀 ~ Object.keys ~ groupData:", groupData)
-                    return <D3LinePath
-                        curve={'curveBasis'}
-                        {...lineProps}
-                        x={xScale(new Date(d.period))}
-                        y={yScale(d.amount)}
-                        fill={colorScale(d.type)}
-                    >
+                return <D3LinePath
+                    key={`d3-line_${key}-${i}`}
+                    {...lineProps}
+                    curve={curveBasis}
+                    data={groupData}
+                // x={d => xScale((d => d.))}
+                // y={yScale(d.amount)}
+                // fill={colorScale(d.type)}
+                >
 
-                    </D3LinePath>
-                })
+                </D3LinePath>
             })
         }
     </D3Group>
