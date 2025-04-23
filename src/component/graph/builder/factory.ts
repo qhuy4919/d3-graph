@@ -1,6 +1,7 @@
-import { MarkType } from "../model"
+import { Datum, LinePathConfig, MarkType } from "../model"
+import { setNumberOrNumberAccessor } from "../util";
 import { MarkBuilder } from "./mark"
-
+import { line } from 'd3-shape';
 
 /**
  * A factory function for creating a new mark
@@ -24,3 +25,17 @@ function markWithName(markType: MarkType, name?: string) {
 export function markGroup(name?: string) {
     return markWithName(MarkType.Group, name)
 }
+
+
+/* d3 shape factory function */
+export function d3Line<Data extends Datum>({
+    x, y, curve
+}: LinePathConfig) {
+    const path = line<Data>();
+    if (x) setNumberOrNumberAccessor(path.x, x);
+    if (y) setNumberOrNumberAccessor(path.y, y);
+    if (curve) path.curve(curve);
+
+    return path;
+}
+/* End of region */

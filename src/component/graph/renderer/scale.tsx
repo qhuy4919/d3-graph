@@ -1,4 +1,4 @@
-import { scaleBand, scaleLinear, scaleOrdinal } from "d3-scale";
+import { scaleBand, scaleLinear, scaleOrdinal, scaleTime } from "d3-scale";
 import { D3ScaleSpec } from "../spec";
 import { D3ScaleOutput, PickD3Scale } from "../model";
 
@@ -39,6 +39,10 @@ export const ScaleRenderer = <
         case "ordinal":
             return scaleOrdinal<string, string>()
                 .domain(domain as string[])
+                .range(range as string[]) as PickD3Scale<T, Output>
+        case 'time':
+            return scaleTime<string>()
+                .domain(domain as Iterable<Date | number>)
                 .range(range as string[]) as PickD3Scale<T, Output>
         default:
             throw new Error(`Something wrong with ${name}`)

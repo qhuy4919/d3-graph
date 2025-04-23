@@ -162,3 +162,13 @@ export function stackedTransformData<Data extends Datum>(data: Data[]) {
         }, []
     )
 }
+
+export function setNumberOrNumberAccessor<NumAccessor>(
+    func: (d: number | NumAccessor) => void,
+    value: number | NumAccessor,
+) {
+    if (typeof value === 'number') func(value);
+    else func(value);
+}
+
+//end of region

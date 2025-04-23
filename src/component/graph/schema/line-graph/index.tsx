@@ -1,29 +1,14 @@
-import {
-    D3GraphSceneBuilder,
-    GraphOptionsManager,
-    GridBuilder,
-    LegendBuilder,
-    TooltipBuilder
-} from "../../builder"
-import {
-    D3BaseGraph,
-    D3ScaleOutput,
-    Datum,
-    DEFAULT_AXIS_TOOLTIP_KEY,
-    DEFAULT_LEGEND_TOOLTIP_KEY,
-    defaultAxisLabelStyle,
-    PickD3Scale
-} from "../../model";
-import { D3StackedBar } from "../../renderer";
-import { max as d3Max } from 'd3-array'
+import { D3GraphSceneBuilder, GraphOptionsManager, GridBuilder, LegendBuilder, TooltipBuilder } from "../../builder";
+import { AxisBuilder } from "../../builder/axis";
+import { ScaleBuilder } from "../../builder/scale";
+import { D3Graph } from "../../graph";
+import { D3BaseGraph, D3ScaleOutput, Datum, DEFAULT_AXIS_TOOLTIP_KEY, DEFAULT_LEGEND_TOOLTIP_KEY, defaultAxisLabelStyle } from "../../model";
+import { D3LinePath, D3LineSeries } from "../../renderer";
 import { ScaleRenderer } from "../../renderer/scale";
-import { getScaleBandwidth, stackedTransformData } from "../../util";
 import { D3ScaleSpec } from "../../spec";
-import { AxisBuilder } from "../../builder/axis"
-import { ScaleBuilder } from "../../builder/scale"
-import { D3Graph } from '../../graph';
+import { getScaleBandwidth } from "../../util";
 
-export const StackedBarGraphBuilder = <Data extends Datum>({
+export const LineGraphBuilder = <Data extends Datum>({
     data,
     options
 }: D3BaseGraph<Data>) => {
@@ -32,25 +17,15 @@ export const StackedBarGraphBuilder = <Data extends Datum>({
     const {
         shape: { width: graphWidth = 0, height: graphHeight = 0 }
     } = graphSpace;
-    const groupedStackedData = stackedTransformData(data)
-    const maxTick = d3Max(groupedStackedData, d => d._total);
 
-    const amountScale = new ScaleBuilder('amountScale', 'linear')
-        .domain([0, maxTick])
-        .rangeRound([graphHeight, 0])
-        .nice()
-
-    const periodScale = new ScaleBuilder('periodScale', 'band')
-        .domain(data.map(d => d?.period))
-        .rangeRound([0, graphWidth])
-        .padding(0.1);
-
+    const periodScale = new ScaleBuilder('periodScale', 'time');
+    const amountScale = new ScaleBuilder('amountScale', 'linear');
     const typeScale = new ScaleBuilder('typeScale', 'band')
         .domain(data.map(d => d?.type));
-
     const colorScale = new ScaleBuilder('colorScale', 'ordinal')
         .domain([...new Set(data.map(d => d.type))])
         .range([...new Set(data.map(d => d.color))]);
+
 
     chart
         .axes(
@@ -65,8 +40,8 @@ export const StackedBarGraphBuilder = <Data extends Datum>({
                 .titleStyle(defaultAxisLabelStyle),
         )
         .scale(
-            amountScale,
             periodScale,
+            amountScale,
             typeScale,
             colorScale
         )
@@ -124,10 +99,10 @@ export const StackedBarGraphBuilder = <Data extends Datum>({
                 })
         )
     return chart;
-}
 
-export const D3StackedBarGraph = <Data extends Datum>(props: D3BaseGraph<Data>) => {
-    const chart = StackedBarGraphBuilder(props);
+}
+export const D3LineGraph = <Data extends Datum>(props: D3BaseGraph<Data>) => {
+    const chart = LineGraphBuilder(props);
     const {
         data,
         options,
@@ -148,7 +123,7 @@ export const D3StackedBarGraph = <Data extends Datum>(props: D3BaseGraph<Data>) 
         return ScaleRenderer<T, Output>(spec);
     }
 
-    const periodScale = getScale<'band', string>('periodScale');
+    const periodScale = getScale<'time', number>('periodScale');
     const amountScale = getScale<'linear', number>('amountScale');
     const typeScale = getScale<'band', string>('typeScale');
     const colorScale = getScale<'ordinal', string>('colorScale');
@@ -165,22 +140,12 @@ export const D3StackedBarGraph = <Data extends Datum>(props: D3BaseGraph<Data>) 
 
     return <D3Graph
         {...props}
-        builder={chart}
     >
-        <D3StackedBar<
-            Datum,
-            PickD3Scale<'band'>,
-            PickD3Scale<'linear', number>
-        >
+        <D3LineSeries
             data={data}
-            width={shape.width}
-            height={shape.height}
             xScale={periodScale}
             yScale={amountScale}
             colorScale={colorScale}
-            signalListener={signalListener}
         />
     </D3Graph>
-
 }
-

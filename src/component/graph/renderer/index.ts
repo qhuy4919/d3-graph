@@ -7,5 +7,7 @@ export {
     D3GroupBar,
     D3GroupBarHorizontal,
     D3Line,
+    D3LinePath,
     D3StackedBar,
+    D3LineSeries,
 } from './shape';

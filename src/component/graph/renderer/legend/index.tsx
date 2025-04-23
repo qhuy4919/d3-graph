@@ -51,7 +51,6 @@ export const LegendRenderer = ({
         <StyledLegendSectionLabel style={style}>{label}:</StyledLegendSectionLabel>
         {
             labelList.map((label, i) => {
-                console.log('colorScale(label)', label, colorScale(label))
                 return (
                     <LegendItem
                         key={`legend-item_${label}`}

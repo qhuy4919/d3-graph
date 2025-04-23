@@ -14,5 +14,6 @@ export {
     TooltipBuilder,
 } from './tooltip'
 export {
-    markGroup
+    markGroup,
+    d3Line
 } from './factory';
