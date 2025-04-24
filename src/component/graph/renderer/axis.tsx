@@ -22,7 +22,6 @@ import { useD3GraphSceneContext } from "../context"
 import { ScaleRenderer } from "./scale"
 import { GraphOptionsManager } from "../builder"
 import { useTooltip, useTooltipInPortal } from "@visx/tooltip"
-import { localPoint } from "@visx/event"
 import { TooltipRenderer } from "./tooltip"
 
 export type AxisRenderer = {
@@ -51,7 +50,7 @@ export const AxisRenderer = ({
 
     const {
         fontSize: titleFontSize = DEFAULT_AXIS_LABEL_FONT_SIZE,
-    } = titleStyle
+    } = titleStyle ?? {}
 
     const axisRef = useRef<SVGGElement>(null);
 
@@ -103,6 +102,7 @@ export const AxisRenderer = ({
         tickFormat
     }: D3AxisSpec) => {
         let axis;
+        console.log('123', orient)
         switch (orient) {
             case 'bottom':
                 axis = axisBottom;
@@ -197,7 +197,7 @@ export const AxisRenderer = ({
             bandWidth = getScaleBandwidth(axisScale)
         }
         else {
-            bandWidth = tickLabelSpacing
+            bandWidth = tickLabelSpacing + paddingRight;
         }
 
         const fontSize = typeof labelFontSize === 'string'
@@ -207,12 +207,24 @@ export const AxisRenderer = ({
         truncateLabel(selection, bandWidth, fontSize);
     }
 
+    function translateSpecialOrientAxis(orient: AxisOrientation) {
+        switch (orient) {
+            case 'right':
+                return `translate(${graphWidth}, 0)`;
+            case 'bottom':
+                return `translate(0, ${graphHeight})`;
+            default:
+                return null;
+        }
+
+    }
+
 
     useEffect(() => {
         if (axisRef) {
             const axisSelection = select<BaseType, Datum>(axisRef.current)
                 .call(d => axisBackbone(spec)(d))
-                .attr('transform', transform)
+                .attr('transform', transform ?? translateSpecialOrientAxis(orient))
 
             axisSelection
                 .append('text')
@@ -227,11 +239,10 @@ export const AxisRenderer = ({
                 .on('mouseenter', function (e) {
                     let label = select(this).datum() as string;
                     if (tickFormat) label = tickFormat?.(label, 0);
-                    const eventSvgCoords = localPoint(e);
                     showTooltip({
                         tooltipData: { [DEFAULT_AXIS_TOOLTIP_KEY]: label.toString() },
-                        tooltipTop: eventSvgCoords?.y ?? 0,
-                        tooltipLeft: eventSvgCoords?.x ?? 0,
+                        tooltipTop: e?.clientY ?? 0,
+                        tooltipLeft: e?.clientX ?? 0,
                     });
                 })
                 .on('mouseleave', function () {

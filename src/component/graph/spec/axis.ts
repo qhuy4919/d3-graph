@@ -20,7 +20,7 @@ export class D3AxisSpec implements AxisSpec {
     private _tickWidth: number = DEFAULT_AXIS_STROKE
     private _tickPadding: number = DEFAULT_AXIS_TICK_PADDING
     private _tickFormat: D3TickFormat
-    private _transform: string = ''
+    private _transform?: string
     // Label configuration 
     private _labelFontSize: React.CSSProperties['fontSize']
     //Title configuration
@@ -117,7 +117,7 @@ export class D3AxisSpec implements AxisSpec {
         this._tickFormat = formatFunc;
     }
 
-    get transform(): string {
+    get transform(): string | undefined {
         return this._transform;
     }
 

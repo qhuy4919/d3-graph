@@ -40,11 +40,14 @@ export const LineGraphBuilder = <Data extends Datum>({
                 .title('Pulse')
                 .titleStyle(defaultAxisLabelStyle),
             new AxisBuilder('periodScale', 'bottom')
-                .transform(`translate(0, ${graphHeight})`)
                 .className('axis-x')
                 .tickFormat((d) => moment(d).format('MMM DD, YY'))
                 .title('Time Period')
                 .titleStyle(defaultAxisLabelStyle),
+            new AxisBuilder('amountScale', 'right')
+                .className('axis-y2')
+                .title('Monkey')
+
         )
         .scale(
             periodScale,

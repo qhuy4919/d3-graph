@@ -11,7 +11,6 @@ import { D3Group } from '../group';
 import { mergeClass } from '../../util';
 import { curveBumpX } from 'd3-shape';
 import { useTooltip, useTooltipInPortal } from '@visx/tooltip';
-import { localPoint } from '@visx/event';
 import { TooltipRenderer } from '../tooltip';
 import { useD3GraphSceneContext } from '../../context';
 
@@ -84,6 +83,16 @@ export function D3LineSeries<
             groupKey.map((key, i) => {
                 const groupData = seriesData.get(key) ?? [];
                 return <>
+                    <D3LinePath
+                        key={`d3-line_${key}-${i}`}
+                        {...lineProps}
+                        curve={curveBumpX}
+                        data={groupData}
+                        x={d => xScale(new Date(d.period))}
+                        y={d => yScale(d.amount)}
+                        stroke={colorScale(key)}
+                    >
+                    </D3LinePath>
                     {
                         groupData.map((d, j) => (
                             <circle
@@ -101,27 +110,16 @@ export function D3LineSeries<
                                     hideTooltip();
                                 }}
                                 onMouseMove={(e) => {
-                                    const eventSvgCoords = localPoint(e);
                                     showTooltip({
                                         tooltipData: d,
-                                        tooltipTop: eventSvgCoords?.y ?? 0,
-                                        tooltipLeft: eventSvgCoords?.x ?? 0,
+                                        tooltipTop: e.clientY ?? 0,
+                                        tooltipLeft: e.clientX ?? 0,
                                     });
 
                                 }}
                             />
                         ))
                     }
-                    <D3LinePath
-                        key={`d3-line_${key}-${i}`}
-                        {...lineProps}
-                        curve={curveBumpX}
-                        data={groupData}
-                        x={d => xScale(new Date(d.period))}
-                        y={d => yScale(d.amount)}
-                        stroke={colorScale(key)}
-                    >
-                    </D3LinePath>
                 </>
             })
         }

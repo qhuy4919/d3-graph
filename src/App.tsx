@@ -19,7 +19,6 @@ function App() {
     amount: "pulse_pressure",
     color: "color",
   });
-  console.log("🚀 ~ App ~ normalizeLineData:", normalizeLineData)
 
   const [customWidth, setCustomWidth] = useState(1000);
   const [customHeight, setCustomHeight] = useState(400);
@@ -53,7 +52,7 @@ function App() {
       >
         Switch to Stacked
       </Button>
-      {/* <div style={{ position: 'relative', width: '100%', height: '50%' }}>
+      <div style={{ position: 'relative', width: '100%', height: '50%' }}>
         {
           type === 'group'
             ? <D3BarGraph
@@ -74,7 +73,7 @@ function App() {
               }}
             />
         }
-      </div> */}
+      </div>
       <div style={{ position: 'relative', width: '100%', height: '50%' }}>
         <D3LineGraph
           data={normalizeLineData}
