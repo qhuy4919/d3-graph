@@ -1,5 +1,5 @@
 import React from 'react';
-import { Line as LineType } from 'd3-shape';
+import { line, Line as LineType } from 'd3-shape';
 import { d3Line } from '../../builder';
 import { mergeClass } from '../../util';
 import {
@@ -21,7 +21,7 @@ export type D3LinePath<Datum extends D3Datum> = {
     /** className applied to path element. */
     className?: string;
 }
-    & LinePathConfig
+    & LinePathConfig<Datum>
     & Pick<D3BaseGraph<Datum>, 'signalListener'>;
 
 export function D3LinePath<Datum extends D3Datum>({
@@ -36,14 +36,16 @@ export function D3LinePath<Datum extends D3Datum>({
     ...restProps
 }: AddSVGProps<D3LinePath<Datum>, SVGPathElement>) {
     const path = d3Line<Datum>({ x, y, curve });
+
     if (children) return <>{children({ path })}</>;
+
 
     return (
         <path
             ref={innerRef}
             className={mergeClass('d3-line-path', className)}
-            d={path(data) || ''}
             fill={fill}
+            d={path(data) ?? ''}
             // without this a datum surrounded by nulls will not be visible
             // https://github.com/d3/d3-shape#line_defined
             strokeLinecap="round"
@@ -51,3 +53,4 @@ export function D3LinePath<Datum extends D3Datum>({
         />
     );
 }
+

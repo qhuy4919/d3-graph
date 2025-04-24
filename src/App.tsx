@@ -15,9 +15,9 @@ function App() {
 
   const normalizeLineData = D3reduceData(lineData, {
     period: "record_date",
-    type: "record_date",
+    type: "type",
     amount: "pulse_pressure",
-    color: "blue",
+    color: "color",
   });
   console.log("🚀 ~ App ~ normalizeLineData:", normalizeLineData)
 
@@ -77,7 +77,6 @@ function App() {
       </div> */}
       <div style={{ position: 'relative', width: '100%', height: '50%' }}>
         <D3LineGraph
-
           data={normalizeLineData}
           options={{
             height: customHeight,

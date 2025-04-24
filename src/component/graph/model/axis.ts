@@ -13,6 +13,7 @@ export const DEFAULT_AXIS_LABEL_FONT_SIZE = '16px';
 export const DEFAULT_AXIS_LABEL_FILL = 'white';
 export const DEFAULT_AXIS_LABEL_FONT_FAMILY = DEFAULT_AXIS_FONT
 
+export type D3TickFormat = (domainValue: string | number | Date, index: number) => string;
 export type AxisOrientation = 'right' | 'left' | 'bottom' | 'top';
 export interface AxisSpec {
     orient: AxisOrientation,
@@ -24,6 +25,7 @@ export interface AxisSpec {
     tickCount?: number
     tickOffset?: number
     tickWidth?: number,
+    tickFormat?: D3TickFormat
     //label
     labelFontSize?: React.CSSProperties['fontSize']
     //title

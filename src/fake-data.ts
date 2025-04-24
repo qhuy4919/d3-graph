@@ -5,7 +5,9 @@ export const lineData = [
         "record_date": "2025-04-21T02:50:29.548676Z",
         "note": null,
         "resource_id": "7ceaf413-561a-407b-9dfe-2971eae7a8f7",
-        "is_simplified_survey": false
+        "is_simplified_survey": false,
+        "type": 'pulse',
+        "color": '#2979ff'
     },
     {
         "_id": "1feec17e-ff4a-40f2-87cb-53d2641e31ab",
@@ -13,7 +15,9 @@ export const lineData = [
         "record_date": "2025-04-04T02:26:18.288820Z",
         "note": null,
         "resource_id": "7ceaf413-561a-407b-9dfe-2971eae7a8f7",
-        "is_simplified_survey": false
+        "is_simplified_survey": false,
+        "type": 'pulse',
+        "color": '#2979ff'
     },
     {
         "_id": "28c7e34f-04aa-4d51-9146-1a82674a62d0",
@@ -21,7 +25,9 @@ export const lineData = [
         "record_date": "2025-04-04T02:12:53.715205Z",
         "note": null,
         "resource_id": "7ceaf413-561a-407b-9dfe-2971eae7a8f7",
-        "is_simplified_survey": false
+        "is_simplified_survey": false,
+        "type": 'pulse',
+        "color": '#2979ff'
     },
     {
         "_id": "ee5e5e29-0f6e-4578-9928-225c76b43feb",
@@ -29,7 +35,9 @@ export const lineData = [
         "record_date": "2025-03-19T08:18:18.115166Z",
         "note": null,
         "resource_id": "7ceaf413-561a-407b-9dfe-2971eae7a8f7",
-        "is_simplified_survey": false
+        "is_simplified_survey": false,
+        "type": 'pulse',
+        "color": '#2979ff'
     },
     {
         "_id": "ee388bfd-0901-4adb-a7c8-19d816fabdc8",
@@ -37,7 +45,9 @@ export const lineData = [
         "record_date": "2025-03-06T09:09:47.769197Z",
         "note": null,
         "resource_id": "7ceaf413-561a-407b-9dfe-2971eae7a8f7",
-        "is_simplified_survey": false
+        "is_simplified_survey": false,
+        "type": 'pulse',
+        "color": '#2979ff'
     },
     {
         "_id": "ff6daae4-5dbd-4928-bb59-710a06e01644",
@@ -45,7 +55,9 @@ export const lineData = [
         "record_date": "2025-03-05T08:00:04.910191Z",
         "note": null,
         "resource_id": "7ceaf413-561a-407b-9dfe-2971eae7a8f7",
-        "is_simplified_survey": false
+        "is_simplified_survey": false,
+        "type": 'pulse',
+        "color": '#2979ff'
     },
     {
         "_id": "fb0ac230-8f4c-4b88-bc29-e31837300804",
@@ -53,7 +65,9 @@ export const lineData = [
         "record_date": "2025-03-04T07:16:24.200406Z",
         "note": null,
         "resource_id": "7ceaf413-561a-407b-9dfe-2971eae7a8f7",
-        "is_simplified_survey": false
+        "is_simplified_survey": false,
+        "type": 'pulse',
+        "color": '#2979ff'
     },
     {
         "_id": "c08bf165-546c-4a21-86cb-09fd4ce94889",
@@ -61,7 +75,9 @@ export const lineData = [
         "record_date": "2025-03-04T03:17:21.051840Z",
         "note": null,
         "resource_id": "7ceaf413-561a-407b-9dfe-2971eae7a8f7",
-        "is_simplified_survey": false
+        "is_simplified_survey": false,
+        "type": 'pulse',
+        "color": '#2979ff'
     },
     {
         "_id": "01cf7c01-f107-480b-853c-3c15a30ca30b",
@@ -69,7 +85,9 @@ export const lineData = [
         "record_date": "2025-01-22T02:22:52.822000Z",
         "note": null,
         "resource_id": "7ceaf413-561a-407b-9dfe-2971eae7a8f7",
-        "is_simplified_survey": true
+        "is_simplified_survey": true,
+        "type": 'pulse',
+        "color": '#2979ff'
     },
     {
         "_id": "ae82a194-e93d-4d47-8e0d-80a1a20dbe26",
@@ -77,7 +95,9 @@ export const lineData = [
         "record_date": "2025-01-15T11:20:51.350000Z",
         "note": null,
         "resource_id": "7ceaf413-561a-407b-9dfe-2971eae7a8f7",
-        "is_simplified_survey": true
+        "is_simplified_survey": true,
+        "type": 'pulse',
+        "color": '#2979ff'
     }
 ];
 

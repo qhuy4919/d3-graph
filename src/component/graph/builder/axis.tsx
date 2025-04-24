@@ -1,5 +1,6 @@
 import {
     AxisOrientation,
+    D3TickFormat,
 } from '../model';
 import { D3AxisSpec } from '../spec';
 /*
@@ -35,6 +36,11 @@ export class AxisBuilder {
 
     public tickPadding(value: number) {
         this.spec.tickPadding = value;
+        return this;
+    }
+
+    public tickFormat(value: D3TickFormat) {
+        this.spec.tickFormat = value;
         return this;
     }
 

@@ -9,7 +9,11 @@ import { group as d3Group } from 'd3-array';
 import { D3LinePath } from './line-path';
 import { D3Group } from '../group';
 import { mergeClass } from '../../util';
-import { curveBasis } from 'd3-shape';
+import { curveBumpX } from 'd3-shape';
+import { useTooltip, useTooltipInPortal } from '@visx/tooltip';
+import { localPoint } from '@visx/event';
+import { TooltipRenderer } from '../tooltip';
+import { useD3GraphSceneContext } from '../../context';
 
 
 export type D3LineSeries<
@@ -52,8 +56,24 @@ export function D3LineSeries<
     className,
     ...lineProps
 }: D3LineSeries<XScale, YScale, ColorScale, Datum>) {
-    const seriesData = d3Group(data, d => d.period);
-    const groupKey = [...seriesData.keys()]
+    const { schema } = useD3GraphSceneContext();
+    const seriesData = d3Group(data, d => d.type);
+    const groupKey = [...seriesData.keys()];
+    const tooltipSpec = schema?.spec.getTooltip('graph');
+
+    const {
+        tooltipOpen,
+        tooltipLeft,
+        tooltipTop,
+        tooltipData,
+        hideTooltip,
+        showTooltip
+    } = useTooltip<Datum>();
+    const {
+        TooltipInPortal
+    } = useTooltipInPortal({
+        detectBounds: true
+    });
 
     return <D3Group
         top={top}
@@ -63,18 +83,60 @@ export function D3LineSeries<
         {
             groupKey.map((key, i) => {
                 const groupData = seriesData.get(key) ?? [];
-                return <D3LinePath
-                    key={`d3-line_${key}-${i}`}
-                    {...lineProps}
-                    curve={curveBasis}
-                    data={groupData}
-                // x={d => xScale((d => d.))}
-                // y={yScale(d.amount)}
-                // fill={colorScale(d.type)}
-                >
+                return <>
+                    {
+                        groupData.map((d, j) => (
+                            <circle
+                                key={i + j}
+                                r={4}
+                                cx={xScale(new Date(d.period))}
+                                cy={yScale(d.amount)}
+                                stroke={colorScale(key)}
+                                fill={colorScale(key)}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.opacity = '0.8';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.opacity = '1';
+                                    hideTooltip();
+                                }}
+                                onMouseMove={(e) => {
+                                    const eventSvgCoords = localPoint(e);
+                                    showTooltip({
+                                        tooltipData: d,
+                                        tooltipTop: eventSvgCoords?.y ?? 0,
+                                        tooltipLeft: eventSvgCoords?.x ?? 0,
+                                    });
 
-                </D3LinePath>
+                                }}
+                            />
+                        ))
+                    }
+                    <D3LinePath
+                        key={`d3-line_${key}-${i}`}
+                        {...lineProps}
+                        curve={curveBumpX}
+                        data={groupData}
+                        x={d => xScale(new Date(d.period))}
+                        y={d => yScale(d.amount)}
+                        stroke={colorScale(key)}
+                    >
+                    </D3LinePath>
+                </>
             })
+        }
+        {
+            tooltipOpen && tooltipData && (
+                <TooltipInPortal
+                    top={tooltipTop}
+                    left={tooltipLeft}
+                >
+                    <TooltipRenderer
+                        data={tooltipData}
+                        spec={tooltipSpec}
+                    />
+                </TooltipInPortal>
+            )
         }
     </D3Group>
 }

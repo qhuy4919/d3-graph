@@ -30,7 +30,7 @@ export function markGroup(name?: string) {
 /* d3 shape factory function */
 export function d3Line<Data extends Datum>({
     x, y, curve
-}: LinePathConfig) {
+}: LinePathConfig<Data>) {
     const path = line<Data>();
     if (x) setNumberOrNumberAccessor(path.x, x);
     if (y) setNumberOrNumberAccessor(path.y, y);

@@ -1,4 +1,4 @@
-import { AxisSpec } from "../model";
+import { AxisSpec, D3TickFormat } from "../model";
 import {
     AxisOrientation,
     DEFAULT_AXIS_COLOR,
@@ -19,6 +19,7 @@ export class D3AxisSpec implements AxisSpec {
     private _tickOffset = DEFAULT_AXIS_TICK_OFFSET_VALUE
     private _tickWidth: number = DEFAULT_AXIS_STROKE
     private _tickPadding: number = DEFAULT_AXIS_TICK_PADDING
+    private _tickFormat: D3TickFormat
     private _transform: string = ''
     // Label configuration 
     private _labelFontSize: React.CSSProperties['fontSize']
@@ -106,6 +107,14 @@ export class D3AxisSpec implements AxisSpec {
 
     set ticks(value: number) {
         this._ticks = value;
+    }
+
+    get tickFormat() {
+        return this._tickFormat
+    }
+
+    set tickFormat(formatFunc: D3TickFormat) {
+        this._tickFormat = formatFunc;
     }
 
     get transform(): string {

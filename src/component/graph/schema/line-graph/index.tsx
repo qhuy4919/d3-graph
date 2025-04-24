@@ -3,12 +3,11 @@ import { AxisBuilder } from "../../builder/axis";
 import { ScaleBuilder } from "../../builder/scale";
 import { D3Graph } from "../../graph";
 import { D3BaseGraph, D3ScaleOutput, Datum, DEFAULT_AXIS_TOOLTIP_KEY, DEFAULT_LEGEND_TOOLTIP_KEY, defaultAxisLabelStyle } from "../../model";
-import { D3LineSeries } from "../../renderer";
-import { max as d3Max, extent } from 'd3-array'
+import { max as d3Max } from 'd3-array'
 import { ScaleRenderer } from "../../renderer/scale";
 import { D3ScaleSpec } from "../../spec";
-import { getScaleBandwidth } from "../../util";
-import { scaleTime } from "d3";
+import moment from 'moment';
+import { D3LineSeries } from "../../renderer";
 
 export const LineGraphBuilder = <Data extends Datum>({
     data,
@@ -22,14 +21,14 @@ export const LineGraphBuilder = <Data extends Datum>({
 
     const periodScale = new ScaleBuilder('periodScale', 'time')
         .domain(data.map(d => d?.period))
-        .rangeRound([0, graphWidth])
+        .range([0, graphWidth])
         .padding(0.1);
     const amountScale = new ScaleBuilder('amountScale', 'linear')
         .domain([0, (d3Max(data, d => d.amount) ?? 0)])
         .rangeRound([graphHeight, 0])
         .nice();
     const typeScale = new ScaleBuilder('typeScale', 'band')
-        .domain(['Pulse']);
+        .domain(data.map(d => d.type));
     const colorScale = new ScaleBuilder('colorScale', 'ordinal')
         .domain([...new Set(data.map(d => d.type))])
         .range([...new Set(data.map(d => d.color))]);
@@ -43,6 +42,7 @@ export const LineGraphBuilder = <Data extends Datum>({
             new AxisBuilder('periodScale', 'bottom')
                 .transform(`translate(0, ${graphHeight})`)
                 .className('axis-x')
+                .tickFormat((d) => moment(d).format('MMM DD, YY'))
                 .title('Time Period')
                 .titleStyle(defaultAxisLabelStyle),
         )
@@ -137,27 +137,15 @@ export const D3LineGraph = <Data extends Datum>(props: D3BaseGraph<Data>) => {
     )
         throw new Error('Something wrong with scale list');
 
-    typeScale.rangeRound([0, getScaleBandwidth(periodScale)]);
-
-    const tempData = [
-        { date: new Date('2025-01-01'), value: 50 },
-        { date: new Date('2025-02-01'), value: 80 },
-        { date: new Date('2025-03-01'), value: 65 },
-    ];
-
-    const xScale = scaleTime()
-        .domain(extent(tempData.map((d) => new Date(d.date))) as [Date, Date])
-        .range([0, 1000]);
-    console.log('xScale', xScale(tempData[1].date))
     return <D3Graph
         {...props}
         builder={chart}
     >
-        {/* <D3LineSeries
+        <D3LineSeries
             data={data}
             xScale={periodScale}
             yScale={amountScale}
             colorScale={colorScale}
-        /> */}
+        />
     </D3Graph>
 }

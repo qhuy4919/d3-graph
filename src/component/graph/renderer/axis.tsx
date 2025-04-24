@@ -45,7 +45,8 @@ export const AxisRenderer = ({
         title,
         titleStyle,
         scale,
-        labelFontSize = DEFAULT_AXIS_LABEL_FONT_SIZE
+        labelFontSize = DEFAULT_AXIS_LABEL_FONT_SIZE,
+        tickFormat,
     } = spec;
 
     const {
@@ -57,9 +58,7 @@ export const AxisRenderer = ({
     const axistooltipSpec = schema?.spec.getTooltip('axis');
     const scaleName = scale;
     const axisScale = ScaleRenderer(schema?.spec.getScale(scaleName)) as AxisScale;
-    console.log("🚀 ~ axisScale:", schema?.spec.getScale(scaleName), axisScale)
     const axisLabelClassName = 'axis-label';
-    console.log('spec', axisScale(100))
 
     const {
         paddingLeft,
@@ -101,6 +100,7 @@ export const AxisRenderer = ({
         orient,
         ticks = 5,
         tickPadding,
+        tickFormat
     }: D3AxisSpec) => {
         let axis;
         switch (orient) {
@@ -125,6 +125,7 @@ export const AxisRenderer = ({
         return axis(axisScale)
             .ticks(ticks)
             .tickPadding(tickPadding)
+            .tickFormat(tickFormat ?? null)
     };
 
     function getSpacingRatio(orient: AxisOrientation) {
@@ -224,10 +225,11 @@ export const AxisRenderer = ({
                 .selectAll('.tick text')
                 .call(truncateText)
                 .on('mouseenter', function (e) {
-                    const label = select(this).datum() as string;
+                    let label = select(this).datum() as string;
+                    if (tickFormat) label = tickFormat?.(label, 0);
                     const eventSvgCoords = localPoint(e);
                     showTooltip({
-                        tooltipData: { [DEFAULT_AXIS_TOOLTIP_KEY]: label },
+                        tooltipData: { [DEFAULT_AXIS_TOOLTIP_KEY]: label.toString() },
                         tooltipTop: eventSvgCoords?.y ?? 0,
                         tooltipLeft: eventSvgCoords?.x ?? 0,
                     });
