@@ -68,6 +68,9 @@ export const LineGraphBuilder = <Data extends Datum>({
                     period: 'On'
                 },
                 {
+                    period: (d) => <>
+                        {moment(d.period).format('MMM DD, YY')}
+                    </>
                 }
             ),
             new TooltipBuilder(

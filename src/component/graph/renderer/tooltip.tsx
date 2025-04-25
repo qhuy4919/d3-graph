@@ -20,26 +20,32 @@ export const StyledD3Tooltip = styled.div`
 `;
 
 
-export type TooltipRenderer<Data extends Record<string, string>> = {
+export type TooltipRenderer<Data extends Datum> = {
     data: Data,
     spec?: Pick<D3TooltipSpec, 'labelSchema' | 'valueSchema'>
 }
-export const TooltipRenderer = <Data extends Record<string, string>>({
+export const TooltipRenderer = <Data extends Datum>({
     data,
     spec
 }: TooltipRenderer<Data>) => {
     if (!spec) return <></>;
 
-    const { labelSchema } = spec ?? {};
+    const { labelSchema, valueSchema } = spec ?? {};
     return <StyledD3Tooltip className="d3-tooltip-container">
         {
-            Object.keys(labelSchema).map((label, i) => (
-                <React.Fragment key={`${label}-${i}}`}>
-                    <span className="tooltip-label">{labelSchema[label]}</span>
-                    <span className="tooltip-value">{data[label]}</span>
+            Object.keys(labelSchema).map((label, i) => {
+                const value = valueSchema[label]
+                    ? valueSchema[label]?.(data)
+                    : data[label]
 
-                </React.Fragment>
-            ))
+                return (
+                    <React.Fragment key={`${label}-${i}}`}>
+                        <span className="tooltip-label">{labelSchema[label]}</span>
+                        <span className="tooltip-value">{value}</span>
+
+                    </React.Fragment>
+                )
+            })
         }
     </StyledD3Tooltip>
 }

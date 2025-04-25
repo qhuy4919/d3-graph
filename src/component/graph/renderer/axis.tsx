@@ -89,7 +89,6 @@ export const AxisRenderer = ({
 
     const {
         axisLabelSpacing,
-        tickLabelSpacing,
     } = getSpacingRatio(orient);
 
     const labelWidth = getTextWidth(title, axisLabelSpacing, titleFontSize)
@@ -102,7 +101,6 @@ export const AxisRenderer = ({
         tickFormat
     }: D3AxisSpec) => {
         let axis;
-        console.log('123', orient)
         switch (orient) {
             case 'bottom':
                 axis = axisBottom;
@@ -191,14 +189,7 @@ export const AxisRenderer = ({
     }
 
     function truncateText(selection: D3Selection<BaseType, unknown, BaseType, Datum>) {
-        let bandWidth = 0;
-        //Xử lý truncate đặc biệt với những scale không có band width
-        if (axisScale.bandwidth?.()) {
-            bandWidth = getScaleBandwidth(axisScale)
-        }
-        else {
-            bandWidth = tickLabelSpacing + paddingRight;
-        }
+        const bandWidth = getScaleBandwidth(axisScale);
 
         const fontSize = typeof labelFontSize === 'string'
             ? parseFloat(labelFontSize)

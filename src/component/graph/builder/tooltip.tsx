@@ -1,4 +1,4 @@
-import { D3TooltipType } from "../model";
+import { D3TooltipType, Datum } from "../model";
 import { D3TooltipSpec } from "../spec";
 
 /** 
@@ -10,7 +10,7 @@ export class TooltipBuilder {
     public constructor(
         type: D3TooltipType,
         labelSchema: Record<string, React.ReactNode>,
-        valueSchema: Record<string, (value: string) => React.ReactNode>
+        valueSchema: Record<string, (value: Datum) => React.ReactNode>
 
     ) {
         this.spec = new D3TooltipSpec(
