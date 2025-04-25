@@ -82,9 +82,8 @@ export function D3LineSeries<
         {
             groupKey.map((key, i) => {
                 const groupData = seriesData.get(key) ?? [];
-                return <>
+                return <React.Fragment key={`d3-line_${key}-${i}`}>
                     <D3LinePath
-                        key={`d3-line_${key}-${i}`}
                         {...lineProps}
                         curve={curveBumpX}
                         data={groupData}
@@ -120,7 +119,7 @@ export function D3LineSeries<
                             />
                         ))
                     }
-                </>
+                </React.Fragment>
             })
         }
         {

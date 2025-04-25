@@ -423,3 +423,252 @@ export const barData = [
         "amount": 2
     }
 ]
+
+
+export const horizontalBarData = [
+    {
+        "period": "Physical and Occupational Therapy Equipment and Supplies",
+        "type": 'sku',
+        "category_id": "5c7fc172-479e-421e-b19e-9cce283dd55f",
+        "color": '#1890ff',
+        "amount": 280
+    },
+    {
+        "period": "Pharmaceuticals",
+        "type": 'sku',
+        "category_id": "c3aad8aa-1cd7-11eb-adc1-0242ac120002",
+        "color": '#1890ff',
+        "amount": 2548
+    },
+    {
+        "period": "Ophthalmology and Optometry Equipment and Supplies",
+        "type": 'sku',
+        "category_id": "db3b7edf-e51f-46e3-baec-21d757e85abb",
+        "color": '#1890ff',
+        "amount": 1574
+    },
+    {
+        "period": "Cardiology Supplies",
+        "type": 'sku',
+        "category_id": "86051a94-fc67-4933-a48c-49c8e31b7f03",
+        "color": '#1890ff',
+        "amount": 110
+    },
+    {
+        "period": "Obstetrics and Maternity Care Equipment and Supplies",
+        "type": 'sku',
+        "category_id": "ae8f3125-709d-480f-b065-3120e075db7f",
+        "color": '#1890ff',
+        "amount": 180
+    },
+    {
+        "period": "Apparel Equipment and Supplies",
+        "type": 'sku',
+        "category_id": "5984f358-0f22-461e-9c46-7c319bd033a7",
+        "color": '#1890ff',
+        "amount": 747
+    },
+    {
+        "period": "Consumables for Women",
+        "type": 'sku',
+        "category_id": "ab9976d3-fa36-49e6-a936-9e8c56ffdca2",
+        "color": '#1890ff',
+        "amount": 464
+    },
+    {
+        "period": "Nephrology Equipment and Supplies",
+        "type": 'sku',
+        "category_id": "bcc24d0b-dd5f-4c74-b0c9-a3f2bfe2e260",
+        "color": '#1890ff',
+        "amount": 376
+    },
+    {
+        "period": "Otology and Neurotology Equipment and Supplies",
+        "type": 'sku',
+        "category_id": "29577918-c1e8-4c87-affb-b8205b0f827b",
+        "color": '#1890ff',
+        "amount": 0
+    },
+    {
+        "period": "Anaesthesia Equipment and Supplies",
+        "type": 'sku',
+        "category_id": "331d9420-65ef-43aa-8fa4-845182d8bd03",
+        "color": '#1890ff',
+        "amount": 66
+    },
+    {
+        "period": "General Medical Equipment and Supplies",
+        "type": 'sku',
+        "category_id": "df718720-2727-43d7-bb3e-84b37cb06492",
+        "color": '#1890ff',
+        "amount": 53
+    },
+    {
+        "period": "Gynecology & Urology Equipment and Supplies",
+        "type": 'sku',
+        "category_id": "789b8722-3de6-495a-beb7-377bc4b1d4d7",
+        "color": '#1890ff',
+        "amount": 2467
+    },
+    {
+        "period": "Laboratory Equipment and Supplies",
+        "type": 'sku',
+        "category_id": "22c92f2a-9a52-4253-909b-6fe382e96a3b",
+        "color": '#1890ff',
+        "amount": 580
+    },
+    {
+        "period": "Neurology Equipment and Supplies",
+        "type": 'sku',
+        "category_id": "9c4fbf9e-52cf-404d-9b42-a156cce499cf",
+        "color": '#1890ff',
+        "amount": 82
+    },
+    {
+        "period": "Gift card",
+        "type": 'sku',
+        "category_id": "9da70192-1cd7-11eb-adc1-0242ac120002",
+        "color": '#1890ff',
+        "amount": 160
+    },
+    {
+        "period": "Sterilization Equipment and Supplies",
+        "type": 'sku',
+        "category_id": "e51304e9-bc50-4a06-b761-f635b3786a68",
+        "color": '#1890ff',
+        "amount": 528
+    },
+    {
+        "period": "Emergency equipment",
+        "type": 'sku',
+        "category_id": "bf6d68bd-eaef-4441-956a-f662f3797319",
+        "color": '#1890ff',
+        "amount": 14606
+    },
+    {
+        "period": "Specialized Equipment",
+        "type": 'sku',
+        "category_id": "08314a45-0aab-402e-b2d4-f8d67f11f679",
+        "color": '#1890ff',
+        "amount": 1442
+    },
+    {
+        "period": "Myopia Test",
+        "type": 'sku',
+        "category_id": "c0fd6106-81ff-4440-92e9-8c1279900670",
+        "color": '#1890ff',
+        "amount": 23301
+    },
+    {
+        "period": "Basic Diagnostic Equipment",
+        "type": 'sku',
+        "category_id": "bfb07fc9-eeb1-48e3-a9cb-89952044beed",
+        "color": '#1890ff',
+        "amount": 18
+    },
+    {
+        "period": "Surgery Equipment and Supplies ",
+        "type": 'sku',
+        "category_id": "20abfb2d-a9e3-4279-9b52-b4bf81186f06",
+        "color": '#1890ff',
+        "amount": 4949
+    },
+    {
+        "period": "Emergency Gloves",
+        "type": 'sku',
+        "category_id": "66cf5693-02aa-45ab-98d8-3751b60a0c3b",
+        "color": '#1890ff',
+        "amount": 124141
+    },
+    {
+        "period": "Patient Clothing",
+        "type": 'sku',
+        "category_id": "e4119161-59bc-47dd-affe-73943ad1a6a3",
+        "color": '#1890ff',
+        "amount": 0
+    },
+    {
+        "period": "Radiology Equipment and Supplies",
+        "type": 'sku',
+        "category_id": "bb5b0ce9-a416-4d93-a9bd-3dbbbdeae902",
+        "color": '#1890ff',
+        "amount": 558
+    },
+    {
+        "period": "Procedure Equipment",
+        "type": 'sku',
+        "category_id": "eb341ca7-a44d-46ab-b900-73f07cea381f",
+        "color": '#1890ff',
+        "amount": 491
+    },
+    {
+        "period": "Disposable equipment",
+        "type": 'sku',
+        "category_id": "f7254a9e-3ebc-4045-902d-64d543598efc",
+        "color": '#1890ff',
+        "amount": 0
+    },
+    {
+        "period": "Dental equipment and supplies",
+        "type": 'sku',
+        "category_id": "44fb57bf-5b2a-473d-b76d-f16009074c2b",
+        "color": '#1890ff',
+        "amount": 208
+    },
+    {
+        "period": "Emergency Equipment",
+        "type": 'sku',
+        "category_id": "38f1b016-5d4b-11ec-bf63-0242ac130002",
+        "color": '#1890ff',
+        "amount": 1400
+    },
+    {
+        "period": "Blood Tube",
+        "type": 'sku',
+        "category_id": "028226a5-141e-4df5-bc22-78d02d7c2737",
+        "color": '#1890ff',
+        "amount": 239
+    },
+    {
+        "period": "Testing",
+        "type": 'sku',
+        "category_id": "19929e56-56bb-4b38-be6f-77e2698e535a",
+        "color": '#1890ff',
+        "amount": 0
+    },
+    {
+        "period": "Microscope",
+        "type": 'sku',
+        "category_id": "a6b2c384-e032-45d4-8c5c-88a75087f6ae",
+        "color": '#1890ff',
+        "amount": 564
+    },
+    {
+        "period": "Type",
+        "type": 'sku',
+        "category_id": "908cb465-6cdd-4535-aca1-91c1dc9f00f4",
+        "color": '#1890ff',
+        "amount": 195437
+    },
+    {
+        "period": "mbeeee",
+        "type": 'sku',
+        "category_id": "99d73aec-0051-47cd-8c95-76626fe34d2d",
+        "color": '#1890ff',
+        "amount": 153056
+    },
+    {
+        "period": "Voucher",
+        "type": 'sku',
+        "category_id": "e0a5448a-6dc3-4723-b1a9-d17810f507bc",
+        "color": '#1890ff',
+        "amount": 98
+    },
+    {
+        "period": "The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ in their grammar, their pronunciation and their most common words. Everyo",
+        "type": 'sku',
+        "category_id": "50f6abf7-2b59-42da-a1c7-1ea09c511126",
+        "color": '#1890ff',
+        "amount": 0
+    }
+];
