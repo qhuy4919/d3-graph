@@ -58,7 +58,6 @@ export const BarGraphBuilder = <Data extends Datum>({
                 .title('Number of Members')
                 .titleStyle(defaultAxisLabelStyle),
             new AxisBuilder('periodScale', 'bottom')
-                .transform(`translate(0, ${graphHeight})`)
                 .className('axis-x')
                 .title('Health Plan')
                 .titleStyle(defaultAxisLabelStyle),

@@ -9,6 +9,7 @@ import styled from 'styled-components';
 export const StyledD3Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100vw;
  
 `;
 function App() {
@@ -20,10 +21,10 @@ function App() {
   });
 
   const normalizeHorizontalBarData = D3reduceData(horizontalBarData, {
-    period: "sku",
-    type: "sku",
+    period: "period",
+    type: "type",
     amount: "amount",
-    color: "color",
+    color: "bgColor",
   })
 
   const normalizeLineData = D3reduceData(lineData, {
@@ -103,7 +104,7 @@ function App() {
             data={normalizeHorizontalBarData}
             options={{
               height: 1000,
-              width: 1200,
+              width: 1000,
               padding: {
                 ...defaultChartOptionPadding,
                 left: 150

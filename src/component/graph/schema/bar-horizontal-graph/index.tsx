@@ -33,6 +33,7 @@ export const HorizontalBarGraphBuilder = <Data extends Datum>({
         shape: { width: graphWidth = 0, height: graphHeight = 0 }
     } = graphSpace;
 
+
     const amountScale = new ScaleBuilder('amountScale', 'linear')
         .domain([0, (d3Max(data, d => d.amount) ?? 0)])
         .rangeRound([0, graphWidth])
@@ -40,7 +41,7 @@ export const HorizontalBarGraphBuilder = <Data extends Datum>({
     const periodScale = new ScaleBuilder('periodScale', 'band')
         .domain(data.map(d => d?.period))
         .rangeRound([0, graphHeight])
-        .padding(0.2);
+        .padding(0.5);
 
     const typeScale = new ScaleBuilder('typeScale', 'band')
         .domain(data.map(d => d?.type))

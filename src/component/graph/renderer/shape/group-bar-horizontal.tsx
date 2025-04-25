@@ -91,8 +91,8 @@ export const D3GroupBarHorizontal = <
                     data: data,
                     value: amount,
                     height: barHeight,
-                    x: xScale(amount) || 0,
-                    y: y0Scale(period) || 0,
+                    x: 0,
+                    y: y1Scale(type) || 0,
                     color: colorScale(type),
                     width: xScale(amount) || 0,
                 };
@@ -113,12 +113,11 @@ export const D3GroupBarHorizontal = <
                 barGroups.map(barGroup => (
                     <D3Group
                         key={`d3-group-bar-${barGroup.y0}-${barGroup.index}`}
-                        left={barGroup.y0}
+                        top={barGroup.y0}
                     >
                         {
                             barGroup.bars.map((bar) => {
                                 const { x, y, width, height, color, value, key, data } = bar;
-                                console.log("🚀 ~ barGroup.bars.map ~ x, y,:", x, y,)
                                 return <React.Fragment
                                     key={`d3-bar-${barGroup.index}-${bar.index}-${bar.key}`}
                                 >
@@ -150,8 +149,8 @@ export const D3GroupBarHorizontal = <
                                     />
                                     <D3Text
                                         key={`d3-bar-text-${barGroup.index}-${bar.index}-${bar.key}`}
-                                        x={x + width / 2}
-                                        y={y - 10}
+                                        x={xScale(value) + 10}
+                                        y={y + y0Scale.bandwidth() / 2}
                                         fill="grey"
                                         fontWeight={'bold'}
                                         textAnchor='middle'

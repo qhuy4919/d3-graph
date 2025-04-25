@@ -427,248 +427,803 @@ export const barData = [
 
 export const horizontalBarData = [
     {
-        "period": "Physical and Occupational Therapy Equipment and Supplies",
-        "type": 'sku',
-        "category_id": "5c7fc172-479e-421e-b19e-9cce283dd55f",
-        "color": '#1890ff',
-        "amount": 280
+        "amount": 0,
+        "period": "Trang Company",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "ce70f3c1-fa00-454d-8dab-9255738bccd2",
+        "lbcolor": "#FF4D4F",
+        "tag": "new-provider"
     },
     {
-        "period": "Pharmaceuticals",
-        "type": 'sku',
-        "category_id": "c3aad8aa-1cd7-11eb-adc1-0242ac120002",
-        "color": '#1890ff',
-        "amount": 2548
+        "amount": 0,
+        "period": "Trang Company",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "ce70f3c1-fa00-454d-8dab-9255738bccd2",
+        "lbcolor": "#FF4D4F",
+        "tag": "new-provider"
     },
     {
-        "period": "Ophthalmology and Optometry Equipment and Supplies",
-        "type": 'sku',
-        "category_id": "db3b7edf-e51f-46e3-baec-21d757e85abb",
-        "color": '#1890ff',
-        "amount": 1574
+        "amount": 0,
+        "period": "ABUNDANCE OF CARE, INC.",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "d3a8fdc4-0a0f-4902-86ba-8dcfad35caac",
+        "lbcolor": "#FF4D4F",
+        "tag": "new-provider"
     },
     {
-        "period": "Cardiology Supplies",
-        "type": 'sku',
-        "category_id": "86051a94-fc67-4933-a48c-49c8e31b7f03",
-        "color": '#1890ff',
-        "amount": 110
+        "amount": 0,
+        "period": "ABUNDANCE OF CARE, INC.",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "d3a8fdc4-0a0f-4902-86ba-8dcfad35caac",
+        "lbcolor": "#FF4D4F",
+        "tag": "new-provider"
     },
     {
-        "period": "Obstetrics and Maternity Care Equipment and Supplies",
-        "type": 'sku',
-        "category_id": "ae8f3125-709d-480f-b065-3120e075db7f",
-        "color": '#1890ff',
-        "amount": 180
+        "amount": 0,
+        "period": "OLLERMAN INC - Test RAPS",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "4996c2b3-0bdb-4027-9079-9fb58d92fd4f",
+        "lbcolor": "#FF4D4F",
+        "tag": "new-provider"
     },
     {
-        "period": "Apparel Equipment and Supplies",
-        "type": 'sku',
-        "category_id": "5984f358-0f22-461e-9c46-7c319bd033a7",
-        "color": '#1890ff',
-        "amount": 747
+        "amount": 0,
+        "period": "OLLERMAN INC - Test RAPS",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "4996c2b3-0bdb-4027-9079-9fb58d92fd4f",
+        "lbcolor": "#FF4D4F",
+        "tag": "new-provider"
     },
     {
-        "period": "Consumables for Women",
-        "type": 'sku',
-        "category_id": "ab9976d3-fa36-49e6-a936-9e8c56ffdca2",
-        "color": '#1890ff',
-        "amount": 464
+        "amount": 0,
+        "period": "A1 SMILES",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "f27f8810-0870-4c25-8ffb-cac942f60515",
+        "lbcolor": "#FF4D4F",
+        "tag": "new-provider"
     },
     {
-        "period": "Nephrology Equipment and Supplies",
-        "type": 'sku',
-        "category_id": "bcc24d0b-dd5f-4c74-b0c9-a3f2bfe2e260",
-        "color": '#1890ff',
-        "amount": 376
+        "amount": 0,
+        "period": "A1 SMILES",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "f27f8810-0870-4c25-8ffb-cac942f60515",
+        "lbcolor": "#FF4D4F",
+        "tag": "new-provider"
     },
     {
-        "period": "Otology and Neurotology Equipment and Supplies",
-        "type": 'sku',
-        "category_id": "29577918-c1e8-4c87-affb-b8205b0f827b",
-        "color": '#1890ff',
-        "amount": 0
+        "amount": 0,
+        "period": "AREA AGENCY ON AGING OF WESTERN ARKANSAS, INC",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "bfe49101-7a01-4e23-93e6-c17d43ca1cb8",
+        "lbcolor": "#FF4D4F",
+        "tag": "new-provider"
     },
     {
-        "period": "Anaesthesia Equipment and Supplies",
-        "type": 'sku',
-        "category_id": "331d9420-65ef-43aa-8fa4-845182d8bd03",
-        "color": '#1890ff',
-        "amount": 66
+        "amount": 0,
+        "period": "AREA AGENCY ON AGING OF WESTERN ARKANSAS, INC",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "bfe49101-7a01-4e23-93e6-c17d43ca1cb8",
+        "lbcolor": "#FF4D4F",
+        "tag": "new-provider"
     },
     {
-        "period": "General Medical Equipment and Supplies",
-        "type": 'sku',
-        "category_id": "df718720-2727-43d7-bb3e-84b37cb06492",
-        "color": '#1890ff',
-        "amount": 53
+        "amount": 1,
+        "period": "24 SEVEN CARE, LLC",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "ef66425c-b4e2-4bc8-a850-6261dc10fb60",
+        "lbcolor": "#FF4D4F",
+        "tag": "new-provider"
     },
     {
-        "period": "Gynecology & Urology Equipment and Supplies",
-        "type": 'sku',
-        "category_id": "789b8722-3de6-495a-beb7-377bc4b1d4d7",
-        "color": '#1890ff',
-        "amount": 2467
+        "amount": 0,
+        "period": "24 SEVEN CARE, LLC",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "ef66425c-b4e2-4bc8-a850-6261dc10fb60",
+        "lbcolor": "#FF4D4F",
+        "tag": "new-provider"
     },
     {
-        "period": "Laboratory Equipment and Supplies",
-        "type": 'sku',
-        "category_id": "22c92f2a-9a52-4253-909b-6fe382e96a3b",
-        "color": '#1890ff',
-        "amount": 580
+        "amount": 5,
+        "period": "(dba) GENTLE DENTISTRY",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "b6c108d5-4fec-4880-a35c-9bb3f4611e69",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Neurology Equipment and Supplies",
-        "type": 'sku',
-        "category_id": "9c4fbf9e-52cf-404d-9b42-a156cce499cf",
-        "color": '#1890ff',
-        "amount": 82
+        "amount": 24,
+        "period": "(dba) GENTLE DENTISTRY",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "b6c108d5-4fec-4880-a35c-9bb3f4611e69",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Gift card",
-        "type": 'sku',
-        "category_id": "9da70192-1cd7-11eb-adc1-0242ac120002",
-        "color": '#1890ff',
-        "amount": 160
+        "amount": 5,
+        "period": "(dba) Jaclan",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "4a5e17d2-fb25-4087-afe0-1f0d1be5f4dd",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Sterilization Equipment and Supplies",
-        "type": 'sku',
-        "category_id": "e51304e9-bc50-4a06-b761-f635b3786a68",
-        "color": '#1890ff',
-        "amount": 528
+        "amount": 21,
+        "period": "(dba) Jaclan",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "4a5e17d2-fb25-4087-afe0-1f0d1be5f4dd",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Emergency equipment",
-        "type": 'sku',
-        "category_id": "bf6d68bd-eaef-4441-956a-f662f3797319",
-        "color": '#1890ff',
-        "amount": 14606
+        "amount": 5,
+        "period": "(dba) CI MEDICAL - II",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "8d3cb959-d7b7-4d91-b4d5-b58cfb9047f1",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Specialized Equipment",
-        "type": 'sku',
-        "category_id": "08314a45-0aab-402e-b2d4-f8d67f11f679",
-        "color": '#1890ff',
-        "amount": 1442
+        "amount": 6,
+        "period": "(dba) CI MEDICAL - II",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "8d3cb959-d7b7-4d91-b4d5-b58cfb9047f1",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Myopia Test",
-        "type": 'sku',
-        "category_id": "c0fd6106-81ff-4440-92e9-8c1279900670",
-        "color": '#1890ff',
-        "amount": 23301
+        "amount": 4,
+        "period": "(dba) (heart) dba CENTER OF NORTH HOUSTON",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "6a0d5de8-183f-4c4b-9214-f2b32c2fe371",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Basic Diagnostic Equipment",
-        "type": 'sku',
-        "category_id": "bfb07fc9-eeb1-48e3-a9cb-89952044beed",
-        "color": '#1890ff',
-        "amount": 18
+        "amount": 3,
+        "period": "(dba) (heart) dba CENTER OF NORTH HOUSTON",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "6a0d5de8-183f-4c4b-9214-f2b32c2fe371",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Surgery Equipment and Supplies ",
-        "type": 'sku',
-        "category_id": "20abfb2d-a9e3-4279-9b52-b4bf81186f06",
-        "color": '#1890ff',
-        "amount": 4949
+        "amount": 3,
+        "period": "(dba) CI MEDICAL - I",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "ad5eed44-7bc3-40e3-bed2-ec36261492ee",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Emergency Gloves",
-        "type": 'sku',
-        "category_id": "66cf5693-02aa-45ab-98d8-3751b60a0c3b",
-        "color": '#1890ff',
-        "amount": 124141
+        "amount": 22,
+        "period": "(dba) CI MEDICAL - I",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "ad5eed44-7bc3-40e3-bed2-ec36261492ee",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Patient Clothing",
-        "type": 'sku',
-        "category_id": "e4119161-59bc-47dd-affe-73943ad1a6a3",
-        "color": '#1890ff',
-        "amount": 0
+        "amount": 3,
+        "period": "(dba) abcd",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "afd45050-6592-4f29-b54b-28f68b50e3fd",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Radiology Equipment and Supplies",
-        "type": 'sku',
-        "category_id": "bb5b0ce9-a416-4d93-a9bd-3dbbbdeae902",
-        "color": '#1890ff',
-        "amount": 558
+        "amount": 2,
+        "period": "(dba) abcd",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "afd45050-6592-4f29-b54b-28f68b50e3fd",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Procedure Equipment",
-        "type": 'sku',
-        "category_id": "eb341ca7-a44d-46ab-b900-73f07cea381f",
-        "color": '#1890ff',
-        "amount": 491
+        "amount": 3,
+        "period": "(dba) A PLACE",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "9c14c6d3-b3ad-49fd-8e56-94ea004c11b6",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Disposable equipment",
-        "type": 'sku',
-        "category_id": "f7254a9e-3ebc-4045-902d-64d543598efc",
-        "color": '#1890ff',
-        "amount": 0
+        "amount": 0,
+        "period": "(dba) A PLACE",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "9c14c6d3-b3ad-49fd-8e56-94ea004c11b6",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Dental equipment and supplies",
-        "type": 'sku',
-        "category_id": "44fb57bf-5b2a-473d-b76d-f16009074c2b",
-        "color": '#1890ff',
-        "amount": 208
+        "amount": 2,
+        "period": "(dba) DBA TEST A HOME FOR US",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "4024baee-db27-4555-a1eb-056583c5a2c2",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Emergency Equipment",
-        "type": 'sku',
-        "category_id": "38f1b016-5d4b-11ec-bf63-0242ac130002",
-        "color": '#1890ff',
-        "amount": 1400
+        "amount": 0,
+        "period": "(dba) DBA TEST A HOME FOR US",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "4024baee-db27-4555-a1eb-056583c5a2c2",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Blood Tube",
-        "type": 'sku',
-        "category_id": "028226a5-141e-4df5-bc22-78d02d7c2737",
-        "color": '#1890ff',
-        "amount": 239
+        "amount": 1,
+        "period": "(dba) AHF PHARMACY",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "62537239-037f-47e0-8e32-e6633559a6f5",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Testing",
-        "type": 'sku',
-        "category_id": "19929e56-56bb-4b38-be6f-77e2698e535a",
-        "color": '#1890ff',
-        "amount": 0
+        "amount": 34,
+        "period": "(dba) AHF PHARMACY",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "62537239-037f-47e0-8e32-e6633559a6f5",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Microscope",
-        "type": 'sku',
-        "category_id": "a6b2c384-e032-45d4-8c5c-88a75087f6ae",
-        "color": '#1890ff',
-        "amount": 564
+        "amount": 1,
+        "period": "(dba) TEXAS HEALTH",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "1f31be8b-1b12-4dcd-9767-f6e1f1962787",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Type",
-        "type": 'sku',
-        "category_id": "908cb465-6cdd-4535-aca1-91c1dc9f00f4",
-        "color": '#1890ff',
-        "amount": 195437
+        "amount": 7,
+        "period": "(dba) TEXAS HEALTH",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "1f31be8b-1b12-4dcd-9767-f6e1f1962787",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "mbeeee",
-        "type": 'sku',
-        "category_id": "99d73aec-0051-47cd-8c95-76626fe34d2d",
-        "color": '#1890ff',
-        "amount": 153056
+        "amount": 1,
+        "period": "HENRY COUNTY HEALTH DEPT-ABBEVILLE MAT CM",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "d7b73d02-b013-4b7f-a65a-21cd1adf902b",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "Voucher",
-        "type": 'sku',
-        "category_id": "e0a5448a-6dc3-4723-b1a9-d17810f507bc",
-        "color": '#1890ff',
-        "amount": 98
+        "amount": 1,
+        "period": "HENRY COUNTY HEALTH DEPT-ABBEVILLE MAT CM",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "d7b73d02-b013-4b7f-a65a-21cd1adf902b",
+        "lbcolor": "#000000",
+        "tag": null
     },
     {
-        "period": "The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ in their grammar, their pronunciation and their most common words. Everyo",
-        "type": 'sku',
-        "category_id": "50f6abf7-2b59-42da-a1c7-1ea09c511126",
-        "color": '#1890ff',
-        "amount": 0
+        "amount": 1,
+        "period": "(dba) A NEW START TREATMENT AND RECOVERY CENTER",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "9c43fd17-51bf-4f10-aafa-59a7a5375876",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "(dba) A NEW START TREATMENT AND RECOVERY CENTER",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "9c43fd17-51bf-4f10-aafa-59a7a5375876",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "ABEL COUNSELING LLC",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "d27474cf-4af5-40dd-b02a-dd50a33098ae",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "ABEL COUNSELING LLC",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "d27474cf-4af5-40dd-b02a-dd50a33098ae",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "(dba) BODYLOGICMD OF HARTFORD",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "15a37f21-8661-44d6-98d6-7c5547d652a1",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "(dba) BODYLOGICMD OF HARTFORD",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "15a37f21-8661-44d6-98d6-7c5547d652a1",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "A WOMAN'S PLACE LLC",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "d5603a0f-bf35-4f6c-af67-f291291a11cb",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "A WOMAN'S PLACE LLC",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "d5603a0f-bf35-4f6c-af67-f291291a11cb",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "A CARING HEART NURSING SERVICES LLC",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "e2b95bc6-aaee-45a4-8a07-c0e860847569",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "A CARING HEART NURSING SERVICES LLC",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "e2b95bc6-aaee-45a4-8a07-c0e860847569",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "ABA WEISSENBERG ELITE BEHAVIORAL SERVICES",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "f18f2a6f-b163-4523-ac6f-3441c3ccfccd",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "ABA WEISSENBERG ELITE BEHAVIORAL SERVICES",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "f18f2a6f-b163-4523-ac6f-3441c3ccfccd",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "(dba) A DENTAL CORPORATION",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "105bf2a3-47ed-4b56-ab83-82ed2158df1f",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "(dba) A DENTAL CORPORATION",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "105bf2a3-47ed-4b56-ab83-82ed2158df1f",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "(dba) ALWAYS THE BEST",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "63ec7345-b89e-49cf-98ba-fa4cf817016a",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "(dba) ALWAYS THE BEST",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "63ec7345-b89e-49cf-98ba-fa4cf817016a",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "Sunny Hospital",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "5123ec43-d326-4439-81df-5ba1f232de5f",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 73,
+        "period": "Sunny Hospital",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "5123ec43-d326-4439-81df-5ba1f232de5f",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "RICHARD ALLEN LE MD PA",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "9643c98a-6ca8-4cae-8a7b-745df4ab8ff9",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 33,
+        "period": "RICHARD ALLEN LE MD PA",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "9643c98a-6ca8-4cae-8a7b-745df4ab8ff9",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "(dba) 24/7 TENDER HOME CARE",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "d35f44a4-7237-4624-be1b-952602f61f6d",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 13,
+        "period": "(dba) 24/7 TENDER HOME CARE",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "d35f44a4-7237-4624-be1b-952602f61f6d",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "A AMBASSADOR LIMOUSINE & TRANSPORTATION",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "d11a6609-5e4c-43f5-81bd-44f7ed5977bf",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 5,
+        "period": "A AMBASSADOR LIMOUSINE & TRANSPORTATION",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "d11a6609-5e4c-43f5-81bd-44f7ed5977bf",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "3M COMPANY & ASSOCIATES, INC",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "a9af2c82-b235-4ee1-8857-510d893a4253",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 3,
+        "period": "3M COMPANY & ASSOCIATES, INC",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "a9af2c82-b235-4ee1-8857-510d893a4253",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "(dba) A DAY TO FORGET ACTIVITY CENTER",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "8cdf1f6d-a0ed-4fcb-a589-c575dc3d5a18",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "(dba) A DAY TO FORGET ACTIVITY CENTER",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "8cdf1f6d-a0ed-4fcb-a589-c575dc3d5a18",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "ACUMEN HEALTH TRANSPORTATION",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "8f5b0d96-fcbf-4ffe-bc0b-364043affa2b",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "ACUMEN HEALTH TRANSPORTATION",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "8f5b0d96-fcbf-4ffe-bc0b-364043affa2b",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "(dba) ARROW PRESCRIPTION CENTER #10",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "8397d9e7-a3cb-44cd-9f97-846f6e88abef",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "(dba) ARROW PRESCRIPTION CENTER #10",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "8397d9e7-a3cb-44cd-9f97-846f6e88abef",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "1736 FAMILY CRISIS CENTER",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "2983ec22-42bc-498a-a9f3-b69bab383728",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "1736 FAMILY CRISIS CENTER",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "2983ec22-42bc-498a-a9f3-b69bab383728",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "A PERSONAL APPROACH BEHAVIORAL HEALTH, LLC",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "7da1e97a-0e1f-41e7-bcd5-324f916a28ab",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "A PERSONAL APPROACH BEHAVIORAL HEALTH, LLC",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "7da1e97a-0e1f-41e7-bcd5-324f916a28ab",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "(dba) DANING HOURSE",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "7bc70cf5-d291-4f98-be7f-dec05235e22d",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "(dba) DANING HOURSE",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "7bc70cf5-d291-4f98-be7f-dec05235e22d",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "(dba) HILL & HILL DDS",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "d5b4814d-1b0c-4202-9a14-8840d8ae5d3d",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "(dba) HILL & HILL DDS",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "d5b4814d-1b0c-4202-9a14-8840d8ae5d3d",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "A NEW DAY COUNSELING CENTER, PLLC",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "68252c94-283e-45d5-a5d5-42b9eb1b61cb",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "A NEW DAY COUNSELING CENTER, PLLC",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "68252c94-283e-45d5-a5d5-42b9eb1b61cb",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 0,
+        "period": "A CHANCE UNA OPORTUNIDAD",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "454c217a-fda0-4d71-8d97-05945ecc72a2",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 1,
+        "period": "A CHANCE UNA OPORTUNIDAD",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "454c217a-fda0-4d71-8d97-05945ecc72a2",
+        "lbcolor": "#000000",
+        "tag": null
+    },
+    {
+        "amount": 100,
+        "period": "(dba) TEXAS EYE",
+        "type": "Eligible",
+        "status": "Eligible",
+        "bgColor": "#43A047",
+        "_id": "aac38018-f328-4cd9-83c2-21e52dd1c056",
+        "lbcolor": "#94248C",
+        "tag": "oon-provider"
+    },
+    {
+        "amount": 30,
+        "period": "(dba) TEXAS EYE",
+        "type": "Ineligible",
+        "status": "Ineligible",
+        "bgColor": "#FF4D4F",
+        "_id": "aac38018-f328-4cd9-83c2-21e52dd1c056",
+        "lbcolor": "#94248C",
+        "tag": "oon-provider"
     }
-];
+]

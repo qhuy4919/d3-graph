@@ -79,7 +79,7 @@ export const AxisRenderer = ({
         tooltipData,
         hideTooltip,
         showTooltip
-    } = useTooltip<Record<string, string>>();
+    } = useTooltip<Datum>();
     const {
         TooltipInPortal
     } = useTooltipInPortal({
@@ -89,6 +89,7 @@ export const AxisRenderer = ({
 
     const {
         axisLabelSpacing,
+
     } = getSpacingRatio(orient);
 
     const labelWidth = getTextWidth(title, axisLabelSpacing, titleFontSize)
@@ -199,11 +200,16 @@ export const AxisRenderer = ({
     }
 
     function translateSpecialOrientAxis(orient: AxisOrientation) {
+        const axisPadding = 5;
         switch (orient) {
             case 'right':
-                return `translate(${graphWidth}, 0)`;
+                return `translate(${graphWidth + axisPadding}, 0)`;
             case 'bottom':
-                return `translate(0, ${graphHeight})`;
+                return `translate(0, ${graphHeight + axisPadding})`;
+            case 'left':
+                return `translate(${-axisPadding}, 0)`;
+            case 'top':
+                return `translate(0, ${-axisPadding})`;
             default:
                 return null;
         }
@@ -231,7 +237,13 @@ export const AxisRenderer = ({
                     let label = select(this).datum() as string;
                     if (tickFormat) label = tickFormat?.(label, 0);
                     showTooltip({
-                        tooltipData: { [DEFAULT_AXIS_TOOLTIP_KEY]: label.toString() },
+                        tooltipData: {
+                            period: '',
+                            type: '',
+                            amount: 0,
+                            color: '',
+                            [DEFAULT_AXIS_TOOLTIP_KEY]: label.toString()
+                        },
                         tooltipTop: e?.clientY ?? 0,
                         tooltipLeft: e?.clientX ?? 0,
                     });
