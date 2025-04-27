@@ -114,15 +114,14 @@ export function truncateLabel(
     text.each(function () {
         let labelName = select(this).text();
         const textWidth = getTextWidth(labelName, width, fontSize);
-
         if (textWidth >= width) {
             const truncateLength =
-                Math.round((textWidth - width) / fontSize) +
+                Math.round(width / fontSize) +
                 truncateText.length;
 
 
             labelName =
-                labelName.slice(0, labelName.length - truncateLength) +
+                labelName.slice(0, truncateLength) +
                 truncateText;
         }
 
