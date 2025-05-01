@@ -1,7 +1,7 @@
 import { BaseType, Selection } from "d3-selection";
 import { GraphPadding } from "./graph";
 
-export type Datum = {
+export type D3Datum = {
     amount: number,
     type: string,
     period: string,
@@ -9,7 +9,7 @@ export type Datum = {
     [key: string]: any
 };
 
-export type D3Table = Datum[]
+export type D3Table = D3Datum[]
 
 export type D3DataSchema = {
     amount: string,
@@ -48,7 +48,7 @@ export type ChartOptions = {
 
 export type D3Selection<
     T extends BaseType = BaseType,
-    D extends Record<string, unknown> | unknown = Datum,
+    D extends Record<string, unknown> | unknown = D3Datum,
     X extends BaseType = BaseType,
-    Y extends Record<string, unknown> | unknown = Datum,
+    Y extends Record<string, unknown> | unknown = D3Datum,
 > = Selection<T | null, D, X, Y>;

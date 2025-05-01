@@ -1,5 +1,5 @@
-export type AccessorForArrayItem<Datum, Output> = (
-    d: Datum,
+export type AccessorForArrayItem<D3Datum, Output> = (
+    d: D3Datum,
     index: number,
-    data: Datum[],
+    data: D3Datum[],
 ) => Output;

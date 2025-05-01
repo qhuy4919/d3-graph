@@ -1,4 +1,4 @@
-import { D3Table, Datum, ViewSize } from "./base";
+import { D3Table, D3Datum, ViewSize } from "./base";
 import { MarkType } from "./common";
 import { D3Scale } from "./scale";
 import { GraphScene, MarkEncodingKey } from "./scene";
@@ -57,12 +57,12 @@ export interface Facet {
 
 export interface EncodingContext {
     /**
-     * The current datum to encode, e.g. a row in the bound data array.
+     * The current D3Datum to encode, e.g. a row in the bound data array.
      */
-    d: Datum
+    d: D3Datum
 
     /**
-     * The index of the datum within the data collection
+     * The index of the D3Datum within the data collection
      */
     index: number
 
@@ -73,13 +73,13 @@ export interface EncodingContext {
     view: ViewSize
 
     /**
-     * Named data tables, datum instances, and scales..
+     * Named data tables, D3Datum instances, and scales..
      *
      * The data tables are a combination of the source dataset and any faceting
-     * tables created at this point. Nomed datums are generated from faceting
+     * tables created at this point. Nomed D3Datums are generated from faceting
      * when the parent row is named.
      */
-    [key: string]: Datum | D3Table | D3Scale<unknown> | ViewSize | number
+    [key: string]: D3Datum | D3Table | D3Scale<unknown> | ViewSize | number
 }
 
 export type MarkEncoding<T> = T | ((ctx: EncodingContext) => T)

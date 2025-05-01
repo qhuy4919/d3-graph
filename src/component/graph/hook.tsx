@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { D3reduceData } from "./util";
-import { Datum } from "./model";
+import { D3Datum } from "./model";
 
 export function useD3GraphData<Data extends Record<string, unknown>>(input: Data[]) {
-    const [data, setData] = useState<Datum[]>([]);
+    const [data, setData] = useState<D3Datum[]>([]);
 
     useEffect(() => {
         if (Array.isArray(input) && input.length > 0) {

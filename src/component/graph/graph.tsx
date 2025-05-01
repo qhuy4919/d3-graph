@@ -1,4 +1,4 @@
-import { ChartOptions, D3EventListener, Datum, SignalListener } from "./model";
+import { ChartOptions, D3EventListener, D3Datum, SignalListener } from "./model";
 import { D3GraphSceneContext } from "./context";
 import styled from 'styled-components'
 import { D3GraphSceneBuilder, GraphOptionsManager } from "./builder";
@@ -18,7 +18,7 @@ export const StyledD3GraphContainer = styled.div`
 `;
 export const StyledD3Graph = styled.svg``;
 
-export type D3Graph<Data extends Datum> = {
+export type D3Graph<Data extends D3Datum> = {
     data: Data[];
     builder?: D3GraphSceneBuilder,
     options: ChartOptions,
@@ -26,7 +26,7 @@ export type D3Graph<Data extends Datum> = {
     children?: React.ReactNode
 };
 
-export const D3Graph = <Data extends Datum>(props: D3Graph<Data>) => {
+export const D3Graph = <Data extends D3Datum>(props: D3Graph<Data>) => {
     const {
         options,
         children,

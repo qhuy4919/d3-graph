@@ -7,7 +7,7 @@ import {
 } from "../../builder"
 import {
     D3ScaleOutput,
-    Datum,
+    D3Datum,
     DEFAULT_AXIS_TOOLTIP_KEY,
     DEFAULT_LEGEND_TOOLTIP_KEY,
     defaultAxisLabelStyle,
@@ -22,7 +22,7 @@ import { AxisBuilder } from "../../builder/axis"
 import { ScaleBuilder } from "../../builder/scale"
 import { D3Graph } from '../../graph';
 
-export const HorizontalBarGraphBuilder = <Data extends Datum>({
+export const HorizontalBarGraphBuilder = <Data extends D3Datum>({
     data,
     options
 }: D3Graph<Data>) => {
@@ -125,7 +125,7 @@ export const HorizontalBarGraphBuilder = <Data extends Datum>({
     return chart;
 }
 
-export const D3HorizontalBarGraph = <Data extends Datum>(props: D3Graph<Data>) => {
+export const D3HorizontalBarGraph = <Data extends D3Datum>(props: D3Graph<Data>) => {
     const chart = HorizontalBarGraphBuilder(props);
     const {
         data,
@@ -167,7 +167,7 @@ export const D3HorizontalBarGraph = <Data extends Datum>(props: D3Graph<Data>) =
         builder={chart}
     >
         <D3GroupBarHorizontal<
-            Datum,
+            D3Datum,
             PickD3Scale<'band'>,
             PickD3Scale<'band'>
         >

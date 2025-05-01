@@ -1,15 +1,15 @@
-import { D3TooltipType, Datum, TooltipSpec } from "../model"
+import { D3TooltipType, D3Datum, TooltipSpec } from "../model"
 
 export class D3TooltipSpec implements TooltipSpec {
     private _type: D3TooltipType
     private _labelSchema: Record<string, React.ReactNode>
-    private _valueSchema: Record<string, (value: Datum) => React.ReactNode>
+    private _valueSchema: Record<string, (value: D3Datum) => React.ReactNode>
 
 
     public constructor(
         type: D3TooltipType,
         labelSchema: Record<string, React.ReactNode>,
-        valueSchema: Record<string, (value: Datum) => React.ReactNode>
+        valueSchema: Record<string, (value: D3Datum) => React.ReactNode>
 
     ) {
         this._type = type;
@@ -40,7 +40,7 @@ export class D3TooltipSpec implements TooltipSpec {
         return this._valueSchema
     }
 
-    set valueSchema(value: Record<string, (value: Datum) => React.ReactNode>) {
+    set valueSchema(value: Record<string, (value: D3Datum) => React.ReactNode>) {
         this._valueSchema = {
             ...this._valueSchema,
             ...value,

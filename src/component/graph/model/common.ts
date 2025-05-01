@@ -1,5 +1,5 @@
 import { SVGProps } from "react";
-import { Datum } from "./base";
+import { D3Datum } from "./base";
 
 export enum StrokeCap {
     Butt = 'butt',
@@ -42,7 +42,7 @@ export type D3EventListener = 'legendClick' |
     'barClick' |
     'lineClick' |
     'combinedTextClick';
-export type SignalListener<Data extends Datum = Datum> = (name: string, value: Data) => void;
+export type SignalListener<Data extends D3Datum = D3Datum> = (name: string, value: Data) => void;
 
 //Omit some custom props that might be duplicate in original SVG props
 export type AddSVGProps<Props, Element extends SVGElement> = Props &

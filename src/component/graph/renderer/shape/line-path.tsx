@@ -5,7 +5,7 @@ import { mergeClass } from '../../util';
 import {
     AddSVGProps,
     LinePathConfig,
-    Datum as D3Datum,
+    D3Datum,
 } from '../../model';
 import { D3Graph } from '../../graph';
 
@@ -46,7 +46,7 @@ export function D3LinePath<Datum extends D3Datum>({
             className={mergeClass('d3-line-path', className)}
             fill={fill}
             d={path(data) ?? ''}
-            // without this a datum surrounded by nulls will not be visible
+            // without this a Datum surrounded by nulls will not be visible
             // https://github.com/d3/d3-shape#line_defined
             strokeLinecap="round"
             {...restProps}

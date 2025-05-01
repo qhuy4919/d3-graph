@@ -1,5 +1,5 @@
 import React from "react";
-import { Datum } from "../model"
+import { D3Datum } from "../model"
 import { D3TooltipSpec } from "../spec";
 import styled from 'styled-components';
 
@@ -20,11 +20,11 @@ export const StyledD3Tooltip = styled.div`
 `;
 
 
-export type TooltipRenderer<Data extends Datum> = {
+export type TooltipRenderer<Data extends D3Datum> = {
     data: Data,
     spec?: Pick<D3TooltipSpec, 'labelSchema' | 'valueSchema'>
 }
-export const TooltipRenderer = <Data extends Datum>({
+export const TooltipRenderer = <Data extends D3Datum>({
     data,
     spec
 }: TooltipRenderer<Data>) => {

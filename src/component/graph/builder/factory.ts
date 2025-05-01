@@ -1,4 +1,4 @@
-import { Datum, LinePathConfig, MarkType } from "../model"
+import { D3Datum, LinePathConfig, MarkType } from "../model"
 import { setNumberOrNumberAccessor } from "../util";
 import { MarkBuilder } from "./mark"
 import { line } from 'd3-shape';
@@ -28,7 +28,7 @@ export function markGroup(name?: string) {
 
 
 /* d3 shape factory function */
-export function d3Line<Data extends Datum>({
+export function d3Line<Data extends D3Datum>({
     x, y, curve
 }: LinePathConfig<Data>) {
     const path = line<Data>();

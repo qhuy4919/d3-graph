@@ -2,7 +2,7 @@ import React from 'react';
 import {
     AnyD3Scale,
     LinePathConfig,
-    Datum as D3Datum,
+    D3Datum,
     PickD3Scale,
 } from '../../model';
 import { group as d3Group } from 'd3-array';

@@ -1,6 +1,6 @@
 import {
     D3ScaleOutput,
-    Datum,
+    D3Datum,
     DEFAULT_AXIS_TOOLTIP_KEY,
     DEFAULT_LEGEND_TOOLTIP_KEY,
     defaultAxisLabelStyle
@@ -21,7 +21,7 @@ import { D3ScaleSpec } from "../../spec";
 import moment from 'moment';
 import { D3LineSeries } from "../../renderer";
 
-export const LineGraphBuilder = <Data extends Datum>({
+export const LineGraphBuilder = <Data extends D3Datum>({
     data,
     options
 }: D3Graph<Data>) => {
@@ -126,7 +126,7 @@ export const LineGraphBuilder = <Data extends Datum>({
     return chart;
 
 }
-export const D3LineGraph = <Data extends Datum>(props: D3Graph<Data>) => {
+export const D3LineGraph = <Data extends D3Datum>(props: D3Graph<Data>) => {
     const chart = LineGraphBuilder(props);
     const {
         data,

@@ -6,7 +6,7 @@ import {
     AxisScale,
     D3DataSchema,
     D3Selection,
-    Datum,
+    D3Datum,
     DEFAULT_FONT_STYLE,
     ScaleInput,
     STACK_OFFSETS,
@@ -22,7 +22,7 @@ export function D3reduceData<ChartData extends Record<string, unknown>>(
         amount,
         color,
     } = dataSchema
-    return data.reduce((acc: Datum[], d: ChartData, i) => {
+    return data.reduce((acc: D3Datum[], d: ChartData, i) => {
         return [
             ...acc,
             {
@@ -104,7 +104,7 @@ export function stringifyStyling(style: React.CSSProperties) {
 }
 
 export function truncateLabel(
-    text: D3Selection<BaseType, unknown, BaseType, Datum>,
+    text: D3Selection<BaseType, unknown, BaseType, D3Datum>,
     width: number = 0,
     fontSize: number = 12,
 ) {
@@ -137,7 +137,7 @@ export function stackOffset(offset?: keyof typeof STACK_OFFSETS) {
     return (offset && STACK_OFFSETS[offset]) || STACK_OFFSETS.none;
 }
 
-export function stackedTransformData<Data extends Datum>(data: Data[]) {
+export function stackedTransformData<Data extends D3Datum>(data: Data[]) {
     return d3Groups(data, d => d.period).reduce(
         (acc: Data[], d: [string, Data[]]) => {
             let total = 0;

@@ -1,5 +1,5 @@
 import { CurveFactory, CurveFactoryLineOnly } from 'd3-shape';
-import { AccessorForArrayItem, Datum as D3Datum } from '../../model';
+import { AccessorForArrayItem, D3Datum } from '../../model';
 export type D3CurveType =
     | 'curveBasis'
     | 'curveBasisClosed'

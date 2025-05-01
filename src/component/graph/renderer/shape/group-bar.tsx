@@ -2,7 +2,7 @@ import React from 'react'
 import {
     AnyBandScale,
     BaseBarGroupProps,
-    Datum as D3Datum,
+    D3Datum,
     BarGroup,
     AddSVGProps,
     PickD3Scale,

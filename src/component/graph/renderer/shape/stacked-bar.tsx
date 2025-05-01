@@ -1,7 +1,7 @@
 import React from 'react'
 import {
     BaseBarGroupProps,
-    Datum as D3Datum,
+    D3Datum,
     AddSVGProps,
     PickD3Scale,
     DEFAULT_GRID_DASHARRAY,

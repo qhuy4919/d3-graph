@@ -2,11 +2,10 @@ import React from 'react'
 import {
     AnyBandScale,
     BaseBarGroupProps,
-    Datum as D3Datum,
+    D3Datum,
     AddSVGProps,
     BarGroupHorizontal,
     PickD3Scale,
-    D3BaseGraph,
     DEFAULT_GRID_DASHARRAY,
 } from '../../model';
 import { groups as d3Groups } from 'd3-array';
@@ -19,6 +18,7 @@ import { useTooltip, useTooltipInPortal } from '@visx/tooltip';
 import { D3Text } from '../text';
 import { TooltipRenderer } from '../tooltip';
 import { D3Line } from './line';
+import { D3Graph } from '../../graph';
 
 export type D3GroupBarHorizontal<
     Datum extends D3Datum,
@@ -31,7 +31,7 @@ export type D3GroupBarHorizontal<
     colorScale: PickD3Scale<'ordinal', string>
     /** Override render function which is passed the computed BarGroups. */
     children?: (barGroups: BarGroupHorizontal[]) => React.ReactNode;
-} & Pick<D3BaseGraph<Datum>, 'signalListener'>
+} & Pick<D3Graph<Datum>, 'signalListener'>
 export const D3GroupBarHorizontal = <
     Datum extends D3Datum,
     Y0Scale extends AnyBandScale = AnyBandScale,

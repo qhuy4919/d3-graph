@@ -1,8 +1,8 @@
 import { CSSProperties } from "styled-components";
 import { D3ScaleSpec } from "../spec";
 
-export type FormattedLabel<Datum, Output, ExtraAttributes = Record<string, unknown>> = {
-    datum: Datum;
+export type FormattedLabel<D3Datum, Output, ExtraAttributes = Record<string, unknown>> = {
+    D3Datum: D3Datum;
     index: number;
     text: string;
     value?: Output;

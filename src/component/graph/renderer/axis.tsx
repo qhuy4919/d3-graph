@@ -3,7 +3,7 @@ import {
     AxisOrientation,
     AxisScale,
     D3Selection,
-    Datum,
+    D3Datum,
     DEFAULT_AXIS_LABEL_FONT_SIZE,
     DEFAULT_AXIS_TOOLTIP_KEY
 } from "../model"
@@ -79,7 +79,7 @@ export const AxisRenderer = ({
         tooltipData,
         hideTooltip,
         showTooltip
-    } = useTooltip<Datum>();
+    } = useTooltip<D3Datum>();
     const {
         TooltipInPortal
     } = useTooltipInPortal({
@@ -189,7 +189,7 @@ export const AxisRenderer = ({
         }
     }
 
-    function truncateText(selection: D3Selection<BaseType, unknown, BaseType, Datum>) {
+    function truncateText(selection: D3Selection<BaseType, unknown, BaseType, D3Datum>) {
         let bandWidth = 0;
         if (['left', 'right'].includes(orient)) {
             bandWidth = tickLabelSpacing;
@@ -226,7 +226,7 @@ export const AxisRenderer = ({
 
     useEffect(() => {
         if (axisRef) {
-            const axisSelection = select<BaseType, Datum>(axisRef.current)
+            const axisSelection = select<BaseType, D3Datum>(axisRef.current)
                 .call(d => axisBackbone(spec)(d))
                 .attr('transform', transform ?? translateSpecialOrientAxis(orient))
 
@@ -241,7 +241,7 @@ export const AxisRenderer = ({
                 .selectAll('.tick text')
                 .call(truncateText)
                 .on('mouseenter', function (e) {
-                    let label = select(this).datum() as string;
+                    let label = select(this).D3Datum() as string;
                     if (tickFormat) label = tickFormat?.(label, 0);
                     showTooltip({
                         tooltipData: {
@@ -262,7 +262,7 @@ export const AxisRenderer = ({
         }
 
         return () => {
-            select<BaseType, Datum>(`.${axisLabelClassName}`).remove()
+            select<BaseType, D3Datum>(`.${axisLabelClassName}`).remove()
 
         }
     }, [axisRef, spec])
