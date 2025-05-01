@@ -193,7 +193,6 @@ export const AxisRenderer = ({
         let bandWidth = 0;
         if (['left', 'right'].includes(orient)) {
             bandWidth = tickLabelSpacing;
-            console.log(bandWidth);
         }
         else {
             bandWidth = getScaleBandwidth(axisScale);

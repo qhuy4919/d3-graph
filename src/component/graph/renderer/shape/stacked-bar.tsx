@@ -4,7 +4,6 @@ import {
     Datum as D3Datum,
     AddSVGProps,
     PickD3Scale,
-    D3BaseGraph,
     DEFAULT_GRID_DASHARRAY,
     BaseStackProps,
     BarStack,
@@ -29,6 +28,7 @@ import { TooltipRenderer } from '../tooltip';
 import { D3Line } from './line';
 import { GraphOptionsManager } from '../../builder';
 import { localPoint } from '@visx/event';
+import { D3Graph } from '../../graph';
 
 type D3StackToolTipData<Datum extends D3Datum> = {
     key: string,
@@ -47,7 +47,7 @@ export type D3StackedBar<
     /** Override render function which is passed the computed BarGroups. */
     children?: (barGroups: BarStack<Datum>[]) => React.ReactNode,
 }
-    & Pick<D3BaseGraph<Datum>, 'signalListener'>
+    & Pick<D3Graph<Datum>, 'signalListener'>
     & BaseStackProps<Datum>;
 
 export const D3StackedBar = <

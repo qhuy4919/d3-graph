@@ -1,7 +1,7 @@
-import { D3BaseGraph, Datum } from "./model";
+import { ChartOptions, D3EventListener, Datum, SignalListener } from "./model";
 import { D3GraphSceneContext } from "./context";
 import styled from 'styled-components'
-import { GraphOptionsManager } from "./builder";
+import { D3GraphSceneBuilder, GraphOptionsManager } from "./builder";
 import { D3Group } from "./renderer/group";
 import { D3Axis, D3Grid, D3Legend } from "./renderer";
 
@@ -19,8 +19,12 @@ export const StyledD3GraphContainer = styled.div`
 export const StyledD3Graph = styled.svg``;
 
 export type D3Graph<Data extends Datum> = {
+    data: Data[];
+    builder?: D3GraphSceneBuilder,
+    options: ChartOptions,
+    signalListener?: Record<D3EventListener, SignalListener>
     children?: React.ReactNode
-} & D3BaseGraph<Data>;
+};
 
 export const D3Graph = <Data extends Datum>(props: D3Graph<Data>) => {
     const {

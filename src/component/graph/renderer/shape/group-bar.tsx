@@ -6,7 +6,6 @@ import {
     BarGroup,
     AddSVGProps,
     PickD3Scale,
-    D3BaseGraph,
     DEFAULT_GRID_DASHARRAY,
 } from '../../model'
 import { getScaleBandwidth, mergeClass } from '../../util';
@@ -20,6 +19,7 @@ import { useD3GraphSceneContext } from '../../context';
 import { TooltipRenderer } from '../tooltip';
 import { D3Line } from './line';
 import { GraphOptionsManager } from '../../builder';
+import { D3Graph } from '../../graph';
 
 export type D3GroupBar<
     Datum extends D3Datum,
@@ -34,7 +34,7 @@ export type D3GroupBar<
     height: number,
     /** Override render function which is passed the computed BarGroups. */
     children?: (barGroups: BarGroup[]) => React.ReactNode,
-} & Pick<D3BaseGraph<Datum>, 'signalListener'>;
+} & Pick<D3Graph<Datum>, 'signalListener'>;
 
 export const D3GroupBar = <
     Datum extends D3Datum,

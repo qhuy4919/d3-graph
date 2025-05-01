@@ -1,13 +1,13 @@
 import React from 'react';
-import { line, Line as LineType } from 'd3-shape';
+import { Line as LineType } from 'd3-shape';
 import { d3Line } from '../../builder';
 import { mergeClass } from '../../util';
 import {
     AddSVGProps,
     LinePathConfig,
     Datum as D3Datum,
-    D3BaseGraph
 } from '../../model';
+import { D3Graph } from '../../graph';
 
 export type D3LinePath<Datum extends D3Datum> = {
     /** Array of data for which to generate a line shape. */
@@ -22,7 +22,7 @@ export type D3LinePath<Datum extends D3Datum> = {
     className?: string;
 }
     & LinePathConfig<Datum>
-    & Pick<D3BaseGraph<Datum>, 'signalListener'>;
+    & Pick<D3Graph<Datum>, 'signalListener'>;
 
 export function D3LinePath<Datum extends D3Datum>({
     children,

@@ -6,7 +6,6 @@ import {
     TooltipBuilder
 } from "../../builder"
 import {
-    D3BaseGraph,
     D3ScaleOutput,
     Datum,
     DEFAULT_AXIS_TOOLTIP_KEY,
@@ -26,7 +25,7 @@ import { D3Graph } from '../../graph';
 export const BarGraphBuilder = <Data extends Datum>({
     data,
     options
-}: D3BaseGraph<Data>) => {
+}: D3Graph<Data>) => {
     const chart = new D3GraphSceneBuilder();
     const { graphSpace } = new GraphOptionsManager(options);
     const {
@@ -125,7 +124,7 @@ export const BarGraphBuilder = <Data extends Datum>({
     return chart;
 }
 
-export const D3BarGraph = <Data extends Datum>(props: D3BaseGraph<Data>) => {
+export const D3BarGraph = <Data extends Datum>(props: D3Graph<Data>) => {
     const chart = BarGraphBuilder(props);
     const {
         data,
