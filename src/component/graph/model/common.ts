@@ -37,11 +37,13 @@ export enum MarkType {
     Shape = 'shape',
 };
 
-export type D3EventListener = 'legendClick' |
-    'pointClick' |
-    'barClick' |
-    'lineClick' |
-    'combinedTextClick';
+export type D3EventListener =
+    | 'legendClick'
+    | 'pointClick'
+    | 'barClick'
+    | 'lineClick'
+    | 'combinedTextClick'
+    | 'pieClick';
 export type SignalListener<Data extends D3Datum = D3Datum> = (name: string, value: Data) => void;
 
 //Omit some custom props that might be duplicate in original SVG props
