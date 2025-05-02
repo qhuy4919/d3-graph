@@ -163,7 +163,7 @@ export const D3StackedBarGraph = <Data extends D3Datum>(props: D3Graph<Data>) =>
 
     return <D3Graph
         {...props}
-        builder={chart}
+        builder={StackedBarGraphBuilder}
     >
         <D3StackedBar<
             D3Datum,

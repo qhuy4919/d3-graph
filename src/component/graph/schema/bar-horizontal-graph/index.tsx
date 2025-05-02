@@ -164,7 +164,7 @@ export const D3HorizontalBarGraph = <Data extends D3Datum>(props: D3Graph<Data>)
 
     return <D3Graph
         {...props}
-        builder={chart}
+        builder={HorizontalBarGraphBuilder}
     >
         <D3GroupBarHorizontal<
             D3Datum,

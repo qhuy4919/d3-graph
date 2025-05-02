@@ -157,7 +157,7 @@ export const D3LineGraph = <Data extends D3Datum>(props: D3Graph<Data>) => {
 
     return <D3Graph
         {...props}
-        builder={chart}
+        builder={LineGraphBuilder}
     >
         <D3LineSeries
             data={data}

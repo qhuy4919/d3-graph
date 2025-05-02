@@ -44,8 +44,8 @@ export type D3EventListener =
     | 'lineClick'
     | 'combinedTextClick'
     | 'pieClick';
-export type SignalListener<Data extends D3Datum = D3Datum> = (name: string, value: Data) => void;
-
+export type SignalListenerData<Data extends Record<string, unknown>> = (name: string, value: Data) => void;
+export type D3SignalListener<Data extends Record<string, unknown>> = Partial<Record<D3EventListener, SignalListenerData<Data>>>;
 //Omit some custom props that might be duplicate in original SVG props
 export type AddSVGProps<Props, Element extends SVGElement> = Props &
     Omit<SVGProps<Element>, keyof Props>;
