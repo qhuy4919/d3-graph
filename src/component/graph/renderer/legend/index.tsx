@@ -1,3 +1,4 @@
+import { forwardRef } from "react"
 import { GraphOptionsManager } from "../../builder"
 import { useD3GraphSceneContext } from "../../context"
 import { D3LegendSpec, D3ScaleSpec } from "../../spec"
@@ -44,8 +45,14 @@ export const LegendRenderer = ({
     return <div
         className={mergeClass('d3-legend', className)}
         style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            fontSize: '12px',
+            alignItems: 'center',
+            gap: '8px',
+            marginLeft: paddingLeft,
+            color: '#303030',
             ...style,
-            marginLeft: paddingLeft
         }}
     >
         <StyledLegendSectionLabel style={style}>{label}:</StyledLegendSectionLabel>
@@ -78,16 +85,25 @@ export const LegendRenderer = ({
     </div>
 
 }
-export const D3Legend = () => {
+export type D3Legend = {
+    innterRef?: React.Ref<HTMLDivElement>;
+}
+export const D3Legend = ({
+    innterRef
+}: D3Legend) => {
     const { schema } = useD3GraphSceneContext();
     if (!schema) return <>No Legend Available</>
     const legendSpecList = schema.spec.legend;
-    return legendSpecList.map((spec, i) => {
-        //Cannot spread instance of class
-        //therfore have to pass it into props
-        return <LegendRenderer
-            key={`d3-legend-${i}`}
-            spec={spec}
-        />
-    })
+    return <div ref={innterRef} className='d3-legend-list'>
+        {
+            legendSpecList.map((spec, i) => {
+                //Cannot spread instance of class
+                //therfore have to pass it into props
+                return <LegendRenderer
+                    key={`d3-legend-${i}`}
+                    spec={spec}
+                />
+            })
+        }
+    </div>
 }

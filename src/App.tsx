@@ -7,10 +7,13 @@ import { barData, lineData, horizontalBarData } from './fake-data';
 import styled from 'styled-components';
 
 export const StyledD3Container = styled.div`
-  display: flex;
-  flex-direction: column;
+  position: relative;
   width: 100vw;
- 
+  height: 500px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  margin: 15px;
+  border-radius: 10px;
 `;
 function App() {
   const normalizeBarData = D3reduceData(barData, {
@@ -66,52 +69,50 @@ function App() {
       >
         Switch to Stacked
       </Button>
-      <StyledD3Container className='d3-container'>
-        <div style={{ position: 'relative', width: '100%', height: '500px' }}>
-          {
-            type === 'group'
-              ? <D3BarGraph
-                data={normalizeBarData}
-                options={{
-                  height: customHeight,
-                  width: customWidth,
-                  padding: defaultChartOptionPadding
-                }
-                }
-              />
-              : <D3StackedBarGraph
-                data={normalizeBarData}
-                options={{
-                  height: customHeight,
-                  width: customWidth,
-                  padding: defaultChartOptionPadding
-                }}
-              />
-          }
-        </div>
-        <div style={{ position: 'relative', width: '100%', height: '500px' }}>
-          <D3LineGraph
-            data={normalizeLineData}
-            options={{
-              height: customHeight,
-              width: customWidth,
-              padding: defaultChartOptionPadding
-            }}
-          />
-        </div>
-        <div style={{ position: 'relative', width: '100%', height: 'auto' }}>
-          <D3HorizontalBarGraph
-            data={normalizeHorizontalBarData}
-            options={{
-              height: 400,
-              width: 1000,
-              padding: {
-                ...defaultChartOptionPadding,
-                left: 150
+      <StyledD3Container style={{ position: 'relative', width: '100%', height: '500px' }}>
+        {
+          type === 'group'
+            ? <D3BarGraph
+              data={normalizeBarData}
+              options={{
+                height: customHeight,
+                width: customWidth,
+                padding: defaultChartOptionPadding
               }
-            }}
-          />
-        </div>
+              }
+            />
+            : <D3StackedBarGraph
+              data={normalizeBarData}
+              options={{
+                height: customHeight,
+                width: customWidth,
+                padding: defaultChartOptionPadding
+              }}
+            />
+        }
+      </StyledD3Container>
+      <StyledD3Container style={{ position: 'relative', width: '100%', height: '500px' }}>
+        <D3LineGraph
+          data={normalizeLineData}
+          options={{
+            height: customHeight,
+            width: customWidth,
+            padding: defaultChartOptionPadding
+          }}
+        />
+      </StyledD3Container>
+      <StyledD3Container style={{ position: 'relative', width: '100%', height: 'auto' }}>
+        <D3HorizontalBarGraph
+          data={normalizeHorizontalBarData}
+          options={{
+            height: 400,
+            width: 1000,
+            padding: {
+              ...defaultChartOptionPadding,
+              left: 150
+            }
+          }}
+        />
       </StyledD3Container>
     </div>
   )

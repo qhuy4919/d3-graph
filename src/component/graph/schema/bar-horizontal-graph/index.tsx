@@ -10,8 +10,9 @@ import {
     D3Datum,
     DEFAULT_AXIS_TOOLTIP_KEY,
     DEFAULT_LEGEND_TOOLTIP_KEY,
-    defaultAxisLabelStyle,
-    PickD3Scale
+    defaultAxisTitleStyle,
+    PickD3Scale,
+    defaultAxisLabelstyle
 } from "../../model";
 import { D3GroupBarHorizontal } from "../../renderer";
 import { max as d3Max } from 'd3-array'
@@ -56,11 +57,13 @@ export const HorizontalBarGraphBuilder = <Data extends D3Datum>({
             new AxisBuilder('amountScale', 'bottom')
                 .className('axis-x')
                 .title('Number of Stocks')
-                .titleStyle(defaultAxisLabelStyle),
+                .titleStyle(defaultAxisTitleStyle)
+                .labelStyle(defaultAxisLabelstyle),
             new AxisBuilder('periodScale', 'left')
                 .className('axis-y')
                 .title('SKU Type')
-                .titleStyle(defaultAxisLabelStyle),
+                .titleStyle(defaultAxisTitleStyle)
+                .labelStyle(defaultAxisLabelstyle),
         )
         .scale(
             amountScale,
@@ -104,12 +107,6 @@ export const HorizontalBarGraphBuilder = <Data extends D3Datum>({
         )
         .legend(
             new LegendBuilder('rect', typeScale.spec, colorScale.spec)
-                .style({
-                    display: 'flex',
-                    maxWidth: graphWidth,
-                    flexWrap: 'wrap',
-                    fontSize: '12px',
-                })
                 .shapeAttr({
                     shapeWidth: '12px',
                     shapeHeight: '12px',

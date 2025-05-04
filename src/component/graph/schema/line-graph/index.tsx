@@ -3,7 +3,8 @@ import {
     D3Datum,
     DEFAULT_AXIS_TOOLTIP_KEY,
     DEFAULT_LEGEND_TOOLTIP_KEY,
-    defaultAxisLabelStyle
+    defaultAxisTitleStyle,
+    defaultAxisLabelstyle
 } from "../../model";
 import {
     D3GraphSceneBuilder,
@@ -50,16 +51,18 @@ export const LineGraphBuilder = <Data extends D3Datum>({
             new AxisBuilder('amountScale', 'left')
                 .className('axis-y')
                 .title('Pulse')
-                .titleStyle(defaultAxisLabelStyle),
+                .titleStyle(defaultAxisTitleStyle)
+                .labelStyle(defaultAxisLabelstyle),
             new AxisBuilder('periodScale', 'bottom')
                 .className('axis-x')
-                .tickFormat((d) => moment(d).format('MMM DD, YY'))
                 .title('Time Period')
-                .titleStyle(defaultAxisLabelStyle),
+                .titleStyle(defaultAxisTitleStyle)
+                .labelStyle(defaultAxisLabelstyle),
             new AxisBuilder('amountScale', 'right')
                 .className('axis-y2')
                 .title('Monkey')
-
+                .titleStyle(defaultAxisTitleStyle)
+                .labelStyle(defaultAxisLabelstyle)
         )
         .scale(
             periodScale,
@@ -105,12 +108,6 @@ export const LineGraphBuilder = <Data extends D3Datum>({
         )
         .legend(
             new LegendBuilder('rect', typeScale.spec, colorScale.spec)
-                .style({
-                    display: 'flex',
-                    maxWidth: graphWidth,
-                    flexWrap: 'wrap',
-                    fontSize: '12px',
-                })
                 .shapeAttr({
                     shapeWidth: '12px',
                     shapeHeight: '12px',

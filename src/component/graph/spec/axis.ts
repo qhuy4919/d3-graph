@@ -9,7 +9,7 @@ import {
 } from '../model';
 
 export class D3AxisSpec implements AxisSpec {
-    private _className: string
+    private _className: string = ''
     private _scale: string;
     private _orient: AxisOrientation;
     // Tick configuration fields
@@ -19,13 +19,14 @@ export class D3AxisSpec implements AxisSpec {
     private _tickOffset = DEFAULT_AXIS_TICK_OFFSET_VALUE
     private _tickWidth: number = DEFAULT_AXIS_STROKE
     private _tickPadding: number = DEFAULT_AXIS_TICK_PADDING
-    private _tickFormat: D3TickFormat
+    private _tickFormat?: D3TickFormat = undefined
     private _transform?: string
     // Label configuration 
     private _labelFontSize: React.CSSProperties['fontSize']
+    private _labelStyle?: React.CSSProperties
     //Title configuration
-    private _title: string
-    private _titleStyle: React.CSSProperties
+    private _title: string = ''
+    private _titleStyle?: React.CSSProperties = undefined
 
     public constructor(
         scale: string,
@@ -109,7 +110,7 @@ export class D3AxisSpec implements AxisSpec {
         this._ticks = value;
     }
 
-    get tickFormat() {
+    get tickFormat(): D3TickFormat | undefined {
         return this._tickFormat
     }
 
@@ -133,7 +134,7 @@ export class D3AxisSpec implements AxisSpec {
         this._title = value;
     }
 
-    get titleStyle() {
+    get titleStyle(): React.CSSProperties | undefined {
         return this._titleStyle;
     }
 
@@ -151,4 +152,16 @@ export class D3AxisSpec implements AxisSpec {
     set labelFontSize(value: React.CSSProperties['fontSize']) {
         this._labelFontSize = value;
     }
+
+    get labelStyle(): React.CSSProperties | undefined {
+        return this._labelStyle;
+    }
+
+    set labelStyle(style: React.CSSProperties) {
+        this._labelStyle = {
+            ...this._labelStyle,
+            ...style
+        }
+    }
+
 }

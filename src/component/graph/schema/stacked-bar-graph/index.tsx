@@ -10,8 +10,10 @@ import {
     D3Datum,
     DEFAULT_AXIS_TOOLTIP_KEY,
     DEFAULT_LEGEND_TOOLTIP_KEY,
-    defaultAxisLabelStyle,
-    PickD3Scale
+    defaultAxisTitleStyle,
+    PickD3Scale,
+    GraphPadding,
+    defaultAxisLabelstyle
 } from "../../model";
 import { D3StackedBar } from "../../renderer";
 import { max as d3Max } from 'd3-array'
@@ -56,11 +58,13 @@ export const StackedBarGraphBuilder = <Data extends D3Datum>({
             new AxisBuilder('amountScale', 'left')
                 .className('axis-y')
                 .title('Number of Members')
-                .titleStyle(defaultAxisLabelStyle),
+                .titleStyle(defaultAxisTitleStyle)
+                .labelStyle(defaultAxisLabelstyle),
             new AxisBuilder('periodScale', 'bottom')
                 .className('axis-x')
                 .title('Health Plan')
-                .titleStyle(defaultAxisLabelStyle),
+                .titleStyle(defaultAxisTitleStyle)
+                .labelStyle(defaultAxisLabelstyle),
         )
         .scale(
             amountScale,
@@ -103,12 +107,6 @@ export const StackedBarGraphBuilder = <Data extends D3Datum>({
         )
         .legend(
             new LegendBuilder('rect', typeScale.spec, colorScale.spec)
-                .style({
-                    display: 'flex',
-                    maxWidth: graphWidth,
-                    flexWrap: 'wrap',
-                    fontSize: '12px',
-                })
                 .shapeAttr({
                     shapeWidth: '12px',
                     shapeHeight: '12px',
@@ -125,17 +123,45 @@ export const StackedBarGraphBuilder = <Data extends D3Datum>({
 }
 
 export const D3StackedBarGraph = <Data extends D3Datum>(props: D3Graph<Data>) => {
-    const chart = StackedBarGraphBuilder(props);
+    const {
+        options: defaultOptions,
+    } = props;
+
+    const {
+        width: containerWidth,
+        height: containerHeight,
+    } = defaultOptions;
+
+    const normalizePadding: GraphPadding = {
+        bottom: containerHeight * 0.2,
+        left: containerWidth * 0.1,
+        right: containerWidth * 0.05,
+        top: containerHeight * 0.15,
+    };
+
+    const normalizeProps = {
+        ...props,
+        options: {
+            ...defaultOptions,
+            padding: normalizePadding,
+        },
+    };
+
     const {
         data,
         options,
         signalListener
-    } = props;
+    } = normalizeProps;
+
     const {
         graphSpace: {
             shape,
         },
     } = new GraphOptionsManager(options);
+
+
+
+    const chart = StackedBarGraphBuilder(normalizeProps);
 
     function getScale<
         T extends D3ScaleSpec['type'],
@@ -159,11 +185,13 @@ export const D3StackedBarGraph = <Data extends D3Datum>(props: D3Graph<Data>) =>
     )
         throw new Error('Something wrong with scale list');
 
-    typeScale.rangeRound([0, getScaleBandwidth(periodScale)])
+    typeScale.rangeRound([0, getScaleBandwidth(periodScale)]);
+
 
     return <D3Graph
-        {...props}
+        {...normalizeProps}
         builder={StackedBarGraphBuilder}
+
     >
         <D3StackedBar<
             D3Datum,

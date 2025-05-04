@@ -8,11 +8,14 @@ export const DEFAULT_AXIS_FONT_SIZE = 10;
 export const DEFAULT_AXIS_TICK_PADDING = 10;
 export const DEFAULT_AXIS_FONT = '"Roboto Condensed", Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"'
 export const DEFAULT_AXIS_TICK_OFFSET_VALUE = 0;
+export const DEFAULT_AXIS_TITLE_PADDING = 1
+export const DEFAULT_AXIS_TITLE_FONT_SIZE = '16px';
+export const DEFAULT_AXIS_TITLE_FILL = 'black';
+export const DEFAULT_AXIS_TITLE_FONT_FAMILY = DEFAULT_AXIS_FONT
 export const DEFAULT_AXIS_LABEL_PADDING = 1
-export const DEFAULT_AXIS_LABEL_FONT_SIZE = '16px';
-export const DEFAULT_AXIS_LABEL_FILL = 'white';
+export const DEFAULT_AXIS_LABEL_FONT_SIZE = '14px';
+export const DEFAULT_AXIS_LABEL_FILL = 'black';
 export const DEFAULT_AXIS_LABEL_FONT_FAMILY = DEFAULT_AXIS_FONT
-
 export type D3TickFormat = (domainValue: string | number | Date, index: number) => string;
 export type AxisOrientation = 'right' | 'left' | 'bottom' | 'top';
 export interface AxisSpec {
@@ -27,7 +30,8 @@ export interface AxisSpec {
     tickWidth?: number,
     tickFormat?: D3TickFormat
     //label
-    labelFontSize?: React.CSSProperties['fontSize']
+    labelFontSize?: React.CSSProperties['fontSize'],
+    labelStyle?: React.CSSProperties,
     //title
     title?: string,
     titleStyle?: React.CSSProperties,
@@ -38,7 +42,13 @@ export interface AxisSpec {
 export type AxisScaleOutput = number | string;
 export type AxisScale = D3AxisScale<AxisScaleOutput>;
 
-export const defaultAxisLabelStyle: React.CSSProperties = {
+export const defaultAxisTitleStyle: React.CSSProperties = {
+    'fontSize': DEFAULT_AXIS_TITLE_FONT_SIZE,
+    'fill': DEFAULT_AXIS_TITLE_FILL,
+    'fontFamily': DEFAULT_AXIS_TITLE_FONT_FAMILY
+};
+
+export const defaultAxisLabelstyle: React.CSSProperties = {
     'fontSize': DEFAULT_AXIS_LABEL_FONT_SIZE,
     'fill': DEFAULT_AXIS_LABEL_FILL,
     'fontFamily': DEFAULT_AXIS_LABEL_FONT_FAMILY

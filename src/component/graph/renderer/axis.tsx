@@ -7,7 +7,6 @@ import {
     DEFAULT_AXIS_LABEL_FONT_SIZE,
     DEFAULT_AXIS_TOOLTIP_KEY
 } from "../model"
-import { D3AxisSpec } from "../spec"
 import {
     getScaleBandwidth,
     getTextWidth,
@@ -15,9 +14,15 @@ import {
     stringifyStyling,
     truncateLabel
 } from "../util"
+import {
+    axisBottom,
+    axisLeft,
+    axisRight,
+    axisTop
+} from "d3-axis"
+import { D3AxisSpec } from "../spec"
 import { D3Group } from "./group"
 import { BaseType, select } from "d3-selection"
-import { axisBottom, axisLeft, axisRight, axisTop } from "d3-axis"
 import { useD3GraphSceneContext } from "../context"
 import { ScaleRenderer } from "./scale"
 import { GraphOptionsManager } from "../builder"
@@ -45,6 +50,7 @@ export const AxisRenderer = ({
         titleStyle,
         scale,
         labelFontSize = DEFAULT_AXIS_LABEL_FONT_SIZE,
+        labelStyle,
         tickFormat,
     } = spec;
 
@@ -121,10 +127,15 @@ export const AxisRenderer = ({
 
         if (!axisScale) throw new Error('axis scale error!');
 
-        return axis(axisScale)
+        const builder = axis(axisScale)
             .ticks(ticks)
             .tickPadding(tickPadding)
-            .tickFormat(tickFormat ?? null)
+
+        if (tickFormat) {
+            builder.tickFormat(tickFormat)
+        }
+        return builder
+
     };
 
     function getSpacingRatio(orient: AxisOrientation) {
@@ -223,7 +234,6 @@ export const AxisRenderer = ({
 
     }
 
-
     useEffect(() => {
         if (axisRef) {
             const axisSelection = select<BaseType, D3Datum>(axisRef.current)
@@ -235,10 +245,11 @@ export const AxisRenderer = ({
                 .text(title)
                 .classed(axisLabelClassName, true)
                 .attr('transform', transformLabel(orient))
-                .attr('style', stringifyStyling(titleStyle));
+                .attr('style', stringifyStyling(titleStyle ?? {}));
 
             axisSelection
                 .selectAll('.tick text')
+                .attr('style', stringifyStyling(labelStyle ?? {}))
                 .call(truncateText)
                 .on('mouseenter', function (e) {
                     let label = select(this).datum() as string;

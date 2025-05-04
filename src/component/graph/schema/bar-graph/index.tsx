@@ -10,8 +10,10 @@ import {
     D3Datum,
     DEFAULT_AXIS_TOOLTIP_KEY,
     DEFAULT_LEGEND_TOOLTIP_KEY,
-    defaultAxisLabelStyle,
-    PickD3Scale
+    defaultAxisTitleStyle,
+    PickD3Scale,
+    GraphPadding,
+    defaultAxisLabelstyle
 } from "../../model";
 import { D3GroupBar } from "../../renderer";
 import { max as d3Max } from 'd3-array'
@@ -55,11 +57,13 @@ export const BarGraphBuilder = <Data extends D3Datum>({
             new AxisBuilder('amountScale', 'left')
                 .className('axis-y')
                 .title('Number of Members')
-                .titleStyle(defaultAxisLabelStyle),
+                .titleStyle(defaultAxisTitleStyle)
+                .labelStyle(defaultAxisLabelstyle),
             new AxisBuilder('periodScale', 'bottom')
                 .className('axis-x')
                 .title('Health Plan')
-                .titleStyle(defaultAxisLabelStyle),
+                .titleStyle(defaultAxisTitleStyle)
+                .labelStyle(defaultAxisLabelstyle),
         )
         .scale(
             amountScale,
@@ -89,7 +93,6 @@ export const BarGraphBuilder = <Data extends D3Datum>({
 
                 },
                 {
-                    [DEFAULT_AXIS_TOOLTIP_KEY]: (value) => value + '123'
                 }
             ),
             new TooltipBuilder(
@@ -103,12 +106,6 @@ export const BarGraphBuilder = <Data extends D3Datum>({
         )
         .legend(
             new LegendBuilder('rect', typeScale.spec, colorScale.spec)
-                .style({
-                    display: 'flex',
-                    maxWidth: graphWidth,
-                    flexWrap: 'wrap',
-                    fontSize: '12px',
-                })
                 .shapeAttr({
                     shapeWidth: '12px',
                     shapeHeight: '12px',
@@ -125,12 +122,38 @@ export const BarGraphBuilder = <Data extends D3Datum>({
 }
 
 export const D3BarGraph = <Data extends D3Datum>(props: D3Graph<Data>) => {
-    const chart = BarGraphBuilder(props);
+    const {
+        options: defaultOptions,
+    } = props;
+
+    const {
+        width: containerWidth,
+        height: containerHeight,
+    } = defaultOptions;
+
+    const normalizePadding: GraphPadding = {
+        bottom: containerHeight * 0.2,
+        left: containerWidth * 0.1,
+        right: containerWidth * 0.05,
+        top: containerHeight * 0.15,
+    };
+
+    const normalizeProps = {
+        ...props,
+        options: {
+            ...defaultOptions,
+            padding: normalizePadding,
+        },
+    };
+
     const {
         data,
         options,
         signalListener
-    } = props;
+    } = normalizeProps;
+
+    const chart = BarGraphBuilder(normalizeProps);
+
     const {
         graphSpace: {
             shape,
@@ -162,7 +185,7 @@ export const D3BarGraph = <Data extends D3Datum>(props: D3Graph<Data>) => {
     typeScale.rangeRound([0, getScaleBandwidth(periodScale)])
 
     return <D3Graph
-        {...props}
+        {...normalizeProps}
         builder={BarGraphBuilder}
     >
         <D3GroupBar<

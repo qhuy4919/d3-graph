@@ -57,6 +57,14 @@ export class AxisBuilder {
         return this;
     }
 
+    public labelStyle(value: React.CSSProperties) {
+        this.spec.labelStyle = {
+            ...this.spec.labelStyle,
+            ...value,
+        }
+        return this;
+    }
+
     public build() {
         return this.spec;
     }

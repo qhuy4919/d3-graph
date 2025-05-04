@@ -151,17 +151,21 @@ export const D3GroupBar = <
 
                                         }}
                                     />
-                                    <D3Text
-                                        key={`d3-bar-text-${barGroup.index}-${bar.index}-${bar.key}`}
-                                        x={x + width / 2}
-                                        y={y - 10}
-                                        fill="grey"
-                                        fontWeight={'bold'}
-                                        textAnchor='middle'
-                                        fontSize={14}
-                                    >
-                                        {value}
-                                    </D3Text>
+                                    {
+                                        value > 0 &&
+                                        <D3Text
+                                            key={`d3-bar-text-${barGroup.index}-${bar.index}-${bar.key}`}
+                                            x={x + width / 2}
+                                            y={y - 10}
+                                            fill="grey"
+                                            fontWeight={'bold'}
+                                            textAnchor='middle'
+                                            fontSize={14}
+                                        >
+                                            {value}
+                                        </D3Text>
+                                    }
+
                                 </React.Fragment>
                             })
                         }
