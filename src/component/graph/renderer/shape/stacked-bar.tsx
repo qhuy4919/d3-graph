@@ -203,7 +203,10 @@ export const D3StackedBar = <
                         left={tooltipLeft}
                     >
                         <TooltipRenderer
-                            data={tooltipData.barStack.data[tooltipData.key]}
+                            data={{
+                                ...tooltipData.barStack.data[tooltipData.key],
+                                _total: tooltipData.barStack.data['_total'],
+                            }}
                             spec={tooltipSpec}
                         />
                     </TooltipInPortal>

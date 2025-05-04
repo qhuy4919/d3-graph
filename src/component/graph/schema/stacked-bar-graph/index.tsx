@@ -85,6 +85,9 @@ export const StackedBarGraphBuilder = <Data extends D3Datum>({
                     period: 'On'
                 },
                 {
+                    amount: (value) => <span>
+                        {value.amount} ({(value.amount / value._total * 100).toFixed(2)}%)
+                    </span>
                 }
             ),
             new TooltipBuilder(

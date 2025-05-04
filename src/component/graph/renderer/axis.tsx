@@ -94,11 +94,11 @@ export const AxisRenderer = ({
 
 
     const {
-        axisLabelSpacing,
+        axisTitleSpacing,
         tickLabelSpacing,
     } = getSpacingRatio(orient);
 
-    const labelWidth = getTextWidth(title, axisLabelSpacing, titleFontSize)
+    const labelWidth = getTextWidth(title, axisTitleSpacing, titleFontSize)
 
 
     const axisBackbone = ({
@@ -139,27 +139,28 @@ export const AxisRenderer = ({
     };
 
     function getSpacingRatio(orient: AxisOrientation) {
-
+        const axisTitleSpacing = (padding: number) => padding / 2;
+        const tickLabelSpacing = (padding: number) => padding / 2;
         switch (orient) {
             case 'bottom':
                 return {
-                    axisLabelSpacing: paddingBottom / 2,
-                    tickLabelSpacing: paddingBottom / 2,
+                    axisTitleSpacing: axisTitleSpacing(paddingBottom),
+                    tickLabelSpacing: tickLabelSpacing(paddingBottom),
                 }
             case 'top':
                 return {
-                    axisLabelSpacing: paddingTop / 2,
-                    tickLabelSpacing: paddingTop / 2,
+                    axisTitleSpacing: axisTitleSpacing(paddingTop),
+                    tickLabelSpacing: tickLabelSpacing(paddingTop),
                 }
             case 'left':
                 return {
-                    axisLabelSpacing: paddingLeft / 2,
-                    tickLabelSpacing: paddingLeft / 2,
+                    axisTitleSpacing: axisTitleSpacing(paddingLeft),
+                    tickLabelSpacing: tickLabelSpacing(paddingLeft),
                 }
             case 'right':
                 return {
-                    axisLabelSpacing: paddingRight / 2,
-                    tickLabelSpacing: paddingRight / 2,
+                    axisTitleSpacing: axisTitleSpacing(paddingRight),
+                    tickLabelSpacing: tickLabelSpacing(paddingRight),
                 }
             default:
                 throw new Error('Invalid axis orientation')
@@ -176,7 +177,7 @@ export const AxisRenderer = ({
             case 'bottom':
                 return `translate(
                     ${graphWidth / 2}, 
-                    ${axisLabelSpacing + fontSize})
+                    ${axisTitleSpacing + fontSize})
                 `
             case 'top':
                 return `translate(
@@ -185,13 +186,13 @@ export const AxisRenderer = ({
                 `
             case 'left':
                 return `translate
-                (${-axisLabelSpacing - fontSize}, 
+                (${-axisTitleSpacing - fontSize}, 
                 ${graphHeight / 2 - labelWidth}), 
                 rotate(-90)
             `
             case 'right':
                 return `translate
-                (${axisLabelSpacing + fontSize}, 
+                (${axisTitleSpacing + fontSize}, 
                 ${graphHeight / 2 - labelWidth}), 
                 rotate(90)
             `
@@ -203,6 +204,7 @@ export const AxisRenderer = ({
     function truncateText(selection: D3Selection<BaseType, unknown, BaseType, D3Datum>) {
         let bandWidth = 0;
         if (['left', 'right'].includes(orient)) {
+            console.log('tickLabelSpacing', tickLabelSpacing);
             bandWidth = tickLabelSpacing;
         }
         else {
