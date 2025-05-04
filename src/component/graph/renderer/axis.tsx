@@ -241,7 +241,7 @@ export const AxisRenderer = ({
                 .selectAll('.tick text')
                 .call(truncateText)
                 .on('mouseenter', function (e) {
-                    let label = select(this).D3Datum() as string;
+                    let label = select(this).datum() as string;
                     if (tickFormat) label = tickFormat?.(label, 0);
                     showTooltip({
                         tooltipData: {

@@ -14,7 +14,6 @@ import { D3Bar } from './bar';
 import { groups as d3Groups } from 'd3-array';
 import { D3Text } from '../text';
 import { useTooltip, useTooltipInPortal } from '@visx/tooltip';
-import { localPoint } from '@visx/event';
 import { useD3GraphSceneContext } from '../../context';
 import { TooltipRenderer } from '../tooltip';
 import { D3Line } from './line';
@@ -144,11 +143,10 @@ export const D3GroupBar = <
                                             hideTooltip();
                                         }}
                                         onMouseMove={(e) => {
-                                            const eventSvgCoords = localPoint(e);
                                             showTooltip({
                                                 tooltipData: bar.data,
-                                                tooltipTop: eventSvgCoords?.y ?? 0,
-                                                tooltipLeft: eventSvgCoords?.x ?? 0,
+                                                tooltipTop: e?.clientY ?? 0,
+                                                tooltipLeft: e?.clientX ?? 0,
                                             });
 
                                         }}

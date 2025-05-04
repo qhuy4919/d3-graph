@@ -99,11 +99,11 @@ function App() {
             }}
           />
         </div>
-        <div style={{ position: 'relative', width: '100%', height: '700px' }}>
+        <div style={{ position: 'relative', width: '100%', height: 'auto' }}>
           <D3HorizontalBarGraph
             data={normalizeHorizontalBarData}
             options={{
-              height: 1000,
+              height: 400,
               width: 1000,
               padding: {
                 ...defaultChartOptionPadding,

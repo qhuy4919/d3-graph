@@ -163,14 +163,13 @@ export const D3StackedBar = <
                                     hideTooltip();
                                 }}
                                 onMouseMove={(e) => {
-                                    const eventSvgCoords = localPoint(e);
                                     showTooltip({
                                         tooltipData: {
                                             key,
                                             barStack: stack.bar
                                         },
-                                        tooltipTop: eventSvgCoords?.y ?? 0,
-                                        tooltipLeft: eventSvgCoords?.x ?? 0,
+                                        tooltipTop: e?.clientY ?? 0,
+                                        tooltipLeft: e?.clientX ?? 0,
                                     });
 
                                 }}
