@@ -1,5 +1,10 @@
 import { Button } from 'antd';
-import { D3BarGraph, D3StackedBarGraph, D3LineGraph, D3HorizontalBarGraph } from './component';
+import {
+  D3BarGraphBuilder,
+  D3StackedBarGraphBuilder,
+  D3LineGraphBuilder,
+  D3HorizontalBarGraphBuilder
+} from './component';
 import { defaultChartOptionPadding } from './component/graph/model';
 import { D3reduceData } from './component/graph/util';
 import { useState } from 'react';
@@ -72,7 +77,7 @@ function App() {
       <StyledD3Container style={{ position: 'relative', width: '100%', height: '500px' }}>
         {
           type === 'group'
-            ? <D3BarGraph
+            ? <D3BarGraphBuilder
               data={normalizeBarData}
               options={{
                 height: customHeight,
@@ -81,7 +86,7 @@ function App() {
               }
               }
             />
-            : <D3StackedBarGraph
+            : <D3StackedBarGraphBuilder
               data={normalizeBarData}
               options={{
                 height: customHeight,
@@ -92,7 +97,7 @@ function App() {
         }
       </StyledD3Container>
       <StyledD3Container style={{ position: 'relative', width: '100%', height: '500px' }}>
-        <D3LineGraph
+        <D3LineGraphBuilder
           data={normalizeLineData}
           options={{
             height: customHeight,
@@ -102,7 +107,7 @@ function App() {
         />
       </StyledD3Container>
       <StyledD3Container style={{ position: 'relative', width: '100%', height: 'auto' }}>
-        <D3HorizontalBarGraph
+        <D3HorizontalBarGraphBuilder
           data={normalizeHorizontalBarData}
           options={{
             height: 400,

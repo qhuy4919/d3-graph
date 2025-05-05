@@ -24,7 +24,7 @@ import { AxisBuilder } from "../../builder/axis"
 import { ScaleBuilder } from "../../builder/scale"
 import { D3Graph } from '../../graph';
 
-export const StackedBarGraphBuilder = <Data extends D3Datum>({
+export const StackedBarGraphSchema = <Data extends D3Datum>({
     data,
     options
 }: D3Graph<Data>) => {
@@ -125,7 +125,7 @@ export const StackedBarGraphBuilder = <Data extends D3Datum>({
     return chart;
 }
 
-export const D3StackedBarGraph = <Data extends D3Datum>(props: D3Graph<Data>) => {
+export const D3StackedBarGraphBuilder = <Data extends D3Datum>(props: D3Graph<Data>) => {
     const {
         options: defaultOptions,
     } = props;
@@ -164,7 +164,7 @@ export const D3StackedBarGraph = <Data extends D3Datum>(props: D3Graph<Data>) =>
 
 
 
-    const chart = StackedBarGraphBuilder(normalizeProps);
+    const chart = StackedBarGraphSchema(normalizeProps);
 
     function getScale<
         T extends D3ScaleSpec['type'],
@@ -193,7 +193,7 @@ export const D3StackedBarGraph = <Data extends D3Datum>(props: D3Graph<Data>) =>
 
     return <D3Graph
         {...normalizeProps}
-        builder={StackedBarGraphBuilder}
+        schema={StackedBarGraphSchema}
 
     >
         <D3StackedBar<

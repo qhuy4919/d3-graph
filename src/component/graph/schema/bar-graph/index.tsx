@@ -24,7 +24,7 @@ import { AxisBuilder } from "../../builder/axis"
 import { ScaleBuilder } from "../../builder/scale"
 import { D3Graph } from '../../graph';
 
-export const BarGraphBuilder = <Data extends D3Datum>({
+export const BarGraphSchema = <Data extends D3Datum>({
     data,
     options
 }: D3Graph<Data>) => {
@@ -121,7 +121,7 @@ export const BarGraphBuilder = <Data extends D3Datum>({
     return chart;
 }
 
-export const D3BarGraph = <Data extends D3Datum>(props: D3Graph<Data>) => {
+export const D3BarGraphBuilder = <Data extends D3Datum>(props: D3Graph<Data>) => {
     const {
         options: defaultOptions,
     } = props;
@@ -152,7 +152,7 @@ export const D3BarGraph = <Data extends D3Datum>(props: D3Graph<Data>) => {
         signalListener
     } = normalizeProps;
 
-    const chart = BarGraphBuilder(normalizeProps);
+    const chart = BarGraphSchema(normalizeProps);
 
     const {
         graphSpace: {
@@ -186,7 +186,7 @@ export const D3BarGraph = <Data extends D3Datum>(props: D3Graph<Data>) => {
 
     return <D3Graph
         {...normalizeProps}
-        builder={BarGraphBuilder}
+        schema={BarGraphSchema}
     >
         <D3GroupBar<
             D3Datum,

@@ -1,9 +1,13 @@
 export { D3Graph } from './graph';
 export {
-    D3BarGraph,
-    D3StackedBarGraph,
-    D3LineGraph,
-    D3HorizontalBarGraph
+    BarGraphSchema,
+    D3BarGraphBuilder,
+    D3HorizontalBarGraphBuilder,
+    D3LineGraphBuilder,
+    D3StackedBarGraphBuilder,
+    HorizontalBarGraphSchema,
+    LineGraphSchema,
+    StackedBarGraphSchema,
 } from './schema';
 export {
     D3GraphSceneBuilder

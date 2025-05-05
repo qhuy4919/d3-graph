@@ -13,7 +13,7 @@ export const StyledD3Graph = styled.svg``;
 
 export type D3Graph<Data extends Record<string, unknown>> = {
     data: Data[];
-    builder?: (props: D3Graph<Data>) => D3GraphSceneBuilder,
+    schema?: (props: D3Graph<Data>) => D3GraphSceneBuilder,
     options: ChartOptions,
     signalListener?: D3SignalListener<D3Datum>
     children?: React.ReactNode
@@ -23,7 +23,7 @@ export const D3Graph = <Data extends Record<string, unknown>>(props: D3Graph<Dat
     const {
         options,
         children,
-        builder,
+        schema,
     } = props;
     const { graphSpace, paddingLeft, paddingTop } = new GraphOptionsManager(options);
     const { shape } = graphSpace;
@@ -31,7 +31,7 @@ export const D3Graph = <Data extends Record<string, unknown>>(props: D3Graph<Dat
 
     return <D3GraphSceneContext.Provider
         value={{
-            schema: builder?.(props),
+            schema: schema?.(props),
             options,
         }}
     >
